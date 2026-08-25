@@ -200,7 +200,7 @@ def create_report(results):
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|"
     ]
 
-        for r in results:
+    for r in results:
         lines.append(
             f'| {r["code"]} | '
             f'{r["trades"]} | '
