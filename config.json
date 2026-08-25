@@ -16,7 +16,24 @@
       "priority": "high"
     }
   ],
-  "watchlist": [],
+  "watchlist": [
+    {
+      "code": "6177",
+      "priority": "high"
+    },
+    {
+      "code": "2134",
+      "priority": "normal"
+    },
+    {
+      "code": "6721",
+      "priority": "normal"
+    },
+    {
+      "code": "2410",
+      "priority": "normal"
+    }
+  ],
   "auto_discovery": {
     "enabled": true,
     "top_candidates": 5
