@@ -1,0 +1,35 @@
+{
+  "portfolio": [
+    {
+      "code": "6740",
+      "shares": 100,
+      "priority": "high"
+    },
+    {
+      "code": "6573",
+      "shares": 100,
+      "priority": "high"
+    },
+    {
+      "code": "4596",
+      "shares": 100,
+      "priority": "high"
+    }
+  ],
+  "watchlist": [],
+  "auto_discovery": {
+    "enabled": true,
+    "top_candidates": 5
+  },
+  "signals": {
+    "buy": true,
+    "add": true,
+    "hold": true,
+    "take_profit": true,
+    "stop_loss": true
+  },
+  "daily_report": {
+    "enabled": true,
+    "time_jst": "16:00"
+  }
+}
