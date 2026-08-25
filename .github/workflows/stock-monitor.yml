@@ -32,16 +32,19 @@ jobs:
       - name: Run stock monitor
         run: python monitor.py
 
-      - name: Save report and signal history
+      - name: Run backtest
+        run: python backtest.py
+
+      - name: Save reports and signal history
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add report.md signals.csv
+          git add report.md signals.csv backtest_report.md
 
           if git diff --cached --quiet; then
             echo "No changes to save"
           else
-            git commit -m "Update daily stock report"
+            git commit -m "Update stock analysis and backtest"
             git push
           fi
