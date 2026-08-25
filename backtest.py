@@ -118,27 +118,74 @@ def backtest_stock(code):
             "return": profit_pct
         })
 
-    if not trades:
+     if not trades:
         return {
             "code": code,
             "trades": 0,
             "wins": 0,
             "win_rate": 0,
-            "avg_return": 0
+            "avg_return": 0,
+            "median_return": 0,
+            "max_profit": 0,
+            "max_loss": 0,
+            "expectancy": 0,
+            "max_drawdown": 0
         }
 
-    wins = sum(t["return"] > 0 for t in trades)
+    returns = [t["return"] for t in trades]
 
-    avg_return = sum(
-        t["return"] for t in trades
-    ) / len(trades)
+    wins = sum(r > 0 for r in returns)
+    win_rate = wins / len(returns) * 100
+
+    avg_return = sum(returns) / len(returns)
+    median_return = float(pd.Series(returns).median())
+
+    max_profit = max(returns)
+    max_loss = min(returns)
+
+    winning_returns = [r for r in returns if r > 0]
+    losing_returns = [r for r in returns if r <= 0]
+
+    avg_win = (
+        sum(winning_returns) / len(winning_returns)
+        if winning_returns else 0
+    )
+
+    avg_loss = (
+        sum(losing_returns) / len(losing_returns)
+        if losing_returns else 0
+    )
+
+    win_probability = wins / len(returns)
+    loss_probability = 1 - win_probability
+
+    expectancy = (
+        win_probability * avg_win
+        + loss_probability * avg_loss
+    )
+
+    equity = 1.0
+    peak = 1.0
+    max_drawdown = 0.0
+
+    for r in returns:
+        equity *= 1 + (r / 100)
+        peak = max(peak, equity)
+
+        drawdown = (equity - peak) / peak * 100
+        max_drawdown = min(max_drawdown, drawdown)
 
     return {
         "code": code,
         "trades": len(trades),
         "wins": wins,
-        "win_rate": wins / len(trades) * 100,
-        "avg_return": avg_return
+        "win_rate": win_rate,
+        "avg_return": avg_return,
+        "median_return": median_return,
+        "max_profit": max_profit,
+        "max_loss": max_loss,
+        "expectancy": expectancy,
+        "max_drawdown": max_drawdown
     }
 
 
@@ -149,16 +196,21 @@ def create_report(results):
         f"- 検証期間: 過去 {HISTORY_PERIOD}",
         f"- シグナル後保有期間: {HOLD_DAYS}営業日",
         "",
-        "| 銘柄 | シグナル数 | 勝率 | 平均騰落率 |",
-        "|---|---:|---:|---:|"
+                "| 銘柄 | シグナル数 | 勝率 | 平均 | 中央値 | 最大利益 | 最大損失 | 期待値 | 最大DD |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|"
     ]
 
-    for r in results:
+        for r in results:
         lines.append(
             f'| {r["code"]} | '
             f'{r["trades"]} | '
             f'{r["win_rate"]:.1f}% | '
-            f'{r["avg_return"]:+.2f}% |'
+            f'{r["avg_return"]:+.2f}% | '
+            f'{r["median_return"]:+.2f}% | '
+            f'{r["max_profit"]:+.2f}% | '
+            f'{r["max_loss"]:+.2f}% | '
+            f'{r["expectancy"]:+.2f}% | '
+            f'{r["max_drawdown"]:.2f}% |'
         )
 
     Path(OUTPUT_FILE).write_text(
