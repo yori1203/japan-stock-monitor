@@ -118,7 +118,7 @@ def backtest_stock(code):
             "return": profit_pct
         })
 
-     if not trades:
+    if not trades:
         return {
             "code": code,
             "trades": 0,
