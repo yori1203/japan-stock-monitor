@@ -2,20 +2,30 @@ name: Japan Stock Monitor
 
 on:
   workflow_dispatch:
-
+    inputs:
+      session:
+        description: Report session
+        required: true
+        default: evening
+        type: choice
+        options: [morning, evening]
   schedule:
-    # 日本時間 16:00 = UTC 07:00
-    # 月〜金に自動実行
-    # 日本時間 08:30 に月〜金で自動実行
+    # UTC Sunday-Thursday 23:30 = JST Monday-Friday 08:30
     - cron: "30 23 * * 0-4"
+    # UTC Monday-Friday 07:00 = JST Monday-Friday 16:00
     - cron: "0 7 * * 1-5"
 
 permissions:
   contents: write
 
+concurrency:
+  group: stock-monitor-main
+  cancel-in-progress: false
+
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository
@@ -25,28 +35,66 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install -r requirements.txt
+
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Select report session
+        id: session
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          MANUAL_SESSION: ${{ inputs.session }}
+        run: |
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            session="$MANUAL_SESSION"
+          elif [[ "$SCHEDULE" == "30 23 * * 0-4" ]]; then
+            session="morning"
+          else
+            session="evening"
+          fi
+          echo "session=$session" >> "$GITHUB_OUTPUT"
 
       - name: Run stock monitor
-        run: python monitor.py
+        id: monitor
+        continue-on-error: true
+        run: python monitor.py --session "${{ steps.session.outputs.session }}"
 
       - name: Run backtest
+        id: backtest
+        continue-on-error: true
         run: python backtest.py
 
-      - name: Save reports and signal history
+      - name: Save reports and history
+        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add report.md signals.csv backtest_report.md
-
+          for file in report.md report_morning.md report_evening.md signals.csv signals.csv.v1.bak backtest_report.md; do
+            [[ -e "$file" ]] && git add "$file"
+          done
           if git diff --cached --quiet; then
             echo "No changes to save"
           else
-            git commit -m "Update stock analysis and backtest"
-            git push
+            git commit -m "Update ${{ steps.session.outputs.session }} stock report"
+            for attempt in 1 2 3; do
+              git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME" && exit 0
+              git rebase --abort 2>/dev/null || true
+              sleep $((attempt * 2))
+            done
+            echo "Failed to save reports after three attempts" >&2
+            exit 1
           fi
+
+      - name: Fail when analysis failed
+        if: steps.monitor.outcome == 'failure' || steps.backtest.outcome == 'failure'
+        run: |
+          echo "Monitor or backtest failed; generated diagnostics were saved." >&2
+          exit 1
