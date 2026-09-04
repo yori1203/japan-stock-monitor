@@ -1,357 +1,166 @@
+from __future__ import annotations
+
+import argparse
 import json
-import csv
+import os
 from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
-import pandas as pd
-import yfinance as yf
+from history import append_unique, migrate_history
+from market_data import download_stock
+from strategy import add_indicators, evaluate_rows
 
-
-CONFIG_FILE = "config.json"
-REPORT_FILE = "report.md"
-SIGNALS_FILE = "signals.csv"
-
-
-def load_config():
-    with open(CONFIG_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+JST = ZoneInfo("Asia/Tokyo")
 
 
-def calc_rsi(close, period=14):
-    delta = close.diff()
-
-    gain = delta.where(delta > 0, 0.0)
-    loss = -delta.where(delta < 0, 0.0)
-
-    avg_gain = gain.rolling(period).mean()
-    avg_loss = loss.rolling(period).mean()
-
-    rs = avg_gain / avg_loss.replace(0, float("nan"))
-    rsi = 100 - (100 / (1 + rs))
-
-    return rsi
+def load_config(path: str = "config.json") -> dict:
+    with open(path, "r", encoding="utf-8") as stream:
+        config = json.load(stream)
+    for section in ("portfolio", "watchlist"):
+        if not isinstance(config.get(section, []), list):
+            raise ValueError(f"{section} は配列で指定してください")
+    return config
 
 
-def add_indicators(df):
-    df = df.copy()
-
-    df["MA5"] = df["Close"].rolling(5).mean()
-    df["MA25"] = df["Close"].rolling(25).mean()
-    df["MA75"] = df["Close"].rolling(75).mean()
-
-    df["RSI"] = calc_rsi(df["Close"])
-
-    ema12 = df["Close"].ewm(span=12, adjust=False).mean()
-    ema26 = df["Close"].ewm(span=26, adjust=False).mean()
-
-    df["MACD"] = ema12 - ema26
-    df["MACD_SIGNAL"] = df["MACD"].ewm(span=9, adjust=False).mean()
-
-    df["VOL_MA20"] = df["Volume"].rolling(20).mean()
-
-    return df
+def report_session(now: datetime, explicit: str | None = None) -> str:
+    if explicit in {"morning", "noon", "evening"}:
+        return explicit
+    hour = now.astimezone(JST).hour
+    if hour < 12:
+        return "morning"
+    if hour < 16:
+        return "noon"
+    return "evening"
 
 
-def score_stock(row, previous):
-    score = 50
-    reasons = []
-
-    price = float(row["Close"])
-    ma5 = float(row["MA5"])
-    ma25 = float(row["MA25"])
-    ma75 = float(row["MA75"])
-    rsi = float(row["RSI"])
-    macd = float(row["MACD"])
-    macd_signal = float(row["MACD_SIGNAL"])
-    volume = float(row["Volume"])
-    vol_ma20 = float(row["VOL_MA20"])
-
-    # トレンド
-    if price > ma25:
-        score += 10
-        reasons.append("株価が25日移動平均線より上")
-    else:
-        score -= 10
-        reasons.append("株価が25日移動平均線より下")
-
-    if ma5 > ma25:
-        score += 8
-        reasons.append("短期トレンド上向き")
-    else:
-        score -= 8
-        reasons.append("短期トレンド弱め")
-
-    if ma25 > ma75:
-        score += 8
-        reasons.append("中期上昇トレンド")
-    else:
-        score -= 8
-        reasons.append("中期トレンド弱め")
-
-    # RSI
-    if 45 <= rsi <= 65:
-        score += 8
-        reasons.append("RSIは健全な上昇圏")
-    elif rsi < 30:
-        score += 4
-        reasons.append("RSIは売られ過ぎ水準")
-    elif rsi >= 75:
-        score -= 10
-        reasons.append("RSIは過熱気味")
-
-    # MACD
-    if macd > macd_signal:
-        score += 10
-        reasons.append("MACDが強気")
-    else:
-        score -= 8
-        reasons.append("MACDが弱気")
-
-    # MACDクロス
-    if previous is not None:
-        prev_macd = float(previous["MACD"])
-        prev_signal = float(previous["MACD_SIGNAL"])
-
-        if prev_macd <= prev_signal and macd > macd_signal:
-            score += 8
-            reasons.append("MACDゴールデンクロス発生")
-
-        if prev_macd >= prev_signal and macd < macd_signal:
-            score -= 8
-            reasons.append("MACDデッドクロス発生")
-
-    # 出来高
-    if vol_ma20 > 0:
-        volume_ratio = volume / vol_ma20
-
-        if volume_ratio >= 1.5:
-            score += 8
-            reasons.append("出来高が20日平均の1.5倍以上")
-        elif volume_ratio < 0.6:
-            score -= 4
-            reasons.append("出来高が低調")
-    else:
-        volume_ratio = 1.0
-
-    score = max(0, min(100, score))
-
-    return score, reasons, volume_ratio
-
-
-def make_signal(score, rsi, price, ma25, macd, macd_signal):
-    if score >= 80 and rsi < 72:
-        return "🟢 強い買い候補"
-
-    if score >= 70:
-        return "🟢 買い・買い増し候補"
-
-    if rsi >= 75 and score >= 55:
-        return "🟠 利確検討"
-
-    if score <= 35:
-        return "🔴 損切り警戒"
-
-    if price < ma25 and macd < macd_signal:
-        return "⚠️ 下落警戒"
-
-    return "🟡 継続監視"
-
-
-def confidence(score):
-    if score >= 80 or score <= 25:
-        return "高"
-
-    if score >= 65 or score <= 40:
-        return "中"
-
-    return "低"
-
-
-def fetch_stock(code):
-    ticker = f"{code}.T"
-
-    df = yf.download(
-        ticker,
-        period="1y",
-        interval="1d",
-        auto_adjust=False,
-        progress=False
-    )
-
-    if df.empty:
-        raise ValueError("株価データを取得できませんでした")
-
-    # yfinanceのMultiIndex対策
-    if isinstance(df.columns, pd.MultiIndex):
-        df.columns = df.columns.get_level_values(0)
-
-    df = add_indicators(df)
-    df = df.dropna()
-
-    if len(df) < 2:
+def analyse(code: str, category: str, priority: str) -> dict:
+    market = download_stock(code)
+    frame = add_indicators(market.frame).dropna()
+    if len(frame) < 2:
         raise ValueError("分析に必要なデータが不足しています")
-
-    latest = df.iloc[-1]
-    previous = df.iloc[-2]
-
-    score, reasons, volume_ratio = score_stock(latest, previous)
-
-    price = float(latest["Close"])
-    ma5 = float(latest["MA5"])
-    ma25 = float(latest["MA25"])
-    ma75 = float(latest["MA75"])
-    rsi = float(latest["RSI"])
-    macd = float(latest["MACD"])
-    macd_signal = float(latest["MACD_SIGNAL"])
-
-    signal = make_signal(
-        score,
-        rsi,
-        price,
-        ma25,
-        macd,
-        macd_signal
-    )
-
+    latest, previous = frame.iloc[-1], frame.iloc[-2]
+    decision = evaluate_rows(latest, previous)
     return {
-        "code": code,
-        "price": round(price, 1),
-        "score": int(score),
-        "signal": signal,
-        "confidence": confidence(score),
-        "rsi": round(rsi, 1),
-        "ma5": round(ma5, 1),
-        "ma25": round(ma25, 1),
-        "ma75": round(ma75, 1),
-        "macd": round(macd, 2),
-        "macd_signal": round(macd_signal, 2),
-        "volume_ratio": round(volume_ratio, 2),
-        "reasons": reasons
+        "code": code, "category": category, "priority": priority,
+        "price": round(float(latest["Close"]), 1), "rsi": round(float(latest["RSI"]), 1),
+        "ma5": round(float(latest["MA5"]), 1), "ma25": round(float(latest["MA25"]), 1),
+        "ma75": round(float(latest["MA75"]), 1), "macd": round(float(latest["MACD"]), 2),
+        "macd_signal": round(float(latest["MACD_SIGNAL"]), 2),
+        "data_as_of": market.data_as_of, "fetched_at": market.fetched_at,
+        "source": market.source, **decision.to_dict(),
     }
 
 
-def save_signal(result):
-    exists = Path(SIGNALS_FILE).exists()
-
-    with open(SIGNALS_FILE, "a", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-
-        if not exists:
-            writer.writerow([
-                "date",
-                "code",
-                "price",
-                "score",
-                "signal",
-                "confidence",
-                "rsi"
-            ])
-
-        writer.writerow([
-            datetime.now().strftime("%Y-%m-%d %H:%M"),
-            result["code"],
-            result["price"],
-            result["score"],
-            result["signal"],
-            result["confidence"],
-            result["rsi"]
-        ])
+def configured_stocks(config: dict) -> list[dict]:
+    stocks = []
+    for category in ("portfolio", "watchlist"):
+        for item in config.get(category, []):
+            value = item if isinstance(item, dict) else {"code": str(item)}
+            stocks.append({"code": str(value["code"]), "category": category,
+                           "priority": value.get("priority", "normal"), "shares": value.get("shares")})
+    return stocks
 
 
-def create_report(results):
-    now = datetime.now()
-
-    lines = [
-        "# 📊 日本株 自動監視レポート",
-        "",
-        f"更新日時：{now.strftime('%Y-%m-%d %H:%M')}",
-        "",
-        "## 保有・重点監視銘柄",
-        ""
-    ]
-
-    for r in results:
-        lines.extend([
-            f"### {r['code']}",
-            "",
-            f"**{r['signal']}**",
-            "",
-            f"- 現在値：{r['price']}円",
-            f"- 総合スコア：**{r['score']} / 100**",
-            f"- 確信度：**{r['confidence']}**",
-            f"- RSI：{r['rsi']}",
-            f"- 5日移動平均：{r['ma5']}円",
-            f"- 25日移動平均：{r['ma25']}円",
-            f"- 75日移動平均：{r['ma75']}円",
-            f"- 出来高倍率：{r['volume_ratio']}倍",
-            "",
-            "**判定理由**",
-        ])
-
-        for reason in r["reasons"]:
-            lines.append(f"- {reason}")
-
-        lines.extend(["", "---", ""])
-
-    lines.extend([
-        "## シグナルの意味",
-        "",
-        "- 🟢 強い買い候補：複数条件が強気",
-        "- 🟢 買い・買い増し候補：上昇条件が優勢",
-        "- 🟡 継続監視：決定的な方向感なし",
-        "- 🟠 利確検討：過熱感を警戒",
-        "- ⚠️ 下落警戒：チャート悪化",
-        "- 🔴 損切り警戒：複数の弱気条件",
-        "",
-        "> この判定は投資助言ではなく、監視・分析用シグナルです。"
-    ])
-
-    with open(REPORT_FILE, "w", encoding="utf-8") as f:
-        f.write("\n".join(lines))
-
-
-def main():
-    config = load_config()
-
-    codes = []
-
-    for stock in config.get("portfolio", []):
-        codes.append(stock["code"])
-
-    for stock in config.get("watchlist", []):
-        if isinstance(stock, dict):
-            codes.append(stock["code"])
-        else:
-            codes.append(str(stock))
-
-    codes = list(dict.fromkeys(codes))
-
-    results = []
-
-    print("=== Japan Stock Monitor ===")
-
-    for code in codes:
-        print(f"分析中: {code}")
-
+def discover(config: dict, excluded: set[str]) -> tuple[list[dict], list[dict]]:
+    settings = config.get("auto_discovery", {})
+    if not settings.get("enabled", False):
+        return [], []
+    candidates, errors = [], []
+    for raw_code in settings.get("candidate_codes", []):
+        code = str(raw_code)
+        if code in excluded:
+            continue
         try:
-            result = fetch_stock(code)
-            results.append(result)
-            save_signal(result)
+            candidates.append(analyse(code, "discovery", "normal"))
+        except Exception as exc:
+            errors.append({"code": code, "category": "discovery", "error": str(exc)})
+    candidates.sort(key=lambda item: (item["score"], item["volume_ratio"]), reverse=True)
+    return candidates[: int(settings.get("top_candidates", 5))], errors
 
-            print(
-                code,
-                result["signal"],
-                result["score"]
-            )
 
-        except Exception as e:
-            print(f"{code}: エラー - {e}")
+def allowed(result: dict, config: dict) -> bool:
+    enabled = config.get("signals", {})
+    key = result["signal_key"]
+    return enabled.get(key, True) if key in enabled else True
 
-    if results:
-        create_report(results)
 
-    print("監視完了")
+def create_report(results: list[dict], discoveries: list[dict], errors: list[dict], *,
+                  generated_at: datetime, session: str, output: Path) -> None:
+    session_ja = {"morning": "朝", "noon": "昼", "evening": "夕"}[session]
+    lines = [f"# 📊 日本株 自動監視レポート（{session_ja}）", "",
+             f"- レポート生成日時（JST）：{generated_at:%Y-%m-%d %H:%M:%S}",
+             "- データ種別：日足（リアルタイム価格ではありません）",
+             "- 取得元：Yahoo Finance（yfinance）", "",
+             "> 表示価格は各銘柄の「データ基準日」時点の日足終値です。取得日時と市場データの基準日は異なる場合があります。", ""]
+    sections = [("portfolio", "保有銘柄"), ("watchlist", "監視銘柄"), ("discovery", "自動探索候補")]
+    all_results = results + discoveries
+    for category, title in sections:
+        items = [item for item in all_results if item["category"] == category]
+        lines.extend([f"## {title}", ""])
+        if not items:
+            lines.extend(["対象なし", ""])
+        for result in items:
+            lines.extend([f"### {result['code']}", "", f"**{result['signal']}**", "",
+                          f"- データ基準日：{result['data_as_of']}",
+                          f"- データ取得日時（JST）：{result['fetched_at']:%Y-%m-%d %H:%M:%S}",
+                          f"- 日足終値：{result['price']}円", f"- 総合スコア：**{result['score']} / 100**",
+                          f"- 確信度：**{result['confidence']}**", f"- RSI：{result['rsi']}",
+                          f"- 移動平均（5/25/75日）：{result['ma5']} / {result['ma25']} / {result['ma75']}円",
+                          f"- 出来高倍率：{result['volume_ratio']}倍", "", "**判定理由**"])
+            lines.extend(f"- {reason}" for reason in result["reasons"])
+            lines.extend(["", "---", ""])
+    if errors:
+        lines.extend(["## 取得エラー", ""])
+        lines.extend(f"- {item['code']}（{item['category']}）：{item['error']}" for item in errors)
+        lines.append("")
+    lines.extend(["## 注意事項", "",
+                  "- 本レポートは日足データによる機械的な監視結果で、リアルタイム情報や投資助言ではありません。",
+                  "- 売買前に適時開示、出来高、注文板、取引コスト等を別途確認してください。"])
+    output.write_text("\n".join(lines), encoding="utf-8")
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", default="config.json")
+    parser.add_argument("--signals", default="signals.csv")
+    parser.add_argument("--session", choices=["morning", "noon", "evening"])
+    args = parser.parse_args(argv)
+    config = load_config(args.config)
+    report_settings = config.get("daily_report", {})
+    if not report_settings.get("enabled", True):
+        print("daily_report.enabled=false のため監視をスキップしました")
+        return 0
+    now = datetime.now(JST)
+    session = report_session(now, args.session or os.getenv("REPORT_SESSION"))
+    output = Path(report_settings.get(f"{session}_file", f"report_{session}.md"))
+    run_id = f"{now:%Y%m%d}-{session}"
+    migrate_history(args.signals)
+    results, errors = [], []
+    stocks = configured_stocks(config)
+    for stock in stocks:
+        try:
+            result = analyse(stock["code"], stock["category"], stock["priority"])
+            result["shares"] = stock["shares"]
+            if allowed(result, config):
+                results.append(result)
+        except Exception as exc:
+            errors.append({**stock, "error": str(exc)})
+    discoveries, discovery_errors = discover(config, {stock["code"] for stock in stocks})
+    errors.extend(discovery_errors)
+    create_report(results, discoveries, errors, generated_at=now, session=session, output=output)
+    latest_output = Path(report_settings.get("latest_file", "report.md"))
+    if latest_output != output:
+        latest_output.write_text(output.read_text(encoding="utf-8"), encoding="utf-8")
+    rows = [{"date": now.strftime("%Y-%m-%d %H:%M"), "code": r["code"], "price": r["price"],
+             "score": r["score"], "signal": r["signal"], "confidence": r["confidence"], "rsi": r["rsi"],
+             "session": session, "data_as_of": r["data_as_of"], "category": r["category"],
+             "priority": r["priority"], "signal_key": r["signal_key"], "source": r["source"], "run_id": run_id}
+            for r in results + discoveries]
+    append_unique(args.signals, rows)
+    print(f"{session} report: {len(results)} configured, {len(discoveries)} discovered, {len(errors)} errors")
+    return 0 if results else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
