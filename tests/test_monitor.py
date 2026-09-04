@@ -5,7 +5,7 @@ from tempfile import TemporaryDirectory
 from unittest.mock import patch
 from zoneinfo import ZoneInfo
 
-from monitor import configured_stocks, create_report, discover, report_session
+from monitor import configured_stocks, create_report, discover, load_config, report_session
 
 
 class MonitorTests(unittest.TestCase):
@@ -16,6 +16,26 @@ class MonitorTests(unittest.TestCase):
         stocks = configured_stocks(config)
         self.assertEqual([item["code"] for item in stocks], ["6740", "6177", "4583"])
         self.assertEqual(stocks[0]["shares"], 100)
+
+    def test_repository_config_preserves_portfolio_and_watchlist(self):
+        stocks = configured_stocks(load_config("config.json"))
+        portfolio = [(item["code"], item["shares"], item["priority"])
+                     for item in stocks if item["category"] == "portfolio"]
+        watchlist = [(item["code"], item["priority"])
+                     for item in stocks if item["category"] == "watchlist"]
+        self.assertEqual(portfolio, [
+            ("6740", 100, "high"),
+            ("6573", 100, "high"),
+            ("4596", 100, "high"),
+            ("4597", 300, "high"),
+        ])
+        self.assertEqual(watchlist, [
+            ("6177", "high"),
+            ("2134", "normal"),
+            ("6721", "normal"),
+            ("2410", "normal"),
+            ("4583", "normal"),
+        ])
 
     def test_session_uses_jst(self):
         jst = ZoneInfo("Asia/Tokyo")
