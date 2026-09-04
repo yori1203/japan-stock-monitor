@@ -8,10 +8,12 @@ on:
         required: true
         default: evening
         type: choice
-        options: [morning, evening]
+        options: [morning, noon, evening]
   schedule:
-    # UTC Sunday-Thursday 23:30 = JST Monday-Friday 08:30
-    - cron: "30 23 * * 0-4"
+    # UTC Monday-Friday 00:30 = JST Monday-Friday 09:30
+    - cron: "30 0 * * 1-5"
+    # UTC Monday-Friday 03:30 = JST Monday-Friday 12:30
+    - cron: "30 3 * * 1-5"
     # UTC Monday-Friday 07:00 = JST Monday-Friday 16:00
     - cron: "0 7 * * 1-5"
 
@@ -55,8 +57,10 @@ jobs:
         run: |
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
             session="$MANUAL_SESSION"
-          elif [[ "$SCHEDULE" == "30 23 * * 0-4" ]]; then
+          elif [[ "$SCHEDULE" == "30 0 * * 1-5" ]]; then
             session="morning"
+          elif [[ "$SCHEDULE" == "30 3 * * 1-5" ]]; then
+            session="noon"
           else
             session="evening"
           fi
@@ -77,7 +81,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for file in report.md report_morning.md report_evening.md signals.csv signals.csv.v1.bak backtest_report.md; do
+          for file in report.md report_morning.md report_noon.md report_evening.md signals.csv signals.csv.v1.bak backtest_report.md; do
             [[ -e "$file" ]] && git add "$file"
           done
           if git diff --cached --quiet; then
