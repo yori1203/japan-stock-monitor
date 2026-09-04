@@ -8,11 +8,12 @@
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python monitor.py --session morning
+python monitor.py --session noon
 python monitor.py --session evening
 python backtest.py
 ```
 
-朝夕のレポートは `report_morning.md` と `report_evening.md` に保存され、`report.md` は最後に生成したレポートと同期します。履歴は `signals.csv`、検証結果は `backtest_report.md` に保存されます。
+朝・昼・夕のレポートは `report_morning.md`、`report_noon.md`、`report_evening.md` に保存され、`report.md` は最後に生成したレポートと同期します。履歴は `signals.csv`、検証結果は `backtest_report.md` に保存されます。
 
 ## 履歴の互換性
 

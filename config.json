@@ -74,9 +74,11 @@
   },
   "daily_report": {
     "enabled": true,
-    "morning_time_jst": "08:30",
+    "morning_time_jst": "09:30",
+    "noon_time_jst": "12:30",
     "evening_time_jst": "16:00",
     "morning_file": "report_morning.md",
+    "noon_file": "report_noon.md",
     "evening_file": "report_evening.md",
     "latest_file": "report.md"
   }

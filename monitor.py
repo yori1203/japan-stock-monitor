@@ -24,9 +24,14 @@ def load_config(path: str = "config.json") -> dict:
 
 
 def report_session(now: datetime, explicit: str | None = None) -> str:
-    if explicit in {"morning", "evening"}:
+    if explicit in {"morning", "noon", "evening"}:
         return explicit
-    return "morning" if now.astimezone(JST).hour < 12 else "evening"
+    hour = now.astimezone(JST).hour
+    if hour < 12:
+        return "morning"
+    if hour < 16:
+        return "noon"
+    return "evening"
 
 
 def analyse(code: str, category: str, priority: str) -> dict:
@@ -82,7 +87,7 @@ def allowed(result: dict, config: dict) -> bool:
 
 def create_report(results: list[dict], discoveries: list[dict], errors: list[dict], *,
                   generated_at: datetime, session: str, output: Path) -> None:
-    session_ja = "朝" if session == "morning" else "夕"
+    session_ja = {"morning": "朝", "noon": "昼", "evening": "夕"}[session]
     lines = [f"# 📊 日本株 自動監視レポート（{session_ja}）", "",
              f"- レポート生成日時（JST）：{generated_at:%Y-%m-%d %H:%M:%S}",
              "- データ種別：日足（リアルタイム価格ではありません）",
@@ -119,7 +124,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="config.json")
     parser.add_argument("--signals", default="signals.csv")
-    parser.add_argument("--session", choices=["morning", "evening"])
+    parser.add_argument("--session", choices=["morning", "noon", "evening"])
     args = parser.parse_args(argv)
     config = load_config(args.config)
     report_settings = config.get("daily_report", {})
