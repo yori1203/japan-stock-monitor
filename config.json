@@ -32,11 +32,33 @@
     {
       "code": "2410",
       "priority": "normal"
+    },
+    {
+      "code": "4583",
+      "priority": "normal"
     }
   ],
   "auto_discovery": {
     "enabled": true,
-    "top_candidates": 5
+    "top_candidates": 5,
+    "candidate_codes": [
+      "1605",
+      "2914",
+      "4502",
+      "6758",
+      "6861",
+      "7203",
+      "7267",
+      "8035",
+      "8306",
+      "8316",
+      "8411",
+      "8766",
+      "9432",
+      "9433",
+      "9983",
+      "9984"
+    ]
   },
   "signals": {
     "buy": true,
@@ -47,6 +69,10 @@
   },
   "daily_report": {
     "enabled": true,
-    "time_jst": "16:00"
+    "morning_time_jst": "08:30",
+    "evening_time_jst": "16:00",
+    "morning_file": "report_morning.md",
+    "evening_file": "report_evening.md",
+    "latest_file": "report.md"
   }
 }
