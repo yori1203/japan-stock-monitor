@@ -39,8 +39,13 @@ class MonitorTests(unittest.TestCase):
 
     def test_session_uses_jst(self):
         jst = ZoneInfo("Asia/Tokyo")
-        self.assertEqual(report_session(datetime(2026, 9, 3, 8, 30, tzinfo=jst)), "morning")
+        self.assertEqual(report_session(datetime(2026, 9, 3, 9, 30, tzinfo=jst)), "morning")
+        self.assertEqual(report_session(datetime(2026, 9, 3, 12, 30, tzinfo=jst)), "noon")
         self.assertEqual(report_session(datetime(2026, 9, 3, 16, 0, tzinfo=jst)), "evening")
+
+    def test_explicit_noon_session_is_supported(self):
+        jst = ZoneInfo("Asia/Tokyo")
+        self.assertEqual(report_session(datetime(2026, 9, 3, 9, 0, tzinfo=jst), "noon"), "noon")
 
     @patch("monitor.analyse")
     def test_discovery_excludes_configured_and_selects_top_scores(self, analyse_mock):
