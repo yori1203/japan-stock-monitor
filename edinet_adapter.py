@@ -7,12 +7,14 @@ import json
 import os
 import time
 import urllib.parse
+import urllib.error
 import urllib.request
+import unicodedata
 import zipfile
 from dataclasses import asdict, dataclass, fields
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
-from typing import Callable, Mapping, Protocol, Sequence
+from typing import Any, Callable, Mapping, Protocol, Sequence
 from xml.etree import ElementTree
 
 EDINET_API_BASE = "https://api.edinet-fsa.go.jp/api/v2"
@@ -107,15 +109,38 @@ class EdinetConfig:
     cache_ttl_hours: float = 24
 
 
+@dataclass(frozen=True)
+class HttpResponse:
+    body: bytes
+    status: int = 200
+    content_type: str = ""
+
+
+@dataclass(frozen=True)
+class CodeMapDiagnostics:
+    http_status: int | None = None
+    content_type: str | None = None
+    archive_member: str | None = None
+    encoding: str | None = None
+    header_row: int | None = None
+    data_rows: int = 0
+    mapped_rows: int = 0
+    reason: str | None = None
+
+
 class HttpTransport(Protocol):
-    def get(self, url: str, timeout: float) -> bytes: ...
+    def get(self, url: str, timeout: float) -> bytes | HttpResponse: ...
 
 
 class UrllibTransport:
-    def get(self, url: str, timeout: float) -> bytes:
+    def get(self, url: str, timeout: float) -> HttpResponse:
         request = urllib.request.Request(url, headers={"User-Agent": "japan-stock-monitor-v3/1.0"})
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return response.read()
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                return HttpResponse(response.read(), int(response.status), response.headers.get("Content-Type", ""))
+        except urllib.error.HTTPError as exc:
+            message = _safe_edinet_message(exc.read())
+            raise RuntimeError(f"EDINET HTTP {exc.code}: {message}") from None
 
 
 def normalize_stock_code(value: str) -> str:
@@ -123,28 +148,70 @@ def normalize_stock_code(value: str) -> str:
     return digits[:4] if len(digits) >= 4 else digits
 
 
-def parse_edinet_code_list(content: bytes) -> dict[str, EdinetCodeEntry]:
+def _canonical_header(value: str) -> str:
+    return unicodedata.normalize("NFKC", value).replace(" ", "").replace("\u3000", "").lstrip("\ufeff").casefold()
+
+
+def _decode_csv(raw: bytes) -> tuple[str, str]:
+    for encoding in ("utf-8-sig", "cp932", "shift_jis"):
+        try:
+            return raw.decode(encoding), encoding
+        except UnicodeDecodeError:
+            continue
+    return raw.decode("cp932", errors="replace"), "cp932-replace"
+
+
+def _parse_edinet_code_list(content: bytes) -> tuple[dict[str, EdinetCodeEntry], CodeMapDiagnostics]:
     with zipfile.ZipFile(io.BytesIO(content)) as archive:
         name = next(item for item in archive.namelist() if item.lower().endswith(".csv"))
         raw = archive.read(name)
-    text = raw.decode("cp932", errors="replace")
+    text, encoding = _decode_csv(raw)
     rows = list(csv.reader(io.StringIO(text)))
     if not rows:
-        return {}
-    header = rows[0]
+        return {}, CodeMapDiagnostics(archive_member=name, encoding=encoding, reason="CSV is empty")
+    aliases = {"edinet": ("EDINETコード",), "stock": ("証券コード",)}
+    header_index = None
+    canonical: list[str] = []
+    for row_index, row in enumerate(rows[:20]):
+        candidate = [_canonical_header(value) for value in row]
+        if all(any(_canonical_header(label) in candidate for label in labels) for labels in aliases.values()):
+            header_index, canonical = row_index, candidate
+            break
+    if header_index is None:
+        return {}, CodeMapDiagnostics(archive_member=name, encoding=encoding, reason="required CSV headers not found")
     def column(*labels):
         for label in labels:
-            if label in header: return header.index(label)
+            key = _canonical_header(label)
+            if key in canonical: return canonical.index(key)
         return -1
-    indexes = {"edinet": column("ＥＤＩＮＥＴコード", "EDINETコード"), "stock": column("証券コード"),
+    indexes = {"edinet": column("EDINETコード"), "stock": column("証券コード"),
                "name": column("提出者名"), "industry": column("提出者業種")}
     result = {}
-    for row in rows[1:]:
-        if indexes["edinet"] < 0 or indexes["stock"] < 0 or max(indexes.values()) >= len(row): continue
+    required_max = max(indexes["edinet"], indexes["stock"], indexes["name"])
+    for row in rows[header_index + 1:]:
+        if required_max >= len(row): continue
         stock = normalize_stock_code(row[indexes["stock"]])
-        if stock:
-            result[stock] = EdinetCodeEntry(row[indexes["edinet"]], stock, row[indexes["name"]], row[indexes["industry"]] or None)
-    return result
+        edinet_code = row[indexes["edinet"]].strip()
+        if len(stock) == 4 and edinet_code:
+            industry = row[indexes["industry"]].strip() if 0 <= indexes["industry"] < len(row) else None
+            result[stock] = EdinetCodeEntry(edinet_code, stock, row[indexes["name"]].strip(), industry or None)
+    diagnostics = CodeMapDiagnostics(archive_member=name, encoding=encoding, header_row=header_index + 1,
+                                     data_rows=max(0, len(rows) - header_index - 1), mapped_rows=len(result),
+                                     reason=None if result else "no valid stock-code rows")
+    return result, diagnostics
+
+
+def parse_edinet_code_list(content: bytes) -> dict[str, EdinetCodeEntry]:
+    return _parse_edinet_code_list(content)[0]
+
+
+def _safe_edinet_message(content: bytes) -> str:
+    try:
+        payload = json.loads(content.decode("utf-8", errors="replace"))
+        metadata = payload.get("metadata", {}) if isinstance(payload, dict) else {}
+        return str(metadata.get("message") or payload.get("message") or "request rejected")[:300]
+    except (ValueError, AttributeError):
+        return "request rejected"
 
 
 def _local_name(tag: str) -> str:
@@ -204,6 +271,9 @@ class EdinetAdapter:
         self.api_key = api_key if api_key is not None else os.getenv("EDINET_API_KEY")
         self.transport = transport or UrllibTransport(); self.config = config
         self.cache_dir = Path(cache_dir); self.sleeper = sleeper
+        self.last_http_status: int | None = None
+        self.last_content_type: str | None = None
+        self.code_map_diagnostics = CodeMapDiagnostics(reason="not fetched")
 
     def _get(self, endpoint: str, params: Mapping[str, str]) -> bytes:
         query = urllib.parse.urlencode({**params, "Subscription-Key": self.api_key or ""})
@@ -213,7 +283,17 @@ class EdinetAdapter:
         error_type = "unknown"
         for attempt in range(self.config.max_retries + 1):
             try:
-                content = self.transport.get(url, self.config.timeout)
+                response = self.transport.get(url, self.config.timeout)
+                if isinstance(response, HttpResponse):
+                    content = response.body
+                    self.last_http_status = response.status
+                    self.last_content_type = response.content_type
+                    if not 200 <= response.status < 300:
+                        raise RuntimeError(f"EDINET HTTP {response.status}: {_safe_edinet_message(content)}")
+                else:
+                    content = response
+                    self.last_http_status = 200
+                    self.last_content_type = None
                 if self.config.rate_limit_delay > 0: self.sleeper(self.config.rate_limit_delay)
                 return content
             except Exception as exc:
@@ -236,7 +316,7 @@ class EdinetAdapter:
             try:
                 listing = json.loads(listing_path.read_text(encoding="utf-8"))
             except (OSError, ValueError, json.JSONDecodeError):
-                listing = json.loads(self._get("documents.json", {"date": day.isoformat(), "type": "2"}))
+                listing = self._decode_api_json(self._get("documents.json", {"date": day.isoformat(), "type": "2"}))
                 listing_path.parent.mkdir(parents=True, exist_ok=True)
                 listing_path.write_text(json.dumps(listing, ensure_ascii=False), encoding="utf-8")
             for item in listing.get("results", []):
@@ -245,6 +325,15 @@ class EdinetAdapter:
                     found[code] = item
             if len(found) == len(wanted): break
         return found
+
+    def _decode_api_json(self, content: bytes) -> dict[str, Any]:
+        payload = json.loads(content)
+        metadata = payload.get("metadata", {}) if isinstance(payload, dict) else {}
+        status = str(metadata.get("status") or metadata.get("statusCode") or "200")
+        if status not in ("200", "0"):
+            message = str(metadata.get("message") or "EDINET API error")[:300]
+            raise RuntimeError(f"EDINET API status {status}: {message}")
+        return payload
 
     def fetch_document(self, code: str, document: Mapping[str, object]) -> EdinetResult:
         if not self.api_key: return EdinetResult("unavailable", reason="EDINET_API_KEY is not set")
@@ -277,10 +366,23 @@ class EdinetAdapter:
                 payload = json.loads(path.read_text(encoding="utf-8"))
                 fetched = datetime.fromisoformat(payload["fetched_at"])
                 if datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours):
-                    return {key: EdinetCodeEntry(**value) for key, value in payload["entries"].items()}
+                    entries = {key: EdinetCodeEntry(**value) for key, value in payload["entries"].items()}
+                    if entries:
+                        self.code_map_diagnostics = CodeMapDiagnostics(
+                            mapped_rows=len(entries), reason="loaded from cache"
+                        )
+                        return entries
             except (OSError, ValueError, KeyError, TypeError): pass
         content = self._raw_get(EDINET_CODE_LIST_URL)
-        entries = parse_edinet_code_list(content)
+        entries, parsed = _parse_edinet_code_list(content)
+        self.code_map_diagnostics = CodeMapDiagnostics(
+            http_status=self.last_http_status, content_type=self.last_content_type,
+            archive_member=parsed.archive_member, encoding=parsed.encoding,
+            header_row=parsed.header_row, data_rows=parsed.data_rows,
+            mapped_rows=parsed.mapped_rows, reason=parsed.reason,
+        )
+        if not entries:
+            raise RuntimeError(f"EDINET code list parsed zero entries ({parsed.reason or 'unknown reason'})")
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps({"fetched_at": datetime.now(timezone.utc).isoformat(), "entries": {k: asdict(v) for k,v in entries.items()}}, ensure_ascii=False), encoding="utf-8")
         return entries
@@ -298,7 +400,7 @@ class EdinetAdapter:
             entry = self.fetch_code_map().get(normalized)
             if not entry: return EdinetResult("unavailable", reason="EDINET code not found")
             day = target_date or date.today()
-            listing = json.loads(self._get("documents.json", {"date": day.isoformat(), "type": "2"}))
+            listing = self._decode_api_json(self._get("documents.json", {"date": day.isoformat(), "type": "2"}))
             docs = [item for item in listing.get("results", []) if item.get("edinetCode") == entry.edinet_code and str(item.get("docTypeCode")) in USEFUL_DOC_TYPES and item.get("xbrlFlag") == "1"]
             if not docs: return EdinetResult("unavailable", reason="useful XBRL document not found")
             doc = max(docs, key=lambda item: item.get("submitDateTime", ""))
