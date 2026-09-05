@@ -30,5 +30,14 @@ class ValidationReportTests(unittest.TestCase):
             self.assertIn(text, report)
         self.assertNotIn("Subscription-Key", report)
 
+    def test_no_recent_filing_is_reportable(self):
+        row = {"code":"7803","company_name":"ブシロード","edinet_code":"E35004",
+               "document_name":"未取得","period":"未取得","edinet_status":"no_recent_filing",
+               "failure_reason":"useful XBRL document not found within 190 days", "yahoo_status":"ok",
+               "score":None,"risks":(),"missing":[],"matched":0,"warnings":0,
+               "period_mismatch":False,"unit_corrections":0,"fields":[]}
+        report = build_report([row], __import__('datetime').datetime.now(__import__('datetime').timezone.utc))
+        self.assertIn("no_recent_filing", report)
+
 
 if __name__ == "__main__": unittest.main()
