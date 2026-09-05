@@ -1,6 +1,7 @@
 """Yahoo/EDINET financial cross-checking without changing the Yahoo-only path."""
 from __future__ import annotations
 from dataclasses import dataclass, replace
+from datetime import date
 from typing import Mapping
 
 from edinet_adapter import EdinetFinancialData
@@ -31,6 +32,7 @@ class CrosscheckResult:
     crosscheck_score: float
     warnings: tuple[str, ...]
     edinet_risk_flags: tuple[str, ...]
+    period_mismatch: bool = False
 
 
 def _best_unit(yahoo: float, edinet: float, multipliers: tuple[float, ...]) -> tuple[float, float]:
@@ -53,8 +55,8 @@ def financial_crosscheck(yahoo: FinancialData, edinet: EdinetFinancialData,
                          config: CrosscheckConfig = CrosscheckConfig()) -> CrosscheckResult:
     pairs: Mapping[str, tuple[float | None, float | None]] = {
         "revenue": (yahoo.revenue, edinet.revenue), "operating_income": (yahoo.operating_income, edinet.operating_income),
-        "net_income": (yahoo.net_income, edinet.net_income), "equity": (None, edinet.equity),
-        "total_assets": (None, edinet.total_assets), "eps": (yahoo.eps, edinet.eps),
+        "net_income": (yahoo.net_income, edinet.net_income), "equity": (yahoo.equity, edinet.equity),
+        "total_assets": (yahoo.total_assets, edinet.total_assets), "eps": (yahoo.eps, edinet.eps),
     }
     results=[]; matched=0; comparable=0; warnings=[]
     for name,(yv,ev) in pairs.items():
@@ -65,8 +67,14 @@ def financial_crosscheck(yahoo: FinancialData, edinet: EdinetFinancialData,
         comparable+=1; matched += status == "matched"
         if status == "warning": warnings.append(f"{name}_mismatch")
         results.append(FieldCrosscheck(name,yv,ev,difference,ratio,status,factor))
+    period_mismatch = False
+    try:
+        if yahoo.period_end and edinet.period_end:
+            period_mismatch = abs((date.fromisoformat(yahoo.period_end[:10]) - date.fromisoformat(edinet.period_end[:10])).days) > config.period_tolerance_days
+    except ValueError:
+        period_mismatch = True
     score=50.0 if not comparable else matched/comparable*100.0
-    return CrosscheckResult(tuple(results),round(score,2),tuple(warnings),edinet_risk_flags(edinet))
+    return CrosscheckResult(tuple(results),round(score,2),tuple(warnings),edinet_risk_flags(edinet),period_mismatch)
 
 
 def apply_edinet_crosscheck(candidate: FinancialCandidate, edinet: EdinetFinancialData | None,

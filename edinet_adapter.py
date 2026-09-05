@@ -50,6 +50,9 @@ class EdinetFinancialData:
     code: str
     edinet_code: str | None = None
     doc_id: str | None = None
+    document_type: str | None = None
+    document_name: str | None = None
+    submitted_at: str | None = None
     accounting_standard: str | None = None
     period_start: str | None = None
     period_end: str | None = None
@@ -207,13 +210,65 @@ class EdinetAdapter:
         return self._raw_get(f"{EDINET_API_BASE}/{endpoint}?{query}")
 
     def _raw_get(self, url: str) -> bytes:
-        error = None
+        error_type = "unknown"
         for attempt in range(self.config.max_retries + 1):
-            try: return self.transport.get(url, self.config.timeout)
+            try:
+                content = self.transport.get(url, self.config.timeout)
+                if self.config.rate_limit_delay > 0: self.sleeper(self.config.rate_limit_delay)
+                return content
             except Exception as exc:
-                error = exc
+                error_type = type(exc).__name__
                 if attempt < self.config.max_retries: self.sleeper(self.config.retry_delay * 2 ** attempt)
-        raise RuntimeError(f"EDINET request failed: {error}")
+        # Never include the requested URL: it contains Subscription-Key.
+        raise RuntimeError(f"EDINET request failed ({error_type})")
+
+    def find_latest_documents(self, codes: Sequence[str], *, end_date: date | None = None,
+                              lookback_days: int = 190) -> dict[str, dict]:
+        """Scan each date once for all target companies, newest document wins."""
+        entries = self.fetch_code_map()
+        wanted = {entries[normalize_stock_code(code)].edinet_code: normalize_stock_code(code)
+                  for code in codes if normalize_stock_code(code) in entries}
+        found: dict[str, dict] = {}
+        last = end_date or date.today()
+        for offset in range(max(lookback_days, 0)):
+            day = last - timedelta(days=offset)
+            listing_path = self.cache_dir / "document-lists" / f"{day.isoformat()}.json"
+            try:
+                listing = json.loads(listing_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError, json.JSONDecodeError):
+                listing = json.loads(self._get("documents.json", {"date": day.isoformat(), "type": "2"}))
+                listing_path.parent.mkdir(parents=True, exist_ok=True)
+                listing_path.write_text(json.dumps(listing, ensure_ascii=False), encoding="utf-8")
+            for item in listing.get("results", []):
+                code = wanted.get(item.get("edinetCode"))
+                if code and code not in found and str(item.get("docTypeCode")) in USEFUL_DOC_TYPES and item.get("xbrlFlag") == "1":
+                    found[code] = item
+            if len(found) == len(wanted): break
+        return found
+
+    def fetch_document(self, code: str, document: Mapping[str, object]) -> EdinetResult:
+        if not self.api_key: return EdinetResult("unavailable", reason="EDINET_API_KEY is not set")
+        normalized = normalize_stock_code(code)
+        path = self.cache_dir / f"{normalized}.json"
+        try:
+            raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
+            if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
+                    and raw.get("data", {}).get("doc_id") == str(document.get("docID"))):
+                names = {item.name for item in fields(EdinetFinancialData)}
+                return EdinetResult("ok", EdinetFinancialData(**{k:v for k,v in raw["data"].items() if k in names}), cache_hit=True)
+        except (OSError, ValueError, KeyError, TypeError): pass
+        try:
+            doc_id = str(document["docID"])
+            archive = zipfile.ZipFile(io.BytesIO(self._get(f"documents/{doc_id}", {"type": "1"})))
+            xbrl_name = next(name for name in archive.namelist() if name.lower().endswith(".xbrl"))
+            data = parse_xbrl(archive.read(xbrl_name), normalized, str(document.get("edinetCode") or ""), doc_id)
+            data = EdinetFinancialData(**{**asdict(data), "document_type": str(document.get("docTypeCode") or ""),
+                "document_name": str(document.get("docDescription") or ""), "submitted_at": str(document.get("submitDateTime") or "")})
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps({"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
+            return EdinetResult("ok", data)
+        except Exception as exc:
+            return EdinetResult("error", reason=f"document_fetch_failed ({type(exc).__name__})")
 
     def fetch_code_map(self, force: bool = False) -> dict[str, EdinetCodeEntry]:
         path = self.cache_dir / "code-list.json"
@@ -252,7 +307,6 @@ class EdinetAdapter:
             data = parse_xbrl(archive.read(xbrl_name), normalized, entry.edinet_code, doc["docID"])
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps({"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
-            self.sleeper(self.config.rate_limit_delay)
             return EdinetResult("ok", data)
         except Exception as exc:
-            return EdinetResult("error", reason=f"{type(exc).__name__}: {exc}")
+            return EdinetResult("error", reason=f"edinet_fetch_failed ({type(exc).__name__})")

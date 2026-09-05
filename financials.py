@@ -54,6 +54,8 @@ class FinancialData:
     total_debt: float | None = None
     free_cash_flow: float | None = None
     market_cap: float | None = None
+    equity: float | None = None
+    total_assets: float | None = None
     dividend_yield: float | None = None
     payout_ratio: float | None = None
     forward_revenue: float | None = None
@@ -470,6 +472,7 @@ class YahooFinanceAdapter:
             roe=_first(info, "returnOnEquity"), roa=_first(info, "returnOnAssets"), equity_ratio=equity_ratio,
             cash_and_equivalents=cash[0] if cash else _first(info, "totalCash"), total_debt=debt[0] if debt else _first(info, "totalDebt"),
             free_cash_flow=fcf[0] if fcf else _first(info, "freeCashflow"), market_cap=_first(info, "marketCap"),
+            equity=equity[0] if equity else None, total_assets=assets[0] if assets else None,
             dividend_yield=_first(info, "dividendYield"), payout_ratio=_first(info, "payoutRatio"),
             forward_revenue=_first(info, "revenueEstimate"), forward_eps=_first(info, "forwardEps"),
             earnings_growth_forecast=_first(info, "earningsGrowth"), analyst_revision=None,
