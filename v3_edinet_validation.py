@@ -61,7 +61,7 @@ def _validate(codes, adapter, code_map, yahoo):
         if not entry:
             er=EdinetResult("unavailable", reason=f"EDINET code not found (normalized={code}, map_entries={len(code_map)})")
         elif not document:
-            er=EdinetResult("unavailable", reason=f"useful XBRL document not found within 190 days (edinet_code={entry.edinet_code})")
+            er=EdinetResult("no_recent_filing", reason=f"useful XBRL document not found within 190 days (edinet_code={entry.edinet_code})")
         else:
             er=adapter.fetch_document(code,document)
         try: yd=yahoo.fetch(code); ys="ok"
