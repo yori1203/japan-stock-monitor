@@ -42,6 +42,14 @@ class EdinetTests(unittest.TestCase):
             first=a.fetch('1234',target_date=date(2026,6,1));calls=t.calls
             second=a.fetch('1234',target_date=date(2026,6,1))
         self.assertEqual(first.status,'ok');self.assertTrue(second.cache_hit);self.assertEqual(t.calls,calls)
+
+    def test_direct_document_fetch_uses_cache(self):
+        t=Transport(); document={'docID':'D1','edinetCode':'E00001','docTypeCode':'120','docDescription':'report','submitDateTime':'2026-06-01'}
+        with tempfile.TemporaryDirectory() as d:
+            a=EdinetAdapter('key',transport=t,cache_dir=d,config=EdinetConfig(rate_limit_delay=0),sleeper=lambda _:None)
+            first=a.fetch_document('1234',document); calls=t.calls
+            second=a.fetch_document('1234',document)
+        self.assertEqual(first.status,'ok');self.assertTrue(second.cache_hit);self.assertEqual(t.calls,calls)
     def test_failure_is_safe(self):
         with tempfile.TemporaryDirectory() as d:
             result=EdinetAdapter('key',transport=Transport(fail=99),cache_dir=d,config=EdinetConfig(max_retries=1,retry_delay=0),sleeper=lambda _:None).fetch('1234')
