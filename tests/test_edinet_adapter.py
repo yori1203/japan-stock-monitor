@@ -1,7 +1,7 @@
 import io, json, tempfile, unittest, zipfile
 from datetime import date
 from pathlib import Path
-from edinet_adapter import EdinetAdapter, EdinetConfig, parse_edinet_code_list, parse_xbrl
+from edinet_adapter import EdinetAdapter, EdinetConfig, normalize_stock_code, parse_edinet_code_list, parse_xbrl
 
 def code_zip():
     data='ＥＤＩＮＥＴコード,提出者名,提出者業種,証券コード\nE00001,テスト株式会社,情報通信,12340\n'.encode('cp932')
@@ -29,6 +29,17 @@ class EdinetTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:self.assertEqual(EdinetAdapter('',cache_dir=d).fetch('1234').status,'unavailable')
     def test_code_conversion(self):
         self.assertEqual(parse_edinet_code_list(code_zip())['1234'].edinet_code,'E00001')
+    def test_code_list_accepts_preamble_utf8_bom_and_full_width_header(self):
+        data=('EDINETコードリスト\n'
+              '\ufeffＥＤＩＮＥＴコード,提出者名,提出者業種,証券コード\n'
+              'E00002,例示株式会社,サービス業,86140\n').encode('utf-8')
+        out=io.BytesIO()
+        with zipfile.ZipFile(out,'w') as z:z.writestr('EdinetcodeDlInfo.csv',data)
+        entry=parse_edinet_code_list(out.getvalue())['8614']
+        self.assertEqual(entry.edinet_code,'E00002')
+    def test_four_and_five_digit_stock_codes_are_normalized(self):
+        self.assertEqual(normalize_stock_code('8614'),'8614')
+        self.assertEqual(normalize_stock_code('86140'),'8614')
     def test_jgaap_normalization(self):
         data=parse_xbrl(xbrl(), '1234');self.assertEqual(data.accounting_standard,'J-GAAP');self.assertEqual(data.revenue,1000)
     def test_ifrs_normalization(self):

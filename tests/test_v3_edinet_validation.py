@@ -21,7 +21,7 @@ class ValidationReportTests(unittest.TestCase):
     def test_report_has_required_summary_and_never_accepts_key(self):
         row = {"code":"8614","company_name":"東洋証券","edinet_code":"E00001",
                "document_name":"有価証券報告書","period":"2025-04-01 - 2026-03-31",
-               "edinet_status":"ok","yahoo_status":"ok","score":100,"risks":(),"missing":[],
+               "edinet_status":"ok","failure_reason":None,"yahoo_status":"ok","score":100,"risks":(),"missing":[],
                "matched":6,"warnings":0,"period_mismatch":False,"unit_corrections":1,
                "fields":[{"name":"revenue","edinet":1000,"yahoo":1000,"status":"matched"}]}
         from datetime import datetime, timezone
