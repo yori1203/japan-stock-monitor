@@ -1,0 +1,71 @@
+name: V3 EDINET Validation
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: Branch or ref containing the V3 validation code
+        required: true
+        default: feature/v3-discovery-engine
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate-edinet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Check EDINET secret
+        shell: bash
+        run: |
+          if [ -z "$EDINET_API_KEY" ]; then
+            echo "::error::EDINET_API_KEY repository secret is not configured"
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt pytest
+
+      - name: Run all tests
+        run: python -m pytest -q
+
+      - name: Restore V3 validation cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/v3-edinet-validation
+          key: ${{ runner.os }}-v3-edinet-${{ github.run_number }}
+          restore-keys: |
+            ${{ runner.os }}-v3-edinet-
+
+      - name: Run EDINET real-data validation
+        run: python v3_edinet_validation.py
+
+      - name: Save V3 validation cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/v3-edinet-validation
+          key: ${{ runner.os }}-v3-edinet-${{ github.run_number }}
+
+      - name: Upload validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v3-edinet-validation-report
+          path: v3_edinet_validation_report.md
+          if-no-files-found: warn
+          retention-days: 30
