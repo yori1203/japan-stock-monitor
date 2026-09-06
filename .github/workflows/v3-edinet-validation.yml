@@ -1,4 +1,4 @@
-name: V3 EDINET Validation
+name: V3 EDINET Full Validation
 
 on:
   workflow_dispatch:
@@ -6,10 +6,15 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: v3-edinet-full-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   validate-edinet:
+    if: github.ref == 'refs/heads/feature/v3-discovery-engine'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     env:
       EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
       PYTHONUNBUFFERED: "1"
@@ -39,25 +44,46 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: .cache/v3-edinet-validation
-          key: ${{ runner.os }}-v3-edinet-${{ github.run_number }}
+          key: ${{ runner.os }}-v3-edinet-full-${{ hashFiles('validation/v3_edinet_50_input.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
+            ${{ runner.os }}-v3-edinet-full-${{ hashFiles('validation/v3_edinet_50_input.json') }}-
             ${{ runner.os }}-v3-edinet-
 
-      - name: Run EDINET real-data validation
-        run: python v3_edinet_validation.py
+      - name: Resume EDINET 50-symbol validation in bounded chunks
+        timeout-minutes: 15
+        shell: bash
+        run: |
+          for chunk in $(seq 1 12); do
+            echo "Starting bounded chunk $chunk (10 symbols / 40 search days / 240 seconds)"
+            status=0
+            python v3_edinet_full_validation.py --batch-size 10 --max-scan-days 40 --max-seconds 240 --operation-timeout 45 || status=$?
+            if [ "$status" -eq 0 ]; then exit 0; fi
+            if [ "$status" -ne 2 ]; then exit "$status"; fi
+          done
+          echo "::error::Validation remains incomplete; checkpoint saved. Re-run this branch to resume."
+          exit 1
+
+      - name: Regenerate final ranking from completed checkpoint
+        run: python v3_edinet_full_validation.py --render
 
       - name: Save V3 validation cache
         if: always()
         uses: actions/cache/save@v4
         with:
           path: .cache/v3-edinet-validation
-          key: ${{ runner.os }}-v3-edinet-${{ github.run_number }}
+          key: ${{ runner.os }}-v3-edinet-full-${{ hashFiles('validation/v3_edinet_50_input.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Upload validation report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v3-edinet-validation-report
-          path: v3_edinet_validation_report.md
+          name: v3-edinet-full-validation
+          include-hidden-files: true
+          path: |
+            v3_edinet_full_validation_report.md
+            v3_edinet_full_validation_results.json
+            v3_final_candidates_report.md
+            v3_final_ranking.json
+            .cache/v3-edinet-validation/full-checkpoint.json
           if-no-files-found: warn
           retention-days: 30
