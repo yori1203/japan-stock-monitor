@@ -224,7 +224,10 @@ def score_final_candidate(candidate: RankingCandidate, config: FinalRankingConfi
     timestamp = generated_at or datetime.now(timezone.utc).isoformat()
     if any(event.code != candidate.code for event in candidate.tdnet_events):
         raise ValueError("TDnet event stock does not match candidate")
-    tdnet = summarize_events(candidate.tdnet_events, status=candidate.tdnet_status,
+    tdnet_status = candidate.tdnet_status
+    if tdnet_status == "ok" and any(e.is_mock or e.source == "mock" for e in candidate.tdnet_events):
+        tdnet_status = "unavailable"
+    tdnet = summarize_events(candidate.tdnet_events, status=tdnet_status,
                              as_of=timestamp, config=config.event_scoring)
     small = small_investment_score(candidate.minimum_purchase_amount)
     risk, warnings = _risk_component(candidate, config)
@@ -309,6 +312,7 @@ def rank_financial_candidates(
     yahoo_statuses: Mapping[str, str] | None = None,
     industries: Mapping[str, str | None] | None = None,
     tdnet_results: Mapping | None = None,
+    production: bool = True,
     config: FinalRankingConfig = FinalRankingConfig(),
     generated_at: str | None = None,
 ) -> FinalRankingResult:
@@ -328,6 +332,12 @@ def rank_financial_candidates(
         for candidate in candidates
     ]
     if tdnet_results:
+        if production:
+            from tdnet_adapter import TDnetResult
+            tdnet_results = {code: result if result.status == "ok" and not getattr(result, "is_mock", False)
+                and result.provider_name != "mock" and not any(e.is_mock or e.source == "mock" for e in result.events)
+                else TDnetResult("unavailable", provider_name=result.provider_name, fetched_at=result.fetched_at)
+                for code, result in tdnet_results.items()}
         prepared = [replace(c, tdnet_status=tdnet_results[c.code].status,
                             tdnet_events=tdnet_results[c.code].events,
                             tdnet_provider=tdnet_results[c.code].provider_name)

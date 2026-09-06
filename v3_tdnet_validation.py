@@ -42,8 +42,8 @@ def run(output_dir=".", *, as_of=None):
     provider = MockTDnetAdapter(as_of=as_of)
     mock = {c.code: provider.fetch_disclosures(c.code) for c in candidates}
     baseline = rank_financial_candidates(candidates, tdnet_results=unavailable, **common)
-    simulated = rank_financial_candidates(candidates, tdnet_results=mock, **common)
-    neutral = rank_financial_candidates(candidates, tdnet_results={c.code: TDnetResult("mock", provider_name="mock") for c in candidates}, **common)
+    simulated = rank_financial_candidates(candidates, tdnet_results=mock, production=False, **common)
+    neutral = rank_financial_candidates(candidates, tdnet_results={c.code: TDnetResult("mock", provider_name="mock") for c in candidates}, production=False, **common)
     stats = FinalReportStats(source["universe_count"], source["preselection_count"], len(candidates),
                             sum(s == "ok" for s in statuses.values()),
                             sum(c.financial_data_quality_score < 100 for c in candidates),

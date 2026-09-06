@@ -1,0 +1,15 @@
+{
+  "status": "unavailable",
+  "source": "jpx_tdnet_public",
+  "is_mock": false,
+  "fetched_at": "2026-09-06T20:42:11.355012+00:00",
+  "events": 0,
+  "cache_hits": 0,
+  "requests": 0,
+  "failures": 0,
+  "candidate_count": 50,
+  "ranking_changes": 0,
+  "warnings": [
+    "TDnet公開情報の自動取得・保存に必要な利用許諾を未確認（無断転用・複製禁止）。取得は無効です。"
+  ]
+}

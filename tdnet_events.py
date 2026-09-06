@@ -75,13 +75,17 @@ class TDnetEvent:
     use_of_proceeds: str | None
     growth_investment: bool | None
     buyback_rate: float | None
+    is_mock: bool
+    fetched_at: str | None
+    category: str | None
 
     def __init__(self, code, datetime=None, event_type=TDnetEventType.OTHER_MATERIAL,
                  title="", source="unknown", impact_score=50, raw_reference=None, *,
                  published_at=None, company_name="", fiscal_period=None, current_value=None,
                  previous_value=None, change_rate=None, confidence=0.5, risk_flags=(),
                  positive_flags=(), parsed_at=None, metric=None, dilution_rate=None,
-                 dilution_level=None, use_of_proceeds=None, growth_investment=None, buyback_rate=None):
+                 dilution_level=None, use_of_proceeds=None, growth_investment=None, buyback_rate=None,
+                 is_mock=False, fetched_at=None, category=None):
         # Preserve the original seven positional arguments and datetime keyword.
         values = locals().copy()
         values.pop("self")
@@ -242,4 +246,6 @@ def normalize_event(raw: Mapping, *, source="unknown", parsed_at=None) -> TDnetE
         impact_score=score, confidence=confidence, positive_flags=positive, risk_flags=risks,
         parsed_at=parsed_at, dilution_rate=dilution, dilution_level=level,
         use_of_proceeds=raw.get("use_of_proceeds"), growth_investment=raw.get("growth_investment"), buyback_rate=buyback,
+        is_mock=bool(raw.get("is_mock", source == "mock" or raw.get("source") == "mock")),
+        fetched_at=raw.get("fetched_at"), category=raw.get("category"),
     )
