@@ -9,6 +9,6 @@ class TDnetTests(unittest.TestCase):
         self.assertEqual(adapter.fetch_dilution_events('1234').status,'unavailable')
         self.assertEqual(adapter.fetch_dividend_revisions('1234').status,'unavailable')
     def test_all_event_types_and_event(self):
-        self.assertEqual(len(TDnetEventType),13)
+        self.assertEqual(len(TDnetEventType),15)
         event=TDnetEvent('1234',datetime.now(timezone.utc),TDnetEventType.UPWARD_REVISION,'title','dummy',80,'ref')
         self.assertEqual(event.event_type.value,'upward_revision');self.assertEqual(event.impact_score,80)
