@@ -11,14 +11,17 @@ from typing import Iterable, Mapping
 
 from financial_crosscheck import CrosscheckResult
 from financials import FinancialCandidate
+from tdnet_events import TDnetEvent
+from tdnet_event_scoring import EventScoringConfig, summarize_events
 
 
 FINAL_SCORE_WEIGHTS: Mapping[str, float] = {
-    "preselection": 20.0,
-    "financial": 40.0,
+    "preselection": 15.0,
+    "financial": 35.0,
     "crosscheck": 15.0,
     "data_quality": 10.0,
     "small_investment": 10.0,
+    "tdnet_event": 10.0,
     "risk_adjustment": 5.0,
 }
 
@@ -52,6 +55,7 @@ class FinalRankingConfig:
     small_investment_limit: float = 50_000.0
     growth_relief_threshold: float = 70.0
     growth_risk_relief: float = 0.50
+    event_scoring: EventScoringConfig = field(default_factory=EventScoringConfig)
 
 
 @dataclass(frozen=True)
@@ -75,6 +79,9 @@ class RankingCandidate:
     edinet_status: str = "unavailable"
     yahoo_status: str = "ok"
     source_date: str | None = None
+    tdnet_status: str = "unavailable"
+    tdnet_events: tuple[TDnetEvent, ...] = ()
+    tdnet_provider: str = "unconfigured"
 
 
 @dataclass(frozen=True)
@@ -103,6 +110,12 @@ class FinalCandidate:
     yahoo_status: str
     source_date: str | None
     generated_at: str
+    tdnet_status: str = "unavailable"
+    tdnet_event_score: float | None = None
+    recent_events: tuple[str, ...] = ()
+    positive_flags: tuple[str, ...] = ()
+    tdnet_adjustment: float = 0.0
+    tdnet_provider: str = "unconfigured"
 
 
 @dataclass(frozen=True)
@@ -208,6 +221,11 @@ def _positive_reasons(candidate: RankingCandidate, small_score: float | None) ->
 
 def score_final_candidate(candidate: RankingCandidate, config: FinalRankingConfig = FinalRankingConfig(),
                           *, generated_at: str | None = None) -> FinalCandidate:
+    timestamp = generated_at or datetime.now(timezone.utc).isoformat()
+    if any(event.code != candidate.code for event in candidate.tdnet_events):
+        raise ValueError("TDnet event stock does not match candidate")
+    tdnet = summarize_events(candidate.tdnet_events, status=candidate.tdnet_status,
+                             as_of=timestamp, config=config.event_scoring)
     small = small_investment_score(candidate.minimum_purchase_amount)
     risk, warnings = _risk_component(candidate, config)
     reason_warnings = {
@@ -223,20 +241,27 @@ def score_final_candidate(candidate: RankingCandidate, config: FinalRankingConfi
         "data_quality": candidate.data_quality_score,
         "small_investment": small,
         "risk_adjustment": risk,
+        "tdnet_event": tdnet.tdnet_event_score,
     }
     available = {key: value for key, value in components.items() if value is not None}
     denominator = sum(max(float(config.weights.get(key, 0)), 0.0) for key in available)
     weighted = sum(_bounded(value) * max(float(config.weights.get(key, 0)), 0.0) for key, value in available.items())
-    score = _bounded(weighted / denominator if denominator else 0.0)
-    timestamp = generated_at or datetime.now(timezone.utc).isoformat()
+    score = _bounded((weighted / denominator if denominator else 0.0) + tdnet.adjustment)
+    if tdnet.tdnet_event_score is None:
+        warnings = (*warnings, "TDnet未照合")
+    else:
+        warnings = (*warnings, *tdnet.risk_flags)
     return FinalCandidate(
         0, candidate.code, candidate.company_name, candidate.market, candidate.industry,
         candidate.minimum_purchase_amount, candidate.preselection_score, candidate.financial_score,
         candidate.crosscheck_score, round(score, 2), classify_category(score, config),
         candidate.growth_score, candidate.profitability_score, candidate.valuation_score,
         candidate.financial_health_score, candidate.shareholder_return_score, candidate.data_quality_score,
-        candidate.risk_flags, _positive_reasons(candidate, small), warnings,
+        tuple(dict.fromkeys((*candidate.risk_flags, *tdnet.risk_flags))), _positive_reasons(candidate, small), warnings,
         candidate.edinet_status, candidate.yahoo_status, candidate.source_date, timestamp,
+        tdnet.status, tdnet.tdnet_event_score,
+        tuple(f"{e.published_at.isoformat()} {e.event_type.value}: {e.title}" for e in sorted(tdnet.events, key=lambda e: (-abs(e.impact_score - 50), -e.published_at.timestamp()))[:3]),
+        tdnet.positive_flags, tdnet.adjustment, candidate.tdnet_provider,
     )
 
 
@@ -283,6 +308,7 @@ def rank_financial_candidates(
     edinet_statuses: Mapping[str, str] | None = None,
     yahoo_statuses: Mapping[str, str] | None = None,
     industries: Mapping[str, str | None] | None = None,
+    tdnet_results: Mapping | None = None,
     config: FinalRankingConfig = FinalRankingConfig(),
     generated_at: str | None = None,
 ) -> FinalRankingResult:
@@ -301,4 +327,9 @@ def rank_financial_candidates(
         )
         for candidate in candidates
     ]
+    if tdnet_results:
+        prepared = [replace(c, tdnet_status=tdnet_results[c.code].status,
+                            tdnet_events=tdnet_results[c.code].events,
+                            tdnet_provider=tdnet_results[c.code].provider_name)
+                    if c.code in tdnet_results else c for c in prepared]
     return rank_final_candidates(prepared, config, generated_at=generated_at)

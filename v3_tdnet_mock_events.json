@@ -1,0 +1,548 @@
+{
+  "8614": {
+    "status": "mock",
+    "events": [
+      {
+        "code": "8614",
+        "published_at": "2026-09-06 10:05:17.178669+00:00",
+        "event_type": "warrant",
+        "title": "MSワラントの発行",
+        "source": "mock",
+        "impact_score": 5.0,
+        "raw_reference": "mock:8614",
+        "company_name": "",
+        "fiscal_period": null,
+        "current_value": null,
+        "previous_value": null,
+        "change_rate": null,
+        "confidence": 0.75,
+        "risk_flags": [
+          "dilution",
+          "major_dilution",
+          "warrant",
+          "ms_warrant"
+        ],
+        "positive_flags": [],
+        "parsed_at": "2026-09-06 10:05:17.178669+00:00",
+        "metric": null,
+        "dilution_rate": 0.3,
+        "dilution_level": "severe",
+        "use_of_proceeds": null,
+        "growth_investment": null,
+        "buyback_rate": null
+      }
+    ],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "2317": {
+    "status": "mock",
+    "events": [
+      {
+        "code": "2317",
+        "published_at": "2026-09-06 10:05:17.178669+00:00",
+        "event_type": "dividend_increase",
+        "title": "配当予想の増額（増配）",
+        "source": "mock",
+        "impact_score": 75.0,
+        "raw_reference": "mock:2317",
+        "company_name": "",
+        "fiscal_period": null,
+        "current_value": null,
+        "previous_value": null,
+        "change_rate": null,
+        "confidence": 0.75,
+        "risk_flags": [],
+        "positive_flags": [
+          "dividend_increase"
+        ],
+        "parsed_at": "2026-09-06 10:05:17.178669+00:00",
+        "metric": null,
+        "dilution_rate": null,
+        "dilution_level": null,
+        "use_of_proceeds": null,
+        "growth_investment": null,
+        "buyback_rate": null
+      }
+    ],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "4477": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "3679": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "2492": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8628": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "3660": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "7803": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "7354": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8789": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "3673": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "7846": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8848": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "7984": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8616": {
+    "status": "mock",
+    "events": [
+      {
+        "code": "8616",
+        "published_at": "2026-09-06 10:05:17.178669+00:00",
+        "event_type": "share_buyback",
+        "title": "大規模な自己株式取得",
+        "source": "mock",
+        "impact_score": 90.0,
+        "raw_reference": "mock:8616",
+        "company_name": "",
+        "fiscal_period": null,
+        "current_value": null,
+        "previous_value": null,
+        "change_rate": null,
+        "confidence": 0.75,
+        "risk_flags": [],
+        "positive_flags": [
+          "share_buyback",
+          "large_buyback"
+        ],
+        "parsed_at": "2026-09-06 10:05:17.178669+00:00",
+        "metric": null,
+        "dilution_rate": null,
+        "dilution_level": null,
+        "use_of_proceeds": null,
+        "growth_investment": null,
+        "buyback_rate": 0.08
+      }
+    ],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8572": {
+    "status": "mock",
+    "events": [
+      {
+        "code": "8572",
+        "published_at": "2026-09-06 10:05:17.178669+00:00",
+        "event_type": "downward_revision",
+        "title": "業績予想の大幅下方修正",
+        "source": "mock",
+        "impact_score": 5.0,
+        "raw_reference": "mock:8572",
+        "company_name": "",
+        "fiscal_period": null,
+        "current_value": 40.0,
+        "previous_value": 100.0,
+        "change_rate": -0.6,
+        "confidence": 0.95,
+        "risk_flags": [
+          "downward_revision",
+          "profit_warning"
+        ],
+        "positive_flags": [],
+        "parsed_at": "2026-09-06 10:05:17.178669+00:00",
+        "metric": "operating_profit",
+        "dilution_rate": null,
+        "dilution_level": null,
+        "use_of_proceeds": null,
+        "growth_investment": null,
+        "buyback_rate": null
+      }
+    ],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "2353": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "4689": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "9508": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "2146": {
+    "status": "mock",
+    "events": [
+      {
+        "code": "2146",
+        "published_at": "2026-09-06 10:05:17.178669+00:00",
+        "event_type": "upward_revision",
+        "title": "営業利益予想の大幅上方修正",
+        "source": "mock",
+        "impact_score": 95.0,
+        "raw_reference": "mock:2146",
+        "company_name": "",
+        "fiscal_period": null,
+        "current_value": 180.0,
+        "previous_value": 100.0,
+        "change_rate": 0.8,
+        "confidence": 0.95,
+        "risk_flags": [],
+        "positive_flags": [
+          "upward_revision",
+          "operating_profit_upgrade",
+          "strong_guidance"
+        ],
+        "parsed_at": "2026-09-06 10:05:17.178669+00:00",
+        "metric": "operating_profit",
+        "dilution_rate": null,
+        "dilution_level": null,
+        "use_of_proceeds": null,
+        "growth_investment": null,
+        "buyback_rate": null
+      }
+    ],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "3350": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8410": {
+    "status": "mock",
+    "events": [
+      {
+        "code": "8410",
+        "published_at": "2026-09-06 10:05:17.178669+00:00",
+        "event_type": "share_issuance",
+        "title": "第三者割当増資",
+        "source": "mock",
+        "impact_score": 30.0,
+        "raw_reference": "mock:8410",
+        "company_name": "",
+        "fiscal_period": null,
+        "current_value": null,
+        "previous_value": null,
+        "change_rate": null,
+        "confidence": 0.75,
+        "risk_flags": [
+          "dilution"
+        ],
+        "positive_flags": [],
+        "parsed_at": "2026-09-06 10:05:17.178669+00:00",
+        "metric": null,
+        "dilution_rate": 0.05,
+        "dilution_level": "caution",
+        "use_of_proceeds": null,
+        "growth_investment": null,
+        "buyback_rate": null
+      }
+    ],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "2181": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "3232": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "2489": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "9009": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "4406": {
+    "status": "mock",
+    "events": [
+      {
+        "code": "4406",
+        "published_at": "2026-09-06 10:05:17.178669+00:00",
+        "event_type": "capital_alliance",
+        "title": "資本業務提携のお知らせ",
+        "source": "mock",
+        "impact_score": 65.0,
+        "raw_reference": "mock:4406",
+        "company_name": "",
+        "fiscal_period": null,
+        "current_value": null,
+        "previous_value": null,
+        "change_rate": null,
+        "confidence": 0.75,
+        "risk_flags": [],
+        "positive_flags": [
+          "capital_alliance"
+        ],
+        "parsed_at": "2026-09-06 10:05:17.178669+00:00",
+        "metric": null,
+        "dilution_rate": null,
+        "dilution_level": null,
+        "use_of_proceeds": null,
+        "growth_investment": null,
+        "buyback_rate": null
+      }
+    ],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8698": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "2120": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "4005": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "7593": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "9507": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "9008": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8729": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "9432": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "8897": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "9505": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "9434": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "3861": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "3668": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "3825": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "5202": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.195684+00:00"
+  },
+  "9506": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.196685+00:00"
+  },
+  "2484": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.196685+00:00"
+  },
+  "7211": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.196685+00:00"
+  },
+  "3387": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.196685+00:00"
+  },
+  "8219": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.196685+00:00"
+  },
+  "9831": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.196685+00:00"
+  },
+  "9504": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.196685+00:00"
+  },
+  "5401": {
+    "status": "mock",
+    "events": [],
+    "reason": null,
+    "provider_name": "mock",
+    "fetched_at": "2026-09-06T10:05:17.196685+00:00"
+  }
+}

@@ -35,6 +35,11 @@ def _candidate_lines(item: FinalCandidate) -> list[str]:
         f"- 最低購入金額: {_amount(item.minimum_purchase_amount)}",
         f"- 主な加点理由: {reasons}",
         f"- 主な注意点: {warnings}", "",
+        f"- TDnet status: {item.tdnet_status}（{'TDnet未照合' if item.tdnet_event_score is None else '仮想イベント・実IRではありません' if item.tdnet_status == 'mock' else '照合済み'}）",
+        f"- tdnet_event_score: {item.tdnet_event_score if item.tdnet_event_score is not None else '未取得'} / 重大イベント補正: {item.tdnet_adjustment:+.2f}",
+        f"- 直近重要イベント: {' / '.join(item.recent_events) or 'なし'}",
+        f"- positive_flags: {', '.join(item.positive_flags) or 'なし'}",
+        f"- risk_flags: {', '.join(item.risk_flags) or 'なし'}", "",
     ]
 
 
