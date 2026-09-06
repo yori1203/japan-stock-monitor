@@ -89,7 +89,7 @@ def select_documents(state, listing):
     wanted = {entry["edinet_code"]: code for code, entry in state["entries"].items()}
     # Same-day submissions are not necessarily returned in time order.
     for document in sorted(listing.get("results", []),
-                           key=lambda item: item.get("submitDateTime", ""), reverse=True):
+                           key=lambda item: item.get("submitDateTime") or "", reverse=True):
         code = wanted.get(document.get("edinetCode"))
         if (code and code not in state["documents"]
                 and str(document.get("docTypeCode")) in USEFUL_DOC_TYPES
