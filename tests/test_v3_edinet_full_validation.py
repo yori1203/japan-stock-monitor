@@ -94,7 +94,7 @@ def test_latest_same_day_document_selected():
     select_documents(state, {'results': [
         {'edinetCode': 'E0', 'docID': str(i), 'submitDateTime': t,
          'docTypeCode': '120', 'xbrlFlag': '1'}
-        for i, t in enumerate(['2026-09-05 10:00', '2026-09-05 15:00'])]})
+        for i, t in enumerate(['2026-09-05 10:00', '2026-09-05 15:00', None])]})
     assert state['documents']['1000']['docID'] == '1'
 
 
