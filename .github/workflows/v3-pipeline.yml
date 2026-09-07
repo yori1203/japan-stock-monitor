@@ -1,0 +1,73 @@
+name: V3 Integrated Pipeline (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'cached/quick require no new acquisition; full updates stale/missing data'
+        type: choice
+        options: [cached, quick, full]
+        default: cached
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v3-integrated-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  pipeline:
+    if: github.ref == 'refs/heads/feature/v3-discovery-engine'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt pytest
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            .cache/v3-pipeline
+            .cache/recovery
+            .cache/v3-edinet-validation
+          key: v3-integrated-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: v3-integrated-${{ runner.os }}-${{ github.ref_name }}-
+      - run: python -m pytest -q
+      - name: Run bounded pipeline (exit 2 retains resume checkpoints)
+        shell: bash
+        run: |
+          set +e
+          python v3_pipeline.py --mode "${{ inputs.mode }}" --max-seconds 180 --max-operations 20
+          code=$?
+          if [ "$code" -eq 2 ]; then
+            echo "::notice::Chunk saved. Dispatch the same mode again to resume."
+          elif [ "$code" -ne 0 ]; then
+            exit "$code"
+          fi
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            .cache/v3-pipeline
+            .cache/recovery
+            .cache/v3-edinet-validation
+          key: v3-integrated-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v3-integrated-pipeline
+          include-hidden-files: true
+          path: |
+            v3_report.md
+            v3_final_candidates_report.md
+            v3_final_ranking.json
+            v3_pipeline_run.json
+            v3_pipeline_summary.json
+            .cache/v3-pipeline/*/checkpoint.json
