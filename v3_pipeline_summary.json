@@ -1,0 +1,148 @@
+{
+  "freshness": {
+    "JPX": {
+      "oldest": "2026-09-05T08:26:27.167273+00:00",
+      "newest": "2026-09-05T08:26:27.167273+00:00",
+      "warning": "なし"
+    },
+    "株価": {
+      "oldest": "2026-09-04T00:00:00+09:00",
+      "newest": "2026-09-04T00:00:00+09:00",
+      "warning": "古いデータを含む"
+    },
+    "財務取得": {
+      "oldest": "2026-09-05T13:16:06.146252+00:00",
+      "newest": "2026-09-05T13:16:47.188301+00:00",
+      "warning": "なし"
+    },
+    "財務決算期": {
+      "oldest": "2025-06-30T00:00:00+09:00",
+      "newest": "2026-03-31T00:00:00+09:00",
+      "warning": "古いデータを含む"
+    },
+    "EDINET取得": {
+      "oldest": "2026-09-05T12:53:46.820622+00:00",
+      "newest": "2026-09-06T03:51:13.813704+00:00",
+      "warning": "なし"
+    },
+    "EDINET決算期": {
+      "oldest": "2026-01-31T00:00:00+09:00",
+      "newest": "2026-06-30T00:00:00+09:00",
+      "warning": "古いデータを含む"
+    },
+    "TDnet": {
+      "oldest": null,
+      "newest": null,
+      "warning": "未照合（取得試行日時はstage記録参照）"
+    }
+  },
+  "portfolio": [
+    {
+      "code": "6740",
+      "shares": 100,
+      "score": null,
+      "price": 47.0,
+      "price_date": "2026-09-04",
+      "unrealized_rate": null,
+      "assessment": "評価保留",
+      "risk_flags": [],
+      "positive_flags": [],
+      "missing": [
+        "財務・総合スコア",
+        "取得単価"
+      ]
+    },
+    {
+      "code": "6573",
+      "shares": 100,
+      "score": null,
+      "price": 27.0,
+      "price_date": "2026-09-04",
+      "unrealized_rate": null,
+      "assessment": "評価保留",
+      "risk_flags": [],
+      "positive_flags": [],
+      "missing": [
+        "財務・総合スコア",
+        "取得単価"
+      ]
+    },
+    {
+      "code": "4596",
+      "shares": 100,
+      "score": null,
+      "price": 64.0,
+      "price_date": "2026-09-04",
+      "unrealized_rate": null,
+      "assessment": "評価保留",
+      "risk_flags": [],
+      "positive_flags": [],
+      "missing": [
+        "財務・総合スコア",
+        "取得単価"
+      ]
+    },
+    {
+      "code": "4597",
+      "shares": 300,
+      "score": null,
+      "price": 29.0,
+      "price_date": "2026-09-04",
+      "unrealized_rate": null,
+      "assessment": "評価保留",
+      "risk_flags": [],
+      "positive_flags": [],
+      "missing": [
+        "財務・総合スコア",
+        "取得単価"
+      ]
+    }
+  ],
+  "changes": {
+    "up": [],
+    "down": [],
+    "new": [],
+    "top20_new": [],
+    "removed": []
+  },
+  "top20": [
+    "8614",
+    "2317",
+    "2146",
+    "8572",
+    "8616",
+    "4406",
+    "8410",
+    "7803",
+    "3679",
+    "8729",
+    "3232",
+    "8628",
+    "2181",
+    "9008",
+    "4477",
+    "8897",
+    "9508",
+    "3861",
+    "8848",
+    "9009"
+  ],
+  "small_top10": [
+    "2317",
+    "2146",
+    "8572",
+    "4406",
+    "8410",
+    "7803",
+    "3679",
+    "8729",
+    "2181",
+    "4477"
+  ],
+  "around_10k": [],
+  "category_a": [
+    "8614",
+    "2317",
+    "2146"
+  ]
+}

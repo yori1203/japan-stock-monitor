@@ -36,13 +36,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 2,
@@ -83,13 +83,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 3,
@@ -124,13 +124,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 4,
@@ -167,13 +167,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 5,
@@ -209,13 +209,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 6,
@@ -248,13 +248,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 7,
@@ -288,13 +288,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 8,
@@ -330,13 +330,13 @@
       "edinet_status": "no_recent_filing",
       "yahoo_status": "ok",
       "source_date": "2025-06-30",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 9,
@@ -377,13 +377,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 10,
@@ -417,13 +417,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 11,
@@ -457,13 +457,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 12,
@@ -498,13 +498,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 13,
@@ -541,13 +541,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 14,
@@ -580,13 +580,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 15,
@@ -626,13 +626,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 16,
@@ -670,13 +670,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 17,
@@ -710,13 +710,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 18,
@@ -749,13 +749,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 19,
@@ -795,13 +795,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 20,
@@ -834,13 +834,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 21,
@@ -872,13 +872,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 22,
@@ -911,13 +911,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 23,
@@ -954,13 +954,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 24,
@@ -1006,13 +1006,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 25,
@@ -1048,13 +1048,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 26,
@@ -1090,13 +1090,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 27,
@@ -1129,13 +1129,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 28,
@@ -1175,13 +1175,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 29,
@@ -1219,13 +1219,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 30,
@@ -1264,13 +1264,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 31,
@@ -1312,13 +1312,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 32,
@@ -1359,13 +1359,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 33,
@@ -1410,13 +1410,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-09-30",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 34,
@@ -1449,13 +1449,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 35,
@@ -1495,13 +1495,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 36,
@@ -1537,13 +1537,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 37,
@@ -1579,13 +1579,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 38,
@@ -1618,13 +1618,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 39,
@@ -1659,13 +1659,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-02-28",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 40,
@@ -1705,13 +1705,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-06-30",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 41,
@@ -1749,13 +1749,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 42,
@@ -1802,13 +1802,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 43,
@@ -1850,13 +1850,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 44,
@@ -1898,13 +1898,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-07-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 45,
@@ -1943,13 +1943,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 46,
@@ -1990,13 +1990,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-09-30",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 47,
@@ -2041,13 +2041,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 48,
@@ -2093,13 +2093,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-09-30",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 49,
@@ -2142,13 +2142,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 50,
@@ -2196,13 +2196,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-08-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     }
   ],
   "top_20": [
@@ -2242,13 +2242,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 2,
@@ -2289,13 +2289,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 3,
@@ -2330,13 +2330,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 4,
@@ -2373,13 +2373,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 5,
@@ -2415,13 +2415,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 6,
@@ -2454,13 +2454,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 7,
@@ -2494,13 +2494,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 8,
@@ -2536,13 +2536,13 @@
       "edinet_status": "no_recent_filing",
       "yahoo_status": "ok",
       "source_date": "2025-06-30",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 9,
@@ -2583,13 +2583,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 10,
@@ -2623,13 +2623,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 11,
@@ -2663,13 +2663,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 12,
@@ -2704,13 +2704,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 13,
@@ -2747,13 +2747,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 14,
@@ -2786,13 +2786,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 15,
@@ -2832,13 +2832,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 16,
@@ -2876,13 +2876,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 17,
@@ -2916,13 +2916,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 18,
@@ -2955,13 +2955,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 19,
@@ -3001,13 +3001,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 20,
@@ -3040,13 +3040,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     }
   ],
   "top_10": [
@@ -3086,13 +3086,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 2,
@@ -3133,13 +3133,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 3,
@@ -3174,13 +3174,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 4,
@@ -3217,13 +3217,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 5,
@@ -3259,13 +3259,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 6,
@@ -3298,13 +3298,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 7,
@@ -3338,13 +3338,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 8,
@@ -3380,13 +3380,13 @@
       "edinet_status": "no_recent_filing",
       "yahoo_status": "ok",
       "source_date": "2025-06-30",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 9,
@@ -3427,13 +3427,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 10,
@@ -3467,13 +3467,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     }
   ],
   "small_investment_top_10": [
@@ -3516,13 +3516,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 3,
@@ -3557,13 +3557,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 4,
@@ -3600,13 +3600,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 6,
@@ -3639,13 +3639,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 7,
@@ -3679,13 +3679,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 8,
@@ -3721,13 +3721,13 @@
       "edinet_status": "no_recent_filing",
       "yahoo_status": "ok",
       "source_date": "2025-06-30",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 9,
@@ -3768,13 +3768,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 10,
@@ -3808,13 +3808,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 13,
@@ -3851,13 +3851,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2026-03-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     },
     {
       "rank": 15,
@@ -3897,13 +3897,13 @@
       "edinet_status": "ok",
       "yahoo_status": "ok",
       "source_date": "2025-12-31",
-      "generated_at": "2026-09-06T10:05:17.178669+00:00",
+      "generated_at": "2026-09-06T21:40:27.560663+00:00",
       "tdnet_status": "unavailable",
       "tdnet_event_score": null,
       "recent_events": [],
       "positive_flags": [],
       "tdnet_adjustment": 0.0,
-      "tdnet_provider": "unconfigured"
+      "tdnet_provider": "jpx_tdnet_public"
     }
   ]
 }
