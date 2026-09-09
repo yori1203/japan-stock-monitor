@@ -72,8 +72,8 @@ def build_report(run, ranked, portfolio, fresh, changes):
              "| stage | status | 入力 | 成功 | 失敗 | cache hit |", "|---|---|---:|---:|---:|---:|"]
     for name, s in run["stages"].items():
         lines.append(f"| {name} | {s['status']} | {s['input_count']} | {s['success_count']} | {s['failure_count']} | {s['cache_hits']} |")
-    lines += ["", "## data freshness", "", "| データ | 最古の取得日時・基準日 | 最新 | warning |", "|---|---|---|---|"]
-    for name, f in fresh.items(): lines.append(f"| {name} | {f['oldest'] or '未取得'} | {f['newest'] or '未取得'} | {f['warning']} |")
+    lines += ["", "## data freshness", "", "| データ | 最古の取得日時・基準日 | 最新 | 状態 | 理由 |", "|---|---|---|---|---|"]
+    for name, f in fresh.items(): lines.append(f"| {name} | {f['oldest'] or '未取得'} | {f['newest'] or '未取得'} | {f.get('status', 'unknown')} | {f.get('reason', f['warning'])} |")
     ed = run.get("edinet_counts", {})
     lines += ["", f"- EDINET: {ed}（no_recent_filingはAPI失敗ではありません）",
               f"- EDINET検索基準日: {run.get('edinet_reference_date', '未取得')}",
@@ -83,11 +83,29 @@ def build_report(run, ranked, portfolio, fresh, changes):
                             ("1万円前後の候補（5千〜1万5千円）", [c for c in ranked if c["minimum_purchase_amount"] is not None and 5000 <= c["minimum_purchase_amount"] <= 15000]),
                             ("A評価銘柄", [c for c in ranked if c["category"] == "A"])]:
         lines += ["", f"## {heading}", "", *table(subset)]
-    lines += ["", "## 保有株評価", "", "売買指示ではなく、確認優先度の目安です。取得単価不明の場合、損益による利確・損切り判定はできません。", "",
-              "| 銘柄 | 株数 | 評価 | score | 株価 | 株価基準日 | 不足情報 |", "|---|---:|---|---:|---:|---|---|"]
+    lines += ["", "## 保有株評価（専用portfolio universe）", "", "候補Top50への採否とは独立した分析です。スコアは取得できた項目で再正規化し、売買は自動実行しません。", ""]
     for p in portfolio:
-        lines.append(f"| {p['code']} | {p['shares']} | {p['assessment']} | {p['score'] if p['score'] is not None else '未取得'} | {p['price']} | {p['price_date']} | {', '.join(p['missing']) or 'なし'} |")
-        if p['risk_flags'] or p['positive_flags']: lines.append(f"\n{p['code']}: risk={p['risk_flags']}, positive={p['positive_flags']}\n")
+        action_label = {"hold": "保有継続", "buy_more": "買い増し候補", "take_profit_watch": "利確警戒", "stop_loss_watch": "損切り警戒", "reduce": "縮小検討", "insufficient_data": "分析データ不足"}
+        lines += [f"### {p['code']} {safe(p['company_name'])}（{p['shares']}株）", "", "| 項目 | 値 |", "|---|---|"]
+        fields = [("取得単価 average_cost", p['average_cost'] if p['average_cost'] is not None else "未登録"),
+            ("現在株価（日足）", p['current_price']), ("株価基準日", p['price_date']), ("前日比 %", p['change_pct']), ("出来高", p['volume']),
+            ("含み損益", p['unrealized_pnl'] if p['unrealized_pnl'] is not None else "取得単価未登録のため算出不可"),
+            ("含み損益 %", p['unrealized_pnl_pct'] if p['unrealized_pnl_pct'] is not None else "取得単価未登録のため算出不可"),
+            ("portfolio_score", p['portfolio_score']), ("ランキング相当スコア", p['ranking_equivalent_score']),
+            ("暫定action", f"{p['action']}（{action_label[p['action']]}）"), ("confidence", p['confidence']),
+            ("financial status", p['financial_status']), ("technical status", p['technical_status']),
+            ("EDINET status", p['edinet_status']), ("TDnet status", p['tdnet_status']),
+            ("positive_flags", ', '.join(p['positive_flags']) or 'なし'), ("risk_flags", ', '.join(p['risk_flags']) or 'なし'),
+            ("評価可能な配点", f"{p['available_weight']} / 100（未取得項目は除外）")]
+        fields += [("スコア内訳", ', '.join(f"{k}={v:.2f}" for k, v in p['components'].items() if v is not None)),
+                   ("取得できた評価項目", ', '.join(p['available_components']) or 'なし'),
+                   ("取得できなかった評価項目", ', '.join(p['missing_components']) or 'なし')]
+        for label, value in fields: lines.append(f"| {label} | {safe(str(value)) if value is not None else '未取得'} |")
+        tech = p['technical']
+        lines += [f"- MA5/25/75: {tech.get('ma5', '未取得')} / {tech.get('ma25', '未取得')} / {tech.get('ma75', '未取得')}",
+                  f"- RSI: {tech.get('rsi', '未取得')} / MACD: {tech.get('macd', '未取得')}"]
+        for kind, f in p['freshness'].items(): lines.append(f"- {kind}: {f['status']} / {f['oldest'] or '未取得'} / {f['reason']}")
+        lines += [f"- 評価理由: {safe('; '.join(p['evaluation_reasons'])) or '評価項目不足'}", f"- コメント: {p['comment']}", ""]
     lines += ["", "## 前回ランキングとの差", ""]
     for key, label in (("up", "順位上昇"), ("down", "順位下落"), ("new", "新規候補"), ("top20_new", "新規Top20"), ("removed", "対象外となった候補")):
         lines.append(f"- {label}: {', '.join(changes[key]) or 'なし'}")

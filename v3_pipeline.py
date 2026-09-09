@@ -21,8 +21,10 @@ from tdnet_events import JST, timestamp
 from tdnet_provider import FreePublicTDnetProvider, production_results
 from v3_edinet_full_validation import atomic_json, select_documents, usable_result
 from v3_pipeline_report import build_report, freshness, portfolio_review, ranking_changes
+from v3_freshness import price_freshness, age_freshness
+from v3_portfolio import analyse_portfolio
 
-STAGES = ("universe", "preselection", "financial", "edinet", "tdnet", "ranking", "report")
+STAGES = ("universe", "preselection", "financial", "edinet", "tdnet", "portfolio", "ranking", "report")
 TERMINAL = {"completed", "cached", "skipped", "partial", "unavailable"}
 
 
@@ -114,7 +116,9 @@ class Pipeline:
         except FileExistsError:
             raise RuntimeError("V3 pipeline lock exists; inspect before resuming") from None
         try:
-            fingerprint = digest({"source": self.source, "edinet": self.saved_ed, "config": self.settings, "mode": self.mode})
+            fingerprint = digest({"version": 2, "source": self.source, "edinet": self.saved_ed, "config": self.settings, "mode": self.mode,
+                "portfolio_settings": read(self.root / "v3_portfolio_settings.json"), "portfolio_input": read(self.root / "validation/v3_portfolio_input.json"),
+                "portfolio_cache": read(self.cache / "portfolio-cache.json")})
             previous = read(self.checkpoint)
             if previous and not self.new_run:
                 if previous["input_hash"] != fingerprint: raise ValueError("inputs changed; use --new-run (acquisition caches retained)")
@@ -201,11 +205,11 @@ class Pipeline:
         securities = filter_equity_universe([UniverseSecurity(**s) for s in uni["securities"]])
         progress_path = self.work / "quote-progress.json"
         progress = read(progress_path, {"done": [], "failures": {}})
-        hits = sum(s.code in snapshots and (self.mode != "full" or freshness([snapshots[s.code].get("data_as_of")], self.now, 3)["warning"] == "なし") for s in securities)
+        hits = sum(s.code in snapshots and (self.mode != "full" or price_freshness([snapshots[s.code].get("data_as_of")], self.now)["status"] in {"fresh", "acceptable"}) for s in securities)
         self.progress("preselection", len(securities), len(progress["done"]), hits, len(progress["failures"]))
         if self.mode == "full":
             missing = [s for s in securities if s.code not in progress["done"] and
-                (s.code not in snapshots or freshness([snapshots[s.code].get("data_as_of")], self.now, 3)["warning"] != "なし")]
+                (s.code not in snapshots or price_freshness([snapshots[s.code].get("data_as_of")], self.now)["status"] not in {"fresh", "acceptable"})]
             for offset in range(0, len(missing), 50):
                 batch = missing[offset:offset+50]
                 fetched = self.call("quotes", [asdict(s) for s in batch])
@@ -333,6 +337,14 @@ class Pipeline:
         return {"status": result.status, "source": result.source, "fetched_at": result.fetched_at,
                 "results": {c: asdict(r) for c, r in mapped.items()}}, self.stats(len(codes), 0, result.cache_hits, result.failure_count, status="unavailable")
 
+    def stage_portfolio(self):
+        financial = {c["code"]: c["financial_data"] for c in self.result("financial")["candidates"]}
+        items = analyse_portfolio(self.root, self.cache, self.result("preselection")["snapshots"], financial,
+                                  self.result("edinet")["results"], self.now)
+        count = sum(p["portfolio_score"] is not None for p in items)
+        return {"portfolio_universe": [p["code"] for p in items], "holdings": items}, self.stats(len(items), count, count,
+            status="cached" if count == len(items) else "partial")
+
     def stage_ranking(self):
         from financials import FinancialCandidate, FinancialData
         from edinet_adapter import EdinetFinancialData
@@ -370,14 +382,15 @@ class Pipeline:
         ranked = value["ranked_candidates"]
         snapshots = self.result("preselection")["snapshots"]
         financial, ed = self.result("financial"), self.result("edinet")
-        fresh = {"JPX": freshness([self.result("universe").get("fetched_at")], self.now, 7),
-            "株価": freshness([snapshots[c["code"]].get("data_as_of") for c in ranked if c["code"] in snapshots], self.now, 3),
-            "財務取得": freshness([c["fetched_at"] for c in financial["candidates"]], self.now, 7),
-            "財務決算期": freshness([c["financial_data"].get("period_end") for c in financial["candidates"]], self.now, 180),
-            "EDINET取得": freshness([r.get("data", {}).get("fetched_at") for r in ed["results"].values()], self.now, 7),
-            "EDINET決算期": freshness([r.get("data", {}).get("period_end") for r in ed["results"].values()], self.now, 180),
-            "TDnet": {"oldest": None, "newest": None, "warning": "未照合（取得試行日時はstage記録参照）"}}
-        holdings = portfolio_review(self.settings.get("portfolio", []), ranked, snapshots)
+        fresh = {"JPX universe": age_freshness([self.result("universe").get("fetched_at")], self.now, 7),
+            "stock_price": price_freshness([snapshots[c["code"]].get("data_as_of") for c in ranked if c["code"] in snapshots] or [c.get("source_date") for c in ranked], self.now),
+            "fundamentals": age_freshness([c["fetched_at"] for c in financial["candidates"]], self.now, 7),
+            "財務決算期": age_freshness([c["financial_data"].get("period_end") for c in financial["candidates"]], self.now, 180),
+            "EDINET": age_freshness([r.get("data", {}).get("fetched_at") for r in ed["results"].values()], self.now, 7),
+            "EDINET決算期": age_freshness([r.get("data", {}).get("period_end") for r in ed["results"].values()], self.now, 180),
+            "TDnet": {"status": "unknown", "oldest": None, "newest": None, "warning": "未照合", "reason": "利用許諾未確認のためunavailable"}}
+        holdings = self.result("portfolio")["holdings"]
+        atomic_json(self.out / "v3_portfolio_output.json", {"generated_at": self.now.isoformat(), "holdings": holdings})
         previous = read(self.work / "previous-ranking.json", {}).get("ranked_candidates", [])
         changes = ranking_changes(ranked, previous)
         stats = self.stats(len(ranked), len(ranked))
@@ -396,7 +409,7 @@ class Pipeline:
             "category_a": [c["code"] for c in ranked if c["category"] == "A"]}
         atomic_json(self.out / "v3_pipeline_summary.json", summary)
         summary["outputs"] = {path: digest((self.out / path).read_text(encoding="utf-8")) for path in
-                              ("v3_report.md", "v3_final_candidates_report.md", "v3_final_ranking.json", "v3_pipeline_summary.json")}
+                              ("v3_report.md", "v3_final_candidates_report.md", "v3_final_ranking.json", "v3_pipeline_summary.json", "v3_portfolio_output.json")}
         return summary, stats
 
 

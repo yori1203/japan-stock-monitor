@@ -1,6 +1,6 @@
 # V3 Final Candidates Report
 
-- 実行日時 JST: 2026-09-07T06:40:27+09:00
+- 実行日時 JST: 2026-09-10T00:14:36+09:00
 - 対象ユニバース数: 3707
 - preselection対象数: 400
 - 財務取得成功数: 50
@@ -580,9 +580,9 @@
 
 # V3統合パイプライン
 
-- 実行日時 JST: 2026-09-07T06:40:27.560663+09:00
+- 実行日時 JST: 2026-09-10T00:14:36.383376+09:00
 - mode: cached / status: completed
-- 実行時間: 1.41秒
+- 実行時間: 1.72秒
 - 保存データの日時は下表参照。自動売買なし。
 
 ## stage状態
@@ -594,20 +594,21 @@
 | financial | cached | 400 | 50 | 0 | 50 |
 | edinet | cached | 50 | 49 | 0 | 50 |
 | tdnet | unavailable | 50 | 0 | 0 | 0 |
+| portfolio | cached | 4 | 4 | 0 | 4 |
 | ranking | completed | 50 | 50 | 0 | 0 |
 | report | completed | 50 | 50 | 0 | 0 |
 
 ## data freshness
 
-| データ | 最古の取得日時・基準日 | 最新 | warning |
-|---|---|---|---|
-| JPX | 2026-09-05T08:26:27.167273+00:00 | 2026-09-05T08:26:27.167273+00:00 | なし |
-| 株価 | 2026-09-04T00:00:00+09:00 | 2026-09-04T00:00:00+09:00 | 古いデータを含む |
-| 財務取得 | 2026-09-05T13:16:06.146252+00:00 | 2026-09-05T13:16:47.188301+00:00 | なし |
-| 財務決算期 | 2025-06-30T00:00:00+09:00 | 2026-03-31T00:00:00+09:00 | 古いデータを含む |
-| EDINET取得 | 2026-09-05T12:53:46.820622+00:00 | 2026-09-06T03:51:13.813704+00:00 | なし |
-| EDINET決算期 | 2026-01-31T00:00:00+09:00 | 2026-06-30T00:00:00+09:00 | 古いデータを含む |
-| TDnet | 未取得 | 未取得 | 未照合（取得試行日時はstage記録参照） |
+| データ | 最古の取得日時・基準日 | 最新 | 状態 | 理由 |
+|---|---|---|---|---|
+| JPX universe | 2026-09-05T08:26:27.167273+00:00 | 2026-09-05T08:26:27.167273+00:00 | acceptable | 最古データは4.3日前（許容7日） |
+| stock_price | 2026-09-04 | 2026-09-04 | stale | 必要な直近営業日終値 2026-09-09 に対し最古の株価基準日は 2026-09-04 |
+| fundamentals | 2026-09-05T13:16:06.146252+00:00 | 2026-09-05T13:16:47.188301+00:00 | acceptable | 最古データは4.1日前（許容7日） |
+| 財務決算期 | 2025-06-30T00:00:00+09:00 | 2026-03-31T00:00:00+09:00 | stale | 最古データは437.0日前（許容180日） |
+| EDINET | 2026-09-05T12:53:46.820622+00:00 | 2026-09-06T03:51:13.813704+00:00 | acceptable | 最古データは4.1日前（許容7日） |
+| EDINET決算期 | 2026-01-31T00:00:00+09:00 | 2026-06-30T00:00:00+09:00 | stale | 最古データは222.0日前（許容180日） |
+| TDnet | 未取得 | 未取得 | unknown | 利用許諾未確認のためunavailable |
 
 - EDINET: {'ok': 49, 'no_recent_filing': 1}（no_recent_filingはAPI失敗ではありません）
 - EDINET検索基準日: 2026-09-05
@@ -668,16 +669,150 @@
 | 2 | 2317 | 株式会社システナ | 81.87 | A | 45,300円 |
 | 3 | 2146 | ＵＴグループ株式会社 | 80.63 | A | 22,700円 |
 
-## 保有株評価
+## 保有株評価（専用portfolio universe）
 
-売買指示ではなく、確認優先度の目安です。取得単価不明の場合、損益による利確・損切り判定はできません。
+候補Top50への採否とは独立した分析です。スコアは取得できた項目で再正規化し、売買は自動実行しません。
 
-| 銘柄 | 株数 | 評価 | score | 株価 | 株価基準日 | 不足情報 |
-|---|---:|---|---:|---:|---|---|
-| 6740 | 100 | 評価保留 | 未取得 | 47.0 | 2026-09-04 | 財務・総合スコア, 取得単価 |
-| 6573 | 100 | 評価保留 | 未取得 | 27.0 | 2026-09-04 | 財務・総合スコア, 取得単価 |
-| 4596 | 100 | 評価保留 | 未取得 | 64.0 | 2026-09-04 | 財務・総合スコア, 取得単価 |
-| 4597 | 300 | 評価保留 | 未取得 | 29.0 | 2026-09-04 | 財務・総合スコア, 取得単価 |
+### 6740 ジャパンディスプレイ（100株）
+
+| 項目 | 値 |
+|---|---|
+| 取得単価 average_cost | 未登録 |
+| 現在株価（日足） | 48.0 |
+| 株価基準日 | 2026-09-07 |
+| 前日比 % | 2.127659574468077 |
+| 出来高 | 16216000.0 |
+| 含み損益 | 取得単価未登録のため算出不可 |
+| 含み損益 % | 取得単価未登録のため算出不可 |
+| portfolio_score | 35.54 |
+| ランキング相当スコア | 43.18 |
+| 暫定action | stop_loss_watch（損切り警戒） |
+| confidence | low |
+| financial status | ok |
+| technical status | ok |
+| EDINET status | unavailable |
+| TDnet status | unavailable |
+| positive_flags | strong_technical |
+| risk_flags | consecutive_losses, declining_equity_ratio, extreme_valuation, large_negative_fcf, negative_equity, operating_loss |
+| 評価可能な配点 | 75 / 100（未取得項目は除外） |
+| スコア内訳 | financial=11.42, technical=70.00, momentum=42.00, risk=0.00 |
+| 取得できた評価項目 | financial, technical, momentum, risk |
+| 取得できなかった評価項目 | edinet, event |
+- MA5/25/75: 47.2 / 47.96 / 51.28
+- RSI: 46.666666666666664 / MACD: -0.6309995008626359
+- stock_price: stale / 2026-09-07 / 必要な直近営業日終値 2026-09-09 に対し最古の株価基準日は 2026-09-07
+- fundamentals: fresh / 2026-09-07T02:46:23.365526+00:00 / 最古データは2.5日前（許容7日）
+- fundamentals_period: acceptable / 2026-03-31T00:00:00+09:00 / 最古データは163.0日前（許容180日）
+- EDINET: unknown / 未取得 / 取得日時・基準日不明
+- TDnet: unknown / 未取得 / 取得日時・基準日不明
+- 評価理由: weak_fcf; 株価が25日移動平均線より上; 短期トレンド弱め; 中期トレンド弱め; RSIは健全な上昇圏; MACDが強気; 出来高が20日平均の1.5倍以上; 20営業日騰落率 -4.00%
+- コメント: 市場・財務・材料ベースの暫定判定。取得単価未登録のため損益率・厳密な利確/損切り価格は算出不可。一部データ未照合。
+
+### 6573 CRAVIA（100株）
+
+| 項目 | 値 |
+|---|---|
+| 取得単価 average_cost | 未登録 |
+| 現在株価（日足） | 28.0 |
+| 株価基準日 | 2026-09-07 |
+| 前日比 % | 3.703703703703698 |
+| 出来高 | 93200.0 |
+| 含み損益 | 取得単価未登録のため算出不可 |
+| 含み損益 % | 取得単価未登録のため算出不可 |
+| portfolio_score | 48.72 |
+| ランキング相当スコア | 52.44 |
+| 暫定action | hold（保有継続） |
+| confidence | low |
+| financial status | ok |
+| technical status | ok |
+| EDINET status | unavailable |
+| TDnet status | unavailable |
+| positive_flags | strong_equity_ratio, strong_revenue_growth, strong_technical |
+| risk_flags | consecutive_losses, large_negative_fcf, operating_loss |
+| 評価可能な配点 | 75 / 100（未取得項目は除外） |
+| スコア内訳 | financial=34.92, technical=72.00, momentum=65.38, risk=0.00 |
+| 取得できた評価項目 | financial, technical, momentum, risk |
+| 取得できなかった評価項目 | edinet, event |
+- MA5/25/75: 28.4 / 27.88 / 26.653333333333332
+- RSI: 55.55555555555556 / MACD: 0.44833376677685166
+- stock_price: stale / 2026-09-07 / 必要な直近営業日終値 2026-09-09 に対し最古の株価基準日は 2026-09-07
+- fundamentals: fresh / 2026-09-07T02:46:34.020616+00:00 / 最古データは2.5日前（許容7日）
+- fundamentals_period: stale / 2025-12-31T00:00:00+09:00 / 最古データは253.0日前（許容180日）
+- EDINET: unknown / 未取得 / 取得日時・基準日不明
+- TDnet: unknown / 未取得 / 取得日時・基準日不明
+- 評価理由: strong_revenue_growth; strong_equity_ratio; weak_fcf; 株価が25日移動平均線より上; 短期トレンド上向き; 中期上昇トレンド; RSIは健全な上昇圏; MACDが弱気; 出来高が低調; 20営業日騰落率 7.69%
+- コメント: 市場・財務・材料ベースの暫定判定。取得単価未登録のため損益率・厳密な利確/損切り価格は算出不可。一部データ未照合。
+
+### 4596 窪田製薬HD（100株）
+
+| 項目 | 値 |
+|---|---|
+| 取得単価 average_cost | 未登録 |
+| 現在株価（日足） | 66.0 |
+| 株価基準日 | 2026-09-07 |
+| 前日比 % | 3.125 |
+| 出来高 | 293600.0 |
+| 含み損益 | 取得単価未登録のため算出不可 |
+| 含み損益 % | 取得単価未登録のため算出不可 |
+| portfolio_score | 38.18 |
+| ランキング相当スコア | 52.77 |
+| 暫定action | reduce（縮小検討） |
+| confidence | low |
+| financial status | ok |
+| technical status | ok |
+| EDINET status | unavailable |
+| TDnet status | unavailable |
+| positive_flags | strong_equity_ratio, strong_revenue_growth |
+| risk_flags | consecutive_losses, large_negative_fcf, operating_loss, rapid_debt_increase |
+| 評価可能な配点 | 75 / 100（未取得項目は除外） |
+| スコア内訳 | financial=30.83, technical=48.00, momentum=59.52, risk=0.00 |
+| 取得できた評価項目 | financial, technical, momentum, risk |
+| 取得できなかった評価項目 | edinet, event |
+- MA5/25/75: 65.4 / 65.72 / 63.666666666666664
+- RSI: 43.47826086956522 / MACD: 0.1314341997395445
+- stock_price: stale / 2026-09-07 / 必要な直近営業日終値 2026-09-09 に対し最古の株価基準日は 2026-09-07
+- fundamentals: fresh / 2026-09-07T02:46:43.920526+00:00 / 最古データは2.5日前（許容7日）
+- fundamentals_period: stale / 2025-12-31T00:00:00+09:00 / 最古データは253.0日前（許容180日）
+- EDINET: unknown / 未取得 / 取得日時・基準日不明
+- TDnet: unknown / 未取得 / 取得日時・基準日不明
+- 評価理由: strong_revenue_growth; strong_equity_ratio; weak_fcf; 株価が25日移動平均線より上; 短期トレンド弱め; 中期上昇トレンド; MACDが弱気; 出来高が低調; 20営業日騰落率 4.76%
+- コメント: 市場・財務・材料ベースの暫定判定。取得単価未登録のため損益率・厳密な利確/損切り価格は算出不可。一部データ未照合。
+
+### 4597 ソレイジア・ファーマ（300株）
+
+| 項目 | 値 |
+|---|---|
+| 取得単価 average_cost | 未登録 |
+| 現在株価（日足） | 29.0 |
+| 株価基準日 | 2026-09-07 |
+| 前日比 % | 0.0 |
+| 出来高 | 36101500.0 |
+| 含み損益 | 取得単価未登録のため算出不可 |
+| 含み損益 % | 取得単価未登録のため算出不可 |
+| portfolio_score | 28.28 |
+| ランキング相当スコア | 54.52 |
+| 暫定action | reduce（縮小検討） |
+| confidence | low |
+| financial status | ok |
+| technical status | ok |
+| EDINET status | unavailable |
+| TDnet status | unavailable |
+| positive_flags | strong_equity_ratio, strong_revenue_growth |
+| risk_flags | consecutive_losses, large_negative_fcf, operating_loss, weak_technical |
+| 評価可能な配点 | 75 / 100（未取得項目は除外） |
+| スコア内訳 | financial=30.83, technical=28.00, momentum=43.33, risk=0.00 |
+| 取得できた評価項目 | financial, technical, momentum, risk |
+| 取得できなかった評価項目 | edinet, event |
+- MA5/25/75: 29.2 / 30.64 / 27.12
+- RSI: 33.33333333333333 / MACD: -0.028179242578332264
+- stock_price: stale / 2026-09-07 / 必要な直近営業日終値 2026-09-09 に対し最古の株価基準日は 2026-09-07
+- fundamentals: fresh / 2026-09-07T02:46:53.696321+00:00 / 最古データは2.5日前（許容7日）
+- fundamentals_period: stale / 2025-12-31T00:00:00+09:00 / 最古データは253.0日前（許容180日）
+- EDINET: unknown / 未取得 / 取得日時・基準日不明
+- TDnet: unknown / 未取得 / 取得日時・基準日不明
+- 評価理由: strong_revenue_growth; strong_equity_ratio; weak_fcf; 株価が25日移動平均線より下; 短期トレンド弱め; 中期上昇トレンド; MACDが弱気; 出来高が低調; 20営業日騰落率 -3.33%
+- コメント: 市場・財務・材料ベースの暫定判定。取得単価未登録のため損益率・厳密な利確/損切り価格は算出不可。一部データ未照合。
+
 
 ## 前回ランキングとの差
 
