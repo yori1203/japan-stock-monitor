@@ -1,6 +1,10 @@
 name: V3 Integrated Pipeline (manual)
 
 on:
+  # Future only (UTC): 09:30 / 12:30 / 16:00 JST, weekdays.
+  # schedule:
+  #   - cron: '30 0,3 * * 1-5'
+  #   - cron: '0 7 * * 1-5'
   workflow_dispatch:
     inputs:
       mode:
@@ -8,6 +12,10 @@ on:
         type: choice
         options: [cached, quick, full]
         default: cached
+      new_run:
+        description: 'Start a new full evaluation (acquisition caches retained); leave false to resume full'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -26,6 +34,8 @@ jobs:
       PYTHONUNBUFFERED: '1'
     steps:
       - uses: actions/checkout@v4
+      - name: Artifact timestamp JST
+        run: echo "V3_RUN_JST=$(TZ=Asia/Tokyo date +%Y%m%d-%H%M%S-JST)" >> "$GITHUB_ENV"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -44,7 +54,9 @@ jobs:
         shell: bash
         run: |
           set +e
-          python v3_pipeline.py --mode "${{ inputs.mode }}" --max-seconds 180 --max-operations 20
+          args=()
+          if [ "${{ inputs.mode }}" != "full" ] || [ "${{ inputs.new_run }}" = "true" ]; then args+=(--new-run); fi
+          python v3_pipeline.py --mode "${{ inputs.mode }}" "${args[@]}" --max-seconds 180 --max-operations 20
           code=$?
           if [ "$code" -eq 2 ]; then
             echo "::notice::Chunk saved. Dispatch the same mode again to resume."
@@ -62,7 +74,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: v3-integrated-pipeline
+          name: v3-integrated-pipeline-${{ env.V3_RUN_JST }}
           include-hidden-files: true
           path: |
             v3_report.md
@@ -70,4 +82,5 @@ jobs:
             v3_final_ranking.json
             v3_pipeline_run.json
             v3_pipeline_summary.json
+            v3_portfolio_output.json
             .cache/v3-pipeline/*/checkpoint.json
