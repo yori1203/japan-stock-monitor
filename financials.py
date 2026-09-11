@@ -69,6 +69,7 @@ class FinancialData:
     source: str = "unknown"
     period_end: str | None = None
     fetched_at: str = ""
+    field_metadata: dict = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -431,6 +432,23 @@ def _growth(values: Sequence[float], periods: int = 1) -> float | None:
     return values[0] / values[periods] - 1.0
 
 
+def _statement_metadata(statement, labels, currency, *, period_kind="annual"):
+    """Describe the exact first finite value selected by _statement_values."""
+    if statement is not None and not getattr(statement, "empty", True):
+        for label in labels:
+            if label in statement.index:
+                for column, value in zip(statement.columns, statement.loc[label].tolist()):
+                    if _number(value) is not None:
+                        return {"source_field": label, "period_start": None,
+                            "period_end": str(column.date()), "period_kind": period_kind,
+                            "scope": "unknown", "original_unit": currency or "unknown",
+                            "normalization_multiplier": 1, "source": "annual_statement"}
+                break
+    return {"period_start": None, "period_end": None, "period_kind": "unknown",
+            "scope": "unknown", "original_unit": currency or "unknown",
+            "normalization_multiplier": 1, "source": "info_fallback"}
+
+
 class YahooFinanceAdapter:
     """Yahoo adapter isolated so EDINET/TDnet adapters can be added later."""
 
@@ -450,6 +468,21 @@ class YahooFinanceAdapter:
         debt = _statement_values(balance, ("Total Debt",))
         equity = _statement_values(balance, ("Stockholders Equity", "Total Equity Gross Minority Interest"))
         assets = _statement_values(balance, ("Total Assets",))
+        currency = info.get("financialCurrency")
+        metadata = {
+            name: _statement_metadata(statement, labels, currency, period_kind=kind)
+            for name, statement, labels, kind in (
+                ("revenue", income, ("Total Revenue", "Operating Revenue"), "annual"),
+                ("operating_income", income, ("Operating Income",), "annual"),
+                ("net_income", income, ("Net Income", "Net Income Common Stockholders"), "annual"),
+                ("equity", balance, ("Stockholders Equity", "Total Equity Gross Minority Interest"), "instant"),
+                ("total_assets", balance, ("Total Assets",), "instant"),
+                ("eps", income, ("Diluted EPS", "Basic EPS"), "annual"))}
+        if _first(info, "trailingEps"):
+            metadata["eps"] = {"source": "info", "source_field": "trailingEps",
+                "period_start": None, "period_end": None, "period_kind": "trailing",
+                "scope": "unknown", "normalization_multiplier": 1}
+        metadata["eps"]["original_unit"] = f"{currency}/shares" if currency else "unknown"
         fcf = _statement_values(cashflow, ("Free Cash Flow",))
         equity_ratio = equity[0] / assets[0] if equity and assets and assets[0] else None
         previous_equity_ratio = equity[1] / assets[1] if len(equity) > 1 and len(assets) > 1 and assets[1] else None
@@ -480,4 +513,5 @@ class YahooFinanceAdapter:
             consecutive_loss_years=consecutive_losses, source="Yahoo Finance (yfinance)",
             period_end=str(income.columns[0].date()) if income is not None and not income.empty else None,
             fetched_at=datetime.now(timezone.utc).isoformat(),
+            field_metadata=metadata,
         )

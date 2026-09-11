@@ -1,6 +1,6 @@
 """Yahoo/EDINET financial cross-checking without changing the Yahoo-only path."""
 from __future__ import annotations
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from datetime import date
 from typing import Mapping
 
@@ -13,6 +13,7 @@ class CrosscheckConfig:
     warning_ratio: float = 0.10
     unit_multipliers: tuple[float, ...] = (1.0, 1_000.0, 1_000_000.0)
     period_tolerance_days: int = 100
+    require_provenance: bool = False
 
 
 @dataclass(frozen=True)
@@ -24,6 +25,8 @@ class FieldCrosscheck:
     difference_ratio: float | None
     status: str
     unit_multiplier: float = 1.0
+    numeric_status: str = ""
+    diagnostics: dict = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -38,6 +41,48 @@ class CrosscheckResult:
 def _best_unit(yahoo: float, edinet: float, multipliers: tuple[float, ...]) -> tuple[float, float]:
     options = [(factor, abs(yahoo - edinet * factor) / max(abs(yahoo), abs(edinet * factor), 1)) for factor in multipliers]
     return min(options, key=lambda item: item[1])
+
+
+def comparison_diagnostics(name, yahoo, edinet, factor, *, missing=False):
+    """Separate proven incompatibility from missing comparison evidence."""
+    ym = yahoo.field_metadata.get(name, {})
+    em = edinet.field_metadata.get(name, {})
+    causes, unknown = [], []
+    if missing:
+        causes.append("data_missing")
+    ye, ee = ym.get("period_end"), em.get("period_end")
+    if ye and ee:
+        if ye != ee: causes.append("period_mismatch")
+        elif name not in ("equity", "total_assets"):
+            ys, es = ym.get("period_start"), em.get("period_start")
+            if ys and es:
+                if ys != es: causes.append("period_mismatch")
+            elif ym.get("period_kind") == "annual" and es:
+                try:
+                    days = (date.fromisoformat(ee) - date.fromisoformat(es)).days
+                    if not 330 <= days <= 400: causes.append("period_mismatch")
+                    else: unknown.append("period_start_unknown")
+                except ValueError: unknown.append("invalid_period")
+            else: unknown.append("period_start_unknown")
+    else: unknown.append("period_unknown")
+    scopes = (ym.get("scope", "unknown"), em.get("scope", "unknown"))
+    if "unknown" not in scopes and all(scopes):
+        if scopes[0] != scopes[1]: causes.append("scope_mismatch")
+    else: unknown.append("scope_unknown")
+    yu, eu = ym.get("original_unit", "unknown"), em.get("original_unit", "unknown")
+    if yu not in (None, "unknown") and eu not in (None, "unknown"):
+        if yu != eu: causes.append("unit_mismatch")
+    else: unknown.append("unit_unknown")
+    if em.get("selection_ambiguous") or (
+        ym.get("semantic") and em.get("semantic") and ym["semantic"] != em["semantic"]):
+        causes.append("xbrl_tag_selection")
+    if not em.get("tag"): unknown.append("xbrl_tag_unknown")
+    if factor != 1:
+        causes.append("unit_correction")
+        unknown.append("heuristic_multiplier_unverified")
+    return {"edinet": em, "yahoo": ym, "causes": list(dict.fromkeys(causes)),
+            "unknown": unknown, "eligible": not causes and not unknown,
+            "reason": "; ".join(causes + unknown) or "comparison_conditions_aligned"}
 
 
 def edinet_risk_flags(data: EdinetFinancialData) -> tuple[str, ...]:
@@ -61,18 +106,37 @@ def financial_crosscheck(yahoo: FinancialData, edinet: EdinetFinancialData,
     results=[]; matched=0; comparable=0; warnings=[]
     for name,(yv,ev) in pairs.items():
         if yv is None or ev is None:
-            results.append(FieldCrosscheck(name,yv,ev,None,None,"unavailable")); continue
-        factor,ratio=_best_unit(yv,ev,config.unit_multipliers); adjusted=ev*factor
+            results.append(FieldCrosscheck(name,yv,ev,None,None,"unavailable",
+                diagnostics=comparison_diagnostics(name,yahoo,edinet,1,missing=True))); continue
+        ym, em = yahoo.field_metadata.get(name, {}), edinet.field_metadata.get(name, {})
+        # Values already normalised from explicit XBRL units/scales must not be
+        # scaled again simply to make a mismatch smaller.
+        known_units = ym.get("original_unit") not in (None,"unknown") and em.get("original_unit") not in (None,"unknown")
+        multipliers = (1.0,) if known_units else config.unit_multipliers
+        factor,ratio=_best_unit(yv,ev,multipliers); adjusted=ev*factor
         difference=yv-adjusted; status="matched" if ratio <= config.warning_ratio else "warning"
-        comparable+=1; matched += status == "matched"
+        numeric_status = status
+        diagnostics = comparison_diagnostics(name,yahoo,edinet,factor)
+        if config.require_provenance:
+            if any(c in diagnostics["causes"] for c in ("period_mismatch","scope_mismatch","unit_mismatch","xbrl_tag_selection")):
+                status = "not_comparable"
+            elif not diagnostics["eligible"] and status == "warning":
+                status = "review"
+            if diagnostics["eligible"] and status == "warning":
+                diagnostics["causes"].append("substantive_difference")
+                diagnostics["reason"] = "substantive_difference: aligned conditions, difference exceeds threshold"
+        if not config.require_provenance or diagnostics["eligible"]:
+            comparable+=1; matched += status == "matched"
         if status == "warning": warnings.append(f"{name}_mismatch")
-        results.append(FieldCrosscheck(name,yv,ev,difference,ratio,status,factor))
+        results.append(FieldCrosscheck(name,yv,ev,difference,ratio,status,factor,numeric_status,diagnostics))
     period_mismatch = False
     try:
         if yahoo.period_end and edinet.period_end:
             period_mismatch = abs((date.fromisoformat(yahoo.period_end[:10]) - date.fromisoformat(edinet.period_end[:10])).days) > config.period_tolerance_days
     except ValueError:
         period_mismatch = True
+    if config.require_provenance:
+        period_mismatch = any("period_mismatch" in f.diagnostics.get("causes",[]) for f in results)
     score=50.0 if not comparable else matched/comparable*100.0
     return CrosscheckResult(tuple(results),round(score,2),tuple(warnings),edinet_risk_flags(edinet),period_mismatch)
 

@@ -11,7 +11,7 @@ import urllib.error
 import urllib.request
 import unicodedata
 import zipfile
-from dataclasses import asdict, dataclass, fields
+from dataclasses import asdict, dataclass, field, fields
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Mapping, Protocol, Sequence
@@ -78,6 +78,7 @@ class EdinetFinancialData:
     previous_free_cash_flow: float | None = None
     fetched_at: str = ""
     source: str = "EDINET API v2"
+    field_metadata: dict = field(default_factory=dict)
 
     @property
     def shares_outstanding_growth(self) -> float | None:
@@ -229,6 +230,13 @@ def _numeric(text: str | None, scale: str | None) -> float | None:
 def parse_xbrl(content: bytes, code: str, edinet_code: str | None = None, doc_id: str | None = None) -> EdinetFinancialData:
     root = ElementTree.fromstring(content)
     contexts: dict[str, tuple[str | None, str | None]] = {}
+    context_details = {}
+    units = {}
+    for node in root.iter():
+        if _local_name(node.tag) == "unit":
+            units[node.attrib.get("id", "")] = "/".join(
+                _local_name(child.text or "") for child in node.iter()
+                if _local_name(child.tag) == "measure")
     for node in root.iter():
         if _local_name(node.tag) != "context": continue
         start = end = None
@@ -237,7 +245,19 @@ def parse_xbrl(content: bytes, code: str, edinet_code: str | None = None, doc_id
             if name == "startDate": start = child.text
             elif name in ("endDate", "instant"): end = child.text
         contexts[node.attrib.get("id", "")] = (start, end)
+        context_id = node.attrib.get("id", "")
+        members = [child.text or "" for child in node.iter()
+                   if _local_name(child.tag) == "explicitMember"]
+        # Absence of a dimension is not evidence that the fact is consolidated.
+        labels = [context_id, *members]
+        scope = ("non_consolidated" if any("NonConsolidated" in s for s in labels)
+                 else "consolidated" if any("Consolidated" in s for s in labels)
+                 else "unknown")
+        context_details[context_id] = {"period_start": start, "period_end": end,
+            "period_kind": "duration" if start else "instant", "scope": scope,
+            "dimensions": members, "context_id": context_id}
     candidates: dict[str, list[tuple[str | None, str | None, float]]] = {key: [] for key in XBRL_TAGS}
+    provenance = {key: [] for key in XBRL_TAGS}
     standard = "IFRS" if any("ifrs" in _local_name(node.tag).lower() for node in root.iter()) else "J-GAAP"
     for node in root.iter():
         name = _local_name(node.tag)
@@ -247,13 +267,34 @@ def parse_xbrl(content: bytes, code: str, edinet_code: str | None = None, doc_id
             if name in tags:
                 start, end = contexts.get(node.attrib.get("contextRef", ""), (None, None))
                 candidates[field_name].append((start, end, value))
+                provenance[field_name].append({
+                    **context_details.get(node.attrib.get("contextRef", ""), {}),
+                    "tag": node.tag, "tag_local": name,
+                    "unit_ref": node.attrib.get("unitRef"),
+                    "original_unit": units.get(node.attrib.get("unitRef", ""), "unknown"),
+                    "scale": int(node.attrib.get("scale") or "0"),
+                    "decimals": node.attrib.get("decimals"),
+                    "raw_value": _numeric(node.text, None),
+                    "normalization_multiplier": 10 ** int(node.attrib.get("scale") or "0"),
+                    "normalized_value": value})
     periods = [end for values in candidates.values() for _, end, _ in values if end]
     latest = max(periods) if periods else None
     selected = {}
     previous = {}
+    metadata = {}
     for field_name, values in candidates.items():
         current_values = [value for _, end, value in values if end == latest] or [value for _, _, value in values]
         selected[field_name] = current_values[0] if current_values else None
+        indexes = [i for i, (_, end, _) in enumerate(values) if end == latest] or list(range(len(values)))
+        if indexes:
+            chosen = indexes[0]
+            metadata[field_name] = dict(provenance[field_name][chosen])
+            # Preserve the existing selection/value; expose conflicting candidates
+            # instead of silently choosing a new tag and changing correct matches.
+            alternatives = [provenance[field_name][i] for i in indexes]
+            metadata[field_name]["selection_ambiguous"] = len({v["normalized_value"] for v in alternatives}) > 1
+            metadata[field_name]["candidate_count"] = len(alternatives)
+            metadata[field_name]["candidates"] = alternatives
         older = sorted(((end, value) for _, end, value in values if end and end != latest), reverse=True)
         previous[field_name] = older[0][1] if older else None
     starts = [start for values in candidates.values() for start, end, _ in values if end == latest and start]
@@ -261,6 +302,7 @@ def parse_xbrl(content: bytes, code: str, edinet_code: str | None = None, doc_id
         period_start=min(starts) if starts else None, period_end=latest,
         previous_shares_outstanding=previous["shares_outstanding"], previous_equity=previous["equity"],
         previous_total_assets=previous["total_assets"], fetched_at=datetime.now(timezone.utc).isoformat(),
+        field_metadata=metadata,
         **selected)
 
 
@@ -274,6 +316,7 @@ class EdinetAdapter:
         self.last_http_status: int | None = None
         self.last_content_type: str | None = None
         self.code_map_diagnostics = CodeMapDiagnostics(reason="not fetched")
+        self.document_search_diagnostics = {}
 
     def _get(self, endpoint: str, params: Mapping[str, str]) -> bytes:
         query = urllib.parse.urlencode({**params, "Subscription-Key": self.api_key or ""})
@@ -310,6 +353,10 @@ class EdinetAdapter:
                   for code in codes if normalize_stock_code(code) in entries}
         found: dict[str, dict] = {}
         last = end_date or date.today()
+        diagnostics = {code: {"window_end":last.isoformat(),
+            "window_start":(last-timedelta(days=max(lookback_days-1,0))).isoformat(),
+            "lookback_days":lookback_days,"scanned_days":0,"issuer_filings":0,
+            "supported_xbrl_filings":0} for code in wanted.values()}
         for offset in range(max(lookback_days, 0)):
             day = last - timedelta(days=offset)
             listing_path = self.cache_dir / "document-lists" / f"{day.isoformat()}.json"
@@ -321,9 +368,15 @@ class EdinetAdapter:
                 listing_path.write_text(json.dumps(listing, ensure_ascii=False), encoding="utf-8")
             for item in listing.get("results", []):
                 code = wanted.get(item.get("edinetCode"))
+                if code:
+                    diagnostics[code]["issuer_filings"] += 1
+                    if str(item.get("docTypeCode")) in USEFUL_DOC_TYPES and item.get("xbrlFlag") == "1":
+                        diagnostics[code]["supported_xbrl_filings"] += 1
                 if code and code not in found and str(item.get("docTypeCode")) in USEFUL_DOC_TYPES and item.get("xbrlFlag") == "1":
                     found[code] = item
+            for info in diagnostics.values(): info["scanned_days"] += 1
             if len(found) == len(wanted): break
+        self.document_search_diagnostics = diagnostics
         return found
 
     def _decode_api_json(self, content: bytes) -> dict[str, Any]:
@@ -343,6 +396,7 @@ class EdinetAdapter:
         try:
             raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
             if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
+                    and raw.get("data", {}).get("field_metadata")
                     and raw.get("data", {}).get("doc_id") == str(document.get("docID"))):
                 names = {item.name for item in fields(EdinetFinancialData)}
                 return EdinetResult("ok", EdinetFinancialData(**{k:v for k,v in raw["data"].items() if k in names}), cache_hit=True)
@@ -393,7 +447,8 @@ class EdinetAdapter:
         normalized = normalize_stock_code(code); path = self.cache_dir / f"{normalized}.json"
         try:
             raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
-            if datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours):
+            if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
+                    and raw.get("data", {}).get("field_metadata")):
                 names = {item.name for item in fields(EdinetFinancialData)}
                 return EdinetResult("ok", EdinetFinancialData(**{k:v for k,v in raw["data"].items() if k in names}), cache_hit=True)
         except (OSError, ValueError, KeyError, TypeError): pass

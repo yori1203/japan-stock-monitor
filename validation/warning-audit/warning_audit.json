@@ -1,0 +1,3305 @@
+{
+  "legacy_rounded_artifact": true,
+  "before": {
+    "unavailable": 39,
+    "matched": 32,
+    "warning": 34
+  },
+  "after": {
+    "unavailable": 39,
+    "matched": 32,
+    "review": 34
+  },
+  "original_warning_causes": {
+    "period_mismatch": 0,
+    "scope_mismatch": 0,
+    "unit_correction": 0,
+    "xbrl_tag_selection": 0,
+    "substantive_difference": 0,
+    "data_missing": 0,
+    "undetermined": 34
+  },
+  "all_item_causes": {
+    "period_mismatch": 0,
+    "scope_mismatch": 0,
+    "unit_correction": 0,
+    "xbrl_tag_selection": 0,
+    "substantive_difference": 0,
+    "data_missing": 39,
+    "undetermined": 66
+  },
+  "original_period_mismatches": 5,
+  "original_unit_corrections": 4,
+  "resolved_warnings": 0,
+  "fields": [
+    {
+      "code": "8614",
+      "name": "revenue",
+      "edinet": null,
+      "yahoo": 13570000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8614",
+      "name": "operating_income",
+      "edinet": 2820000000.0,
+      "yahoo": 2814000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.002127659574468085,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8614",
+      "name": "net_income",
+      "edinet": 3937000000.0,
+      "yahoo": 3937000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8614",
+      "name": "total_assets",
+      "edinet": 71950000000.0,
+      "yahoo": 71950000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8614",
+      "name": "equity",
+      "edinet": 30640000000.0,
+      "yahoo": 30640000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8614",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 57.98,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8614",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "2317",
+      "name": "revenue",
+      "edinet": 94400000000.0,
+      "yahoo": 94400000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2317",
+      "name": "operating_income",
+      "edinet": 15370000000.0,
+      "yahoo": 15370000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2317",
+      "name": "net_income",
+      "edinet": 11320000000.0,
+      "yahoo": 11310000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0008833922261484099,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2317",
+      "name": "total_assets",
+      "edinet": 61080000000.0,
+      "yahoo": 61080000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2317",
+      "name": "equity",
+      "edinet": 40220000000.0,
+      "yahoo": 39610000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.015166583789159622,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2317",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 31.63,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "2317",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "4477",
+      "name": "revenue",
+      "edinet": 12390000000.0,
+      "yahoo": 20730000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.402315484804631,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "4477",
+      "name": "operating_income",
+      "edinet": 1068000000.0,
+      "yahoo": 1686000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.3665480427046263,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "4477",
+      "name": "net_income",
+      "edinet": 837000000.0,
+      "yahoo": 1826000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.5416210295728368,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "4477",
+      "name": "total_assets",
+      "edinet": 52130000000.0,
+      "yahoo": 57800000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0980968858131488,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "4477",
+      "name": "equity",
+      "edinet": 15440000000.0,
+      "yahoo": 14920000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.03367875647668394,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "4477",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 18.88,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "4477",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "3679",
+      "name": "revenue",
+      "edinet": 29220000000.0,
+      "yahoo": 29220000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3679",
+      "name": "operating_income",
+      "edinet": 5913000000.0,
+      "yahoo": 5913000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3679",
+      "name": "net_income",
+      "edinet": 2148000000.0,
+      "yahoo": 4157000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.4832812124127977,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3679",
+      "name": "total_assets",
+      "edinet": 40560000000.0,
+      "yahoo": 40560000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3679",
+      "name": "equity",
+      "edinet": 10520000000.0,
+      "yahoo": 22510000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.5326521545979565,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3679",
+      "name": "eps",
+      "edinet": 41.66,
+      "yahoo": 41.62,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0009601536245799124,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3679",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "2492",
+      "name": "revenue",
+      "edinet": 9990000000.0,
+      "yahoo": 18820000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.4691817215727949,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2492",
+      "name": "operating_income",
+      "edinet": 2119000000.0,
+      "yahoo": 2864000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.2601256983240223,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2492",
+      "name": "net_income",
+      "edinet": 1173000000.0,
+      "yahoo": 1923000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.39001560062402496,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2492",
+      "name": "total_assets",
+      "edinet": 33860000000.0,
+      "yahoo": 18170000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.4633786178381571,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2492",
+      "name": "equity",
+      "edinet": 30100000000.0,
+      "yahoo": 12140000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.5966777408637873,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "2492",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 9.35,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "2492",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8628",
+      "name": "revenue",
+      "edinet": null,
+      "yahoo": 49140000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8628",
+      "name": "operating_income",
+      "edinet": 23460000000.0,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8628",
+      "name": "net_income",
+      "edinet": 15480000000.0,
+      "yahoo": 15480000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8628",
+      "name": "total_assets",
+      "edinet": 1354000000000.0,
+      "yahoo": 1354000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8628",
+      "name": "equity",
+      "edinet": 82350000000.0,
+      "yahoo": 82350000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8628",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 59.99,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8628",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "3660",
+      "name": "revenue",
+      "edinet": 14780000000.0,
+      "yahoo": 68770000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.7850807037952595,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3660",
+      "name": "operating_income",
+      "edinet": 1186000000.0,
+      "yahoo": 3164000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.6251580278128951,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3660",
+      "name": "net_income",
+      "edinet": 822100000.0,
+      "yahoo": 2327000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.6467125053717232,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3660",
+      "name": "total_assets",
+      "edinet": 9729000000.0,
+      "yahoo": 34600000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.7188150289017341,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3660",
+      "name": "equity",
+      "edinet": 5833000000.0,
+      "yahoo": 16860000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.6540332147093713,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "3660",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 30.1,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "3660",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "7803",
+      "name": "revenue",
+      "edinet": null,
+      "yahoo": 56180000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": null,
+      "category": "data_missing"
+    },
+    {
+      "code": "7803",
+      "name": "operating_income",
+      "edinet": null,
+      "yahoo": 4868000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": null,
+      "category": "data_missing"
+    },
+    {
+      "code": "7803",
+      "name": "net_income",
+      "edinet": null,
+      "yahoo": 3418000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": null,
+      "category": "data_missing"
+    },
+    {
+      "code": "7803",
+      "name": "total_assets",
+      "edinet": null,
+      "yahoo": 49800000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": null,
+      "category": "data_missing"
+    },
+    {
+      "code": "7803",
+      "name": "equity",
+      "edinet": null,
+      "yahoo": 24190000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": null,
+      "category": "data_missing"
+    },
+    {
+      "code": "7803",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 33.26,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": null,
+      "category": "data_missing"
+    },
+    {
+      "code": "7803",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": null,
+      "category": "data_missing"
+    },
+    {
+      "code": "7354",
+      "name": "revenue",
+      "edinet": 11460000000.0,
+      "yahoo": 22690000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.494931687968268,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7354",
+      "name": "operating_income",
+      "edinet": 1363000000.0,
+      "yahoo": 2133000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.36099390529770276,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7354",
+      "name": "net_income",
+      "edinet": null,
+      "yahoo": 1345000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "7354",
+      "name": "total_assets",
+      "edinet": 26900000000.0,
+      "yahoo": 27420000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.018964259664478483,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7354",
+      "name": "equity",
+      "edinet": null,
+      "yahoo": 14880000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "7354",
+      "name": "eps",
+      "edinet": 27.22,
+      "yahoo": 38.71,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.2968225264789461,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7354",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2026-01-01",
+        "2026-06-30"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8789",
+      "name": "revenue",
+      "edinet": 8011000000.0,
+      "yahoo": 14430000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.4448371448371448,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-10-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8789",
+      "name": "operating_income",
+      "edinet": 2553000000.0,
+      "yahoo": 3406000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.2504403992953611,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-10-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8789",
+      "name": "net_income",
+      "edinet": 3206000000.0,
+      "yahoo": 2122000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.33811603243917654,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-10-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8789",
+      "name": "total_assets",
+      "edinet": 26960000000.0,
+      "yahoo": 26990000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0011115227862171174,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-10-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8789",
+      "name": "equity",
+      "edinet": 14570000000.0,
+      "yahoo": 10970000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.24708304735758407,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-10-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8789",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 20.77,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-10-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8789",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-10-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "7203",
+      "name": "revenue",
+      "edinet": 18260000000000.0,
+      "yahoo": 50680000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.6397000789265983,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7203",
+      "name": "operating_income",
+      "edinet": 3766000000000.0,
+      "yahoo": 3766000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7203",
+      "name": "net_income",
+      "edinet": 3392000000000.0,
+      "yahoo": 3848000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.11850311850311851,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7203",
+      "name": "total_assets",
+      "edinet": 105500000000000.0,
+      "yahoo": 105500000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7203",
+      "name": "equity",
+      "edinet": 23660000000000.0,
+      "yahoo": 39920000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.407314629258517,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "7203",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 351.5,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "7203",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8306",
+      "name": "revenue",
+      "edinet": null,
+      "yahoo": 7521000000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8306",
+      "name": "operating_income",
+      "edinet": 1400000000000.0,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8306",
+      "name": "net_income",
+      "edinet": 2561000000000.0,
+      "yahoo": 2427000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.05232331120655994,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8306",
+      "name": "total_assets",
+      "edinet": 431700000000000.0,
+      "yahoo": 431700000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8306",
+      "name": "equity",
+      "edinet": 23740000000000.0,
+      "yahoo": 22270000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.061920808761583825,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "8306",
+      "name": "eps",
+      "edinet": null,
+      "yahoo": 236.6,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "8306",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "6758",
+      "name": "revenue",
+      "edinet": 164500000000.0,
+      "yahoo": 12480000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.9868189102564102,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "6758",
+      "name": "operating_income",
+      "edinet": 1448000000000.0,
+      "yahoo": 1554000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0682110682110682,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "6758",
+      "name": "net_income",
+      "edinet": 462300000000.0,
+      "yahoo": -326900000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 1.7071165909582522,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "6758",
+      "name": "total_assets",
+      "edinet": 15680000000000.0,
+      "yahoo": 15680000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "6758",
+      "name": "equity",
+      "edinet": 2755000000000.0,
+      "yahoo": 8119000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.6606724966128834,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "6758",
+      "name": "eps",
+      "edinet": -54.7,
+      "yahoo": 186.4,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 1.2934549356223177,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "6758",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "9432",
+      "name": "revenue",
+      "edinet": null,
+      "yahoo": 14410000000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "9432",
+      "name": "operating_income",
+      "edinet": 1706000000000.0,
+      "yahoo": 1786000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.04479283314669653,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9432",
+      "name": "net_income",
+      "edinet": 921900000000.0,
+      "yahoo": 1037000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.11099324975891996,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9432",
+      "name": "total_assets",
+      "edinet": 46720000000000.0,
+      "yahoo": 46720000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9432",
+      "name": "equity",
+      "edinet": 6886000000000.0,
+      "yahoo": 9728000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.29214638157894735,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9432",
+      "name": "eps",
+      "edinet": 12.61,
+      "yahoo": 12.61,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9432",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "9984",
+      "name": "revenue",
+      "edinet": null,
+      "yahoo": 7799000000000.0,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    },
+    {
+      "code": "9984",
+      "name": "operating_income",
+      "edinet": 1953000000000.0,
+      "yahoo": -4789000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 1.002452124935996,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9984",
+      "name": "net_income",
+      "edinet": 1492000000000.0,
+      "yahoo": 5002000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.70171931227509,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9984",
+      "name": "total_assets",
+      "edinet": 60750000000000.0,
+      "yahoo": 60750000000000.0,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.0,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9984",
+      "name": "equity",
+      "edinet": 6818000000000.0,
+      "yahoo": 17620000000000.0,
+      "before_status": "warning",
+      "status": "review",
+      "numeric_status": "warning",
+      "difference_ratio": 0.6130533484676504,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9984",
+      "name": "eps",
+      "edinet": 873.5,
+      "yahoo": 872.4,
+      "before_status": "matched",
+      "status": "matched",
+      "numeric_status": "matched",
+      "difference_ratio": 0.001259301659988578,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "undetermined"
+    },
+    {
+      "code": "9984",
+      "name": "shares_outstanding",
+      "edinet": null,
+      "yahoo": null,
+      "before_status": "unavailable",
+      "status": "unavailable",
+      "numeric_status": "unavailable",
+      "difference_ratio": null,
+      "ratio_basis": "rounded artifact values; unadjusted; original ratio unavailable",
+      "unit_multiplier": null,
+      "diagnostics": {
+        "edinet": {},
+        "yahoo": {},
+        "causes": [
+          "data_missing"
+        ],
+        "unknown": [
+          "period_unknown",
+          "scope_unknown",
+          "unit_unknown",
+          "xbrl_tag_unknown"
+        ],
+        "eligible": false,
+        "reason": "data_missing; period_unknown; scope_unknown; unit_unknown; xbrl_tag_unknown"
+      },
+      "document_period": [
+        "2025-04-01",
+        "2026-03-31"
+      ],
+      "category": "data_missing"
+    }
+  ],
+  "symbols": [
+    {
+      "code": "8614",
+      "status": "ok"
+    },
+    {
+      "code": "2317",
+      "status": "ok"
+    },
+    {
+      "code": "4477",
+      "status": "ok"
+    },
+    {
+      "code": "3679",
+      "status": "ok"
+    },
+    {
+      "code": "2492",
+      "status": "ok"
+    },
+    {
+      "code": "8628",
+      "status": "ok"
+    },
+    {
+      "code": "3660",
+      "status": "ok"
+    },
+    {
+      "code": "7803",
+      "status": "no_recent_filing"
+    },
+    {
+      "code": "7354",
+      "status": "ok"
+    },
+    {
+      "code": "8789",
+      "status": "ok"
+    },
+    {
+      "code": "7203",
+      "status": "ok"
+    },
+    {
+      "code": "8306",
+      "status": "ok"
+    },
+    {
+      "code": "6758",
+      "status": "ok"
+    },
+    {
+      "code": "9432",
+      "status": "ok"
+    },
+    {
+      "code": "9984",
+      "status": "ok"
+    }
+  ]
+}
