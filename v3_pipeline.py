@@ -354,7 +354,10 @@ class Pipeline:
         from tdnet_events import TDnetEvent
         financial, ed, td = self.result("financial"), self.result("edinet"), self.result("tdnet")
         candidates, checks, industries = [], {}, dict(financial["industries"])
+        held_codes = {str(h["code"]) for h in self.settings.get("portfolio", [])}
         for raw in financial["candidates"]:
+            if str(raw["code"]) in held_codes:
+                continue  # Holdings are evaluated exclusively by stage_portfolio.
             raw = dict(raw); raw["financial_data"] = FinancialData(**raw["financial_data"])
             c = FinancialCandidate(**raw)
             entry = ed["entries"].get(c.code, {})

@@ -331,8 +331,9 @@ class EdinetAdapter:
         metadata = payload.get("metadata", {}) if isinstance(payload, dict) else {}
         status = str(metadata.get("status") or metadata.get("statusCode") or "200")
         if status not in ("200", "0"):
-            message = str(metadata.get("message") or "EDINET API error")[:300]
-            raise RuntimeError(f"EDINET API status {status}: {message}")
+            # Server text can echo the authenticated request URL or key.
+            safe_status = status if status.isdecimal() and len(status) <= 3 else "unknown"
+            raise RuntimeError(f"EDINET API status {safe_status}") from None
         return payload
 
     def fetch_document(self, code: str, document: Mapping[str, object]) -> EdinetResult:

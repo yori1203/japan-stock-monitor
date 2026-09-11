@@ -47,6 +47,18 @@ def action_for(score, risks, technical, pnl=None):
     return "hold"
 
 
+def decision_reasons(action, score, risks, technical, price_status):
+    """Explain the chosen assessment and the alternatives without trade orders."""
+    return {
+        "保有継続": "強い売却・買い増し条件に該当せず、継続監視" if action == "hold" else "別の警戒・評価条件を優先",
+        "買い増し候補": "75点以上かつ観測リスクなし" if action == "buy_more" else "75点以上・観測リスクなしの条件未成立、または警戒条件を優先",
+        "利確警戒": "RSI過熱、または含み益と評価低下を確認" if action == "take_profit_watch" else "RSI過熱・含み益条件未成立、または重大リスクを優先（取得単価なしでは損益条件未評価）",
+        "損切り警戒": "債務超過等の重大リスク、または登録取得単価に対し15%以上の含み損" if action == "stop_loss_watch" else "重大リスク・含み損条件未成立（取得単価なしでは損益条件未評価）",
+        "様子見": "株価が古い/基準日不明のため最新データ確認待ち。暫定評価と併記" if price_status in {"stale", "unknown"} else "分析データ不足のため判断保留" if action == "insufficient_data" else "鮮度条件による保留なし。暫定評価を参照",
+        "縮小検討": f"総合{score:.2f}点が40点未満" if action == "reduce" else "40点未満ではない、または重大リスクを優先",
+    }
+
+
 def analyse(h, raw, snapshot, now):
     from financials import FinancialData, score_financial_candidate, CORE_QUALITY_FIELDS
     from preselection import MarketSnapshot, score_preselection
@@ -122,6 +134,7 @@ def analyse(h, raw, snapshot, now):
     coverage = sum(WEIGHTS[k] for k, v in components.items() if v is not None)
     confidence = "medium" if coverage >= 60 else "low"
     if fresh["stock_price"]["status"] in {"stale", "unknown"}: confidence = "low"
+    action = action_for(score, risks, tech, pnl)
     return dict(code=code, company_name=h.get("company_name", NAMES.get(code, code)), shares=h.get("shares"), average_cost=cost,
         purchase_price_status="registered" if cost else "missing", cost_basis_status="registered" if cost else "missing",
         current_price=price, price_date=price_date, previous_close=tech.get("previous_close"), change_pct=tech.get("change_pct"),
@@ -131,7 +144,8 @@ def analyse(h, raw, snapshot, now):
         available_components=[k for k, v in components.items() if v is not None],
         missing_components=[k for k, v in components.items() if v is None],
         evaluation_reasons=reasons + ([f"20営業日騰落率 {momentum:.2%}"] if momentum is not None else []),
-        action=action_for(score, risks, tech, pnl), confidence=confidence,
+        action=action, confidence=confidence,
+        decision_reasons=decision_reasons(action, score, risks, tech, fresh["stock_price"]["status"]),
         financial_status=financial_status, technical_status="ok" if tech.get("score") is not None else "partial" if momentum is not None else "unavailable",
         edinet_status=ed_status, tdnet_status=td_status, positive_flags=sorted(set(positives)), risk_flags=sorted(set(risks)), freshness=fresh,
         comment="市場・財務・材料ベースの暫定判定。" + ("取得単価未登録のため損益率・厳密な利確/損切り価格は算出不可。" if cost is None else "損益は別レイヤーで判定。") + ("一部データ未照合。" if coverage < 100 else ""))

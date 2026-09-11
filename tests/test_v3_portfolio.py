@@ -107,3 +107,43 @@ def test_no_financial_data_still_technical_analysis(tmp_path):
     assert len(items) == 4
     p = analyse({'code':'6740'}, {'technical': {'score':55}}, {}, NOW)
     assert p['portfolio_score'] == 55 and p['action'] == 'hold'
+
+
+def test_holding_qualifying_for_candidates_is_excluded(tmp_path, monkeypatch):
+    from copy import deepcopy
+    def no_network(*a, **k): raise AssertionError('network forbidden')
+    monkeypatch.setattr(socket.socket, 'connect', no_network)
+    class OverlapPipeline(Pipeline):
+        def stage_financial(self):
+            data, stats = super().stage_financial()
+            holding = deepcopy(data['candidates'][0])
+            holding.update(code='6740', company_name='保有株')
+            holding['financial_data']['code'] = '6740'
+            data['candidates'].insert(0, holding)
+            data['count'] += 1
+            return data, stats
+    p = OverlapPipeline(root=ROOT, cache_dir=tmp_path/'cache', output_dir=tmp_path/'out', now=NOW, executor=no_network)
+    assert p.run()['status'] == 'completed'
+    assert len(p.result('financial')['candidates']) == 51
+    ranked = p.result('ranking')['ranked_candidates']
+    assert len(ranked) == 50 and '6740' not in {c['code'] for c in ranked}
+    assert '6740' in p.result('portfolio')['portfolio_universe']
+
+
+def test_decision_reasons_include_wait_and_cost_limitation():
+    p = analyse({'code':'6740'}, {'technical': {'score':55, 'current_price':100, 'data_as_of':'2026-09-04'}}, {}, NOW)
+    assert p['action'] == 'hold'
+    assert {'保有継続', '買い増し候補', '利確警戒', '損切り警戒', '様子見'} <= p['decision_reasons'].keys()
+    assert '確認待ち' in p['decision_reasons']['様子見']
+    assert '取得単価なし' in p['decision_reasons']['利確警戒']
+
+
+def test_edinet_error_body_cannot_leak_secret():
+    from edinet_adapter import EdinetAdapter
+    adapter = EdinetAdapter(api_key='synthetic-test-key')
+    for status in ('403', 'synthetic-test-key'):
+        response = json.dumps({'metadata': {'status':status, 'message':'Subscription-Key=synthetic-test-key'}}).encode()
+        with pytest.raises(RuntimeError) as exc:
+            adapter._decode_api_json(response)
+        assert 'synthetic-test-key' not in str(exc.value)
+        assert 'Subscription-Key' not in str(exc.value)

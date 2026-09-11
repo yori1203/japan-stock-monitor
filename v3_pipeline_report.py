@@ -105,6 +105,7 @@ def build_report(run, ranked, portfolio, fresh, changes):
         lines += [f"- MA5/25/75: {tech.get('ma5', '未取得')} / {tech.get('ma25', '未取得')} / {tech.get('ma75', '未取得')}",
                   f"- RSI: {tech.get('rsi', '未取得')} / MACD: {tech.get('macd', '未取得')}"]
         for kind, f in p['freshness'].items(): lines.append(f"- {kind}: {f['status']} / {f['oldest'] or '未取得'} / {f['reason']}")
+        for label, reason in p.get('decision_reasons', {}).items(): lines.append(f"- {label}の判断理由: {safe(reason)}")
         lines += [f"- 評価理由: {safe('; '.join(p['evaluation_reasons'])) or '評価項目不足'}", f"- コメント: {p['comment']}", ""]
     lines += ["", "## 前回ランキングとの差", ""]
     for key, label in (("up", "順位上昇"), ("down", "順位下落"), ("new", "新規候補"), ("top20_new", "新規Top20"), ("removed", "対象外となった候補")):
