@@ -5,6 +5,7 @@ import csv
 import io
 import json
 import os
+import re
 import time
 import urllib.parse
 import urllib.error
@@ -145,8 +146,10 @@ class UrllibTransport:
 
 
 def normalize_stock_code(value: str) -> str:
-    digits = "".join(char for char in str(value) if char.isdigit())
-    return digits[:4] if len(digits) >= 4 else digits
+    code = unicodedata.normalize("NFKC", str(value)).strip().upper()
+    # EDINET uses a trailing zero; letters are part of the security identity.
+    # Removing 'A' from 366A0 used to overwrite the unrelated issuer 36600.
+    return code[:4] if re.fullmatch(r"[0-9A-Z]{4}0?", code) else ""
 
 
 def _canonical_header(value: str) -> str:
@@ -396,6 +399,7 @@ class EdinetAdapter:
         try:
             raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
             if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
+                    and raw.get("code_normalization_version") == 2
                     and raw.get("data", {}).get("field_metadata")
                     and raw.get("data", {}).get("doc_id") == str(document.get("docID"))):
                 names = {item.name for item in fields(EdinetFinancialData)}
@@ -409,7 +413,7 @@ class EdinetAdapter:
             data = EdinetFinancialData(**{**asdict(data), "document_type": str(document.get("docTypeCode") or ""),
                 "document_name": str(document.get("docDescription") or ""), "submitted_at": str(document.get("submitDateTime") or "")})
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps({"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
+            path.write_text(json.dumps({"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
             return EdinetResult("ok", data)
         except Exception as exc:
             return EdinetResult("error", reason=f"document_fetch_failed ({type(exc).__name__})")
@@ -420,7 +424,8 @@ class EdinetAdapter:
             try:
                 payload = json.loads(path.read_text(encoding="utf-8"))
                 fetched = datetime.fromisoformat(payload["fetched_at"])
-                if datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours):
+                if (payload.get("code_normalization_version") == 2
+                        and datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)):
                     entries = {key: EdinetCodeEntry(**value) for key, value in payload["entries"].items()}
                     if entries:
                         self.code_map_diagnostics = CodeMapDiagnostics(
@@ -439,7 +444,7 @@ class EdinetAdapter:
         if not entries:
             raise RuntimeError(f"EDINET code list parsed zero entries ({parsed.reason or 'unknown reason'})")
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps({"fetched_at": datetime.now(timezone.utc).isoformat(), "entries": {k: asdict(v) for k,v in entries.items()}}, ensure_ascii=False), encoding="utf-8")
+        path.write_text(json.dumps({"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "entries": {k: asdict(v) for k,v in entries.items()}}, ensure_ascii=False), encoding="utf-8")
         return entries
 
     def fetch(self, code: str, *, target_date: date | None = None) -> EdinetResult:
@@ -448,6 +453,7 @@ class EdinetAdapter:
         try:
             raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
             if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
+                    and raw.get("code_normalization_version") == 2
                     and raw.get("data", {}).get("field_metadata")):
                 names = {item.name for item in fields(EdinetFinancialData)}
                 return EdinetResult("ok", EdinetFinancialData(**{k:v for k,v in raw["data"].items() if k in names}), cache_hit=True)
@@ -464,7 +470,7 @@ class EdinetAdapter:
             xbrl_name = next(name for name in archive.namelist() if name.lower().endswith(".xbrl"))
             data = parse_xbrl(archive.read(xbrl_name), normalized, entry.edinet_code, doc["docID"])
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps({"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
+            path.write_text(json.dumps({"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
             return EdinetResult("ok", data)
         except Exception as exc:
             return EdinetResult("error", reason=f"edinet_fetch_failed ({type(exc).__name__})")

@@ -26,6 +26,31 @@ def check(y,e):
 
 
 class ProvenanceTests(unittest.TestCase):
+    def test_alphanumeric_security_does_not_overwrite_numeric_issuer(self):
+        import zipfile
+        from edinet_adapter import normalize_stock_code, parse_edinet_code_list
+        self.assertEqual(normalize_stock_code('３６６Ａ０'),'366A')
+        self.assertEqual(normalize_stock_code('36600'),'3660')
+        data='ＥＤＩＮＥＴコード,提出者名,提出者業種,証券コード\nE26301,istyle,IT,36600\nE37743,Wellness,IT,366A0\n'
+        b=io.BytesIO()
+        with zipfile.ZipFile(b,'w') as z:z.writestr('codes.csv',data.encode('cp932'))
+        mapping=parse_edinet_code_list(b.getvalue())
+        self.assertEqual(mapping['3660'].edinet_code,'E26301')
+        self.assertEqual(mapping['366A'].edinet_code,'E37743')
+
+    def test_legacy_code_map_cache_is_refreshed(self):
+        from tests.test_edinet_adapter import code_zip
+        from datetime import datetime,timezone
+        class Transport:
+            calls=0
+            def get(self,url,timeout):self.calls+=1;return code_zip()
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d)/'code-list.json').write_text(json.dumps({'fetched_at':datetime.now(timezone.utc).isoformat(),
+                'entries':{'1234':{'edinet_code':'WRONG','stock_code':'1234','company_name':'wrong'}}}))
+            t=Transport();a=EdinetAdapter('fixture',transport=t,cache_dir=d)
+            self.assertEqual(a.fetch_code_map()['1234'].edinet_code,'E00001')
+            self.assertEqual(t.calls,1)
+
     def test_aligned_match_and_true_difference(self):
         y,e=pair(1000)
         self.assertEqual(check(y,e).fields[0].status,'matched')
