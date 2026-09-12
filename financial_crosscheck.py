@@ -43,6 +43,78 @@ def _best_unit(yahoo: float, edinet: float, multipliers: tuple[float, ...]) -> t
     return min(options, key=lambda item: item[1])
 
 
+def select_comparison_fact(name, ym, em, value):
+    """Select statement totals by context/meaning, never by distance to Yahoo.
+
+    EDINET's standard consolidation axis defaults to ConsolidatedMember.
+    Segment/equity-component dimensions cannot compete with statement totals.
+    Yahoo does not supply scope; this function does not invent Yahoo evidence.
+    """
+    candidates = em.get("all_period_candidates", em.get("candidates", []))
+    if not candidates:
+        return value, em
+    totals = []
+    for original in candidates:
+        c = dict(original)
+        dims = c.get("dimensions")
+        if dims is None or any(d.rsplit(":", 1)[-1] not in
+                              ("ConsolidatedMember", "NonConsolidatedMember") for d in dims):
+            continue
+        if (not dims and c.get("scope") == "unknown" and
+                c.get("tag", "").startswith(("{http://disclosure.edinet-fsa.go.jp/taxonomy/jppfs/",
+                                               "{http://disclosure.edinet-fsa.go.jp/taxonomy/jpigp/"))):
+            c["scope"] = "consolidated"
+            c["scope_basis"] = "EDINET standard consolidation-axis default member"
+        totals.append(c)
+    if not totals:
+        return value, {**em, "selection_basis": "no_statement_total_context"}
+    # Keep the same selected period unless a fact for Yahoo's date and duration
+    # is actually present in this filing. No extrapolation or half-year doubling.
+    def same_period(c):
+        if not ym.get("period_end") or c.get("period_end") != ym["period_end"]:
+            return False
+        if ym.get("period_kind") == "instant":
+            return not c.get("period_start")
+        if ym.get("period_start"):
+            return c.get("period_start") == ym["period_start"]
+        if ym.get("period_kind") == "annual" and c.get("period_start"):
+            try:
+                return 330 <= (date.fromisoformat(c["period_end"]) - date.fromisoformat(c["period_start"])).days <= 400
+            except ValueError:
+                return False
+        return False
+    pool = [c for c in totals if same_period(c)]
+    if not pool:
+        pool = [c for c in totals if c.get("period_end") == em.get("period_end")]
+    if not pool:
+        return value, em
+    desired_scope = ym.get("scope")
+    scoped = [c for c in pool if c.get("scope") == desired_scope] if desired_scope in ("consolidated", "non_consolidated") else []
+    if not scoped:
+        scoped = [c for c in pool if c.get("scope") == "consolidated"]
+    pool = scoped or pool
+    source_field = ym.get("source_field")
+    if name == "net_income" and source_field in ("Net Income", "Net Income Common Stockholders"):
+        owners = [c for c in pool if c.get("tag_local") in
+                  ("ProfitLossAttributableToOwnersOfParent", "ProfitLossAttributableToOwnersOfParentIFRS")]
+        pool = owners or pool
+    if name == "equity" and source_field == "Stockholders Equity":
+        owners = [c for c in pool if c.get("tag_local") in
+                  ("EquityAttributableToOwnersOfParent", "EquityAttributableToOwnersOfParentIFRS")]
+        pool = owners or pool
+    # Different values in the remaining equivalent contexts remain ambiguous.
+    chosen = sorted(pool, key=lambda c: (c.get("tag", ""), c.get("context_id", "")))[0]
+    metadata = {**chosen, "candidates": candidates,
+                "selection_ambiguous": len({(c.get("normalized_value"), c.get("original_unit"), c.get("period_start"), c.get("scope")) for c in pool}) > 1,
+                "candidate_count": len(candidates), "eligible_candidate_count": len(pool),
+                "selection_basis": "statement_total; observed_period; scope; source_field_semantics",
+                "original_selected_value": em.get("original_selected_value", value),
+                "original_selected_context": em.get("original_selected_context", em.get("context_id"))}
+    if name == "equity" and source_field == "Stockholders Equity" and chosen.get("tag_local") in ("NetAssets", "Equity"):
+        metadata["semantic_mismatch"] = "total_equity_including_other_interests_vs_stockholders_equity"
+    return chosen["normalized_value"], metadata
+
+
 def comparison_diagnostics(name, yahoo, edinet, factor, *, missing=False):
     """Separate proven incompatibility from missing comparison evidence."""
     ym = yahoo.field_metadata.get(name, {})
@@ -76,6 +148,10 @@ def comparison_diagnostics(name, yahoo, edinet, factor, *, missing=False):
     if em.get("selection_ambiguous") or (
         ym.get("semantic") and em.get("semantic") and ym["semantic"] != em["semantic"]):
         causes.append("xbrl_tag_selection")
+    if em.get("semantic_mismatch"):
+        causes.append("semantic_mismatch")
+    if ym.get("period_kind") == "trailing" and not ym.get("period_end"):
+        causes.append("undated_trailing_period")
     if not em.get("tag"): unknown.append("xbrl_tag_unknown")
     if factor != 1:
         causes.append("unit_correction")
@@ -105,10 +181,15 @@ def financial_crosscheck(yahoo: FinancialData, edinet: EdinetFinancialData,
     }
     results=[]; matched=0; comparable=0; warnings=[]
     for name,(yv,ev) in pairs.items():
+        field_edinet = edinet
+        if config.require_provenance and ev is not None:
+            ev, selected_meta = select_comparison_fact(name, yahoo.field_metadata.get(name, {}),
+                                                       edinet.field_metadata.get(name, {}), ev)
+            field_edinet = replace(edinet, **{name: ev}, field_metadata={**edinet.field_metadata, name: selected_meta})
         if yv is None or ev is None:
             results.append(FieldCrosscheck(name,yv,ev,None,None,"unavailable",
                 diagnostics=comparison_diagnostics(name,yahoo,edinet,1,missing=True))); continue
-        ym, em = yahoo.field_metadata.get(name, {}), edinet.field_metadata.get(name, {})
+        ym, em = yahoo.field_metadata.get(name, {}), field_edinet.field_metadata.get(name, {})
         # Values already normalised from explicit XBRL units/scales must not be
         # scaled again simply to make a mismatch smaller.
         known_units = ym.get("original_unit") not in (None,"unknown") and em.get("original_unit") not in (None,"unknown")
@@ -116,12 +197,20 @@ def financial_crosscheck(yahoo: FinancialData, edinet: EdinetFinancialData,
         factor,ratio=_best_unit(yv,ev,multipliers); adjusted=ev*factor
         difference=yv-adjusted; status="matched" if ratio <= config.warning_ratio else "warning"
         numeric_status = status
-        diagnostics = comparison_diagnostics(name,yahoo,edinet,factor)
+        diagnostics = comparison_diagnostics(name,yahoo,field_edinet,factor)
         if config.require_provenance:
-            if any(c in diagnostics["causes"] for c in ("period_mismatch","scope_mismatch","unit_mismatch","xbrl_tag_selection")):
+            if any(c in diagnostics["causes"] for c in ("period_mismatch","scope_mismatch","unit_mismatch","xbrl_tag_selection","semantic_mismatch","undated_trailing_period")):
                 status = "not_comparable"
             elif not diagnostics["eligible"] and status == "warning":
-                status = "review"
+                if ym.get("source") == "annual_statement" and em.get("selection_basis"):
+                    # The recorded provider response has no scope/start evidence.
+                    # Finish the audit as unavailable comparison basis, not a
+                    # proven financial difference or a fabricated matched fact.
+                    status = "not_comparable"
+                    diagnostics["causes"].append("comparison_basis_unavailable")
+                    diagnostics["reason"] += "; comparison_basis_unavailable: provider metadata does not establish " + ", ".join(diagnostics["unknown"])
+                else:
+                    status = "review"
             if diagnostics["eligible"] and status == "warning":
                 diagnostics["causes"].append("substantive_difference")
                 diagnostics["reason"] = "substantive_difference: aligned conditions, difference exceeds threshold"

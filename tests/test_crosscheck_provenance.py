@@ -26,6 +26,63 @@ def check(y,e):
 
 
 class ProvenanceTests(unittest.TestCase):
+    def test_statement_total_selection_never_uses_closest_value(self):
+        from financial_crosscheck import select_comparison_fact
+        ns='{http://disclosure.edinet-fsa.go.jp/taxonomy/jppfs/2025-11-01/jppfs_cor}'
+        base={'tag':ns+'NetSales','tag_local':'NetSales','period_start':'2025-04-01',
+              'period_end':'2026-03-31','scope':'unknown','original_unit':'JPY'}
+        total={**base,'dimensions':[],'context_id':'CurrentYearDuration','normalized_value':500}
+        segment={**base,'dimensions':['x:SegmentMember'],'context_id':'Segment','normalized_value':1000}
+        ym={'period_end':'2026-03-31','period_kind':'annual','source_field':'Total Revenue'}
+        for cs in ([segment,total],[total,segment]):
+            value,meta=select_comparison_fact('revenue',ym,{**segment,'candidates':cs},1000)
+            self.assertEqual(value,500)
+            self.assertFalse(meta['selection_ambiguous'])
+            self.assertEqual(meta['scope'],'consolidated')
+
+    def test_ifrs_parent_profit_is_extracted_and_selected(self):
+        from financial_crosscheck import select_comparison_fact
+        raw=b'''<xbrl xmlns:j="http://disclosure.edinet-fsa.go.jp/taxonomy/jpigp/2025-11-01/jpigp_cor"><context id="CurrentYearDuration"><period><startDate>2025-04-01</startDate><endDate>2026-03-31</endDate></period></context><unit id="JPY"><measure>iso4217:JPY</measure></unit><j:ProfitLossAttributableToOwnersOfParentIFRS contextRef="CurrentYearDuration" unitRef="JPY">7000</j:ProfitLossAttributableToOwnersOfParentIFRS></xbrl>'''
+        e=parse_xbrl(raw,'1')
+        value,meta=select_comparison_fact('net_income',{'source_field':'Net Income'},e.field_metadata['net_income'],e.net_income)
+        self.assertEqual(value,7000)
+        self.assertEqual(meta['tag_local'],'ProfitLossAttributableToOwnersOfParentIFRS')
+
+    def test_same_period_conflicting_totals_remain_incomparable(self):
+        y,e=pair(500)
+        c={**e.field_metadata['revenue'],'tag_local':'NetSales','context_id':'CurrentYearDuration','dimensions':[],'normalized_value':500}
+        e.field_metadata['revenue']['candidates']=[c,{**c,'normalized_value':1000}]
+        self.assertEqual(check(y,e).fields[0].status,'not_comparable')
+
+    def test_known_prior_annual_fact_can_replace_interim_but_not_double_it(self):
+        from financial_crosscheck import select_comparison_fact
+        c={'tag':'{test}NetSales','tag_local':'NetSales','scope':'consolidated','dimensions':[],
+           'context_id':'InterimDuration','period_start':'2026-01-01','period_end':'2026-06-30','normalized_value':50}
+        annual={**c,'context_id':'PriorYearDuration','period_start':'2025-01-01','period_end':'2025-12-31','normalized_value':90}
+        ym={'period_kind':'annual','period_end':'2025-12-31'}
+        value,m=select_comparison_fact('revenue',ym,{**c,'all_period_candidates':[c,annual]},50)
+        self.assertEqual(value,90)
+        value,m=select_comparison_fact('revenue',ym,{**c,'candidates':[c]},50)
+        self.assertEqual(value,50)
+
+    def test_undated_trailing_eps_is_not_a_proven_difference(self):
+        y,e=pair()
+        y=replace(y,eps=100,field_metadata={'eps':{'period_kind':'trailing','source':'info','source_field':'trailingEps'}})
+        e=replace(e,eps=50)
+        f=next(f for f in check(y,e).fields if f.field=='eps')
+        self.assertEqual(f.status,'not_comparable')
+        self.assertIn('undated_trailing_period',f.diagnostics['causes'])
+
+    def test_provider_evidence_absence_is_explicit_not_true_difference(self):
+        y,e=pair(500)
+        y.field_metadata['revenue'].update(source='annual_statement',scope='unknown')
+        c={**e.field_metadata['revenue'],'tag_local':'NetSales','context_id':'CurrentYearDuration','dimensions':[],'normalized_value':500}
+        e.field_metadata['revenue']['candidates']=[c]
+        f=check(y,e).fields[0]
+        self.assertEqual(f.status,'not_comparable')
+        self.assertIn('comparison_basis_unavailable',f.diagnostics['causes'])
+        self.assertFalse(f.diagnostics['eligible'])
+
     def test_alphanumeric_security_does_not_overwrite_numeric_issuer(self):
         import zipfile
         from edinet_adapter import normalize_stock_code, parse_edinet_code_list

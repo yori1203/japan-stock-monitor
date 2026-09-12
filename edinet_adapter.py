@@ -23,12 +23,12 @@ EDINET_CODE_LIST_URL = "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/co
 USEFUL_DOC_TYPES = frozenset({"120", "130", "140", "150", "160"})
 
 XBRL_TAGS: Mapping[str, tuple[str, ...]] = {
-    "revenue": ("NetSales", "Revenue", "OperatingRevenue", "RevenueIFRS"),
+    "revenue": ("NetSales", "Revenue", "OperatingRevenue", "RevenueIFRS", "Revenue2IFRS"),
     "operating_income": ("OperatingIncome", "OperatingProfitLoss", "OperatingProfitLossIFRS"),
     "ordinary_income": ("OrdinaryIncome", "OrdinaryIncomeLoss"),
-    "net_income": ("ProfitLoss", "NetIncome", "ProfitLossAttributableToOwnersOfParent"),
+    "net_income": ("ProfitLoss", "NetIncome", "ProfitLossAttributableToOwnersOfParent", "ProfitLossAttributableToOwnersOfParentIFRS"),
     "total_assets": ("Assets", "AssetsIFRS"),
-    "equity": ("NetAssets", "Equity", "EquityAttributableToOwnersOfParent"),
+    "equity": ("NetAssets", "Equity", "EquityAttributableToOwnersOfParent", "EquityAttributableToOwnersOfParentIFRS"),
     "cash_and_equivalents": ("CashAndCashEquivalents", "CashAndCashEquivalentsIFRS"),
     "interest_bearing_debt": ("InterestBearingDebt", "BondsAndBorrowings", "Borrowings"),
     "operating_cash_flow": ("NetCashProvidedByUsedInOperatingActivities", "CashFlowsFromUsedInOperatingActivities"),
@@ -298,6 +298,8 @@ def parse_xbrl(content: bytes, code: str, edinet_code: str | None = None, doc_id
             metadata[field_name]["selection_ambiguous"] = len({v["normalized_value"] for v in alternatives}) > 1
             metadata[field_name]["candidate_count"] = len(alternatives)
             metadata[field_name]["candidates"] = alternatives
+            metadata[field_name]["all_period_candidates"] = provenance[field_name]
+            metadata[field_name]["extraction_version"] = 3
         older = sorted(((end, value) for _, end, value in values if end and end != latest), reverse=True)
         previous[field_name] = older[0][1] if older else None
     starts = [start for values in candidates.values() for start, end, _ in values if end == latest and start]
@@ -400,6 +402,7 @@ class EdinetAdapter:
             raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
             if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
                     and raw.get("code_normalization_version") == 2
+                    and raw.get("extraction_version") == 3
                     and raw.get("data", {}).get("field_metadata")
                     and raw.get("data", {}).get("doc_id") == str(document.get("docID"))):
                 names = {item.name for item in fields(EdinetFinancialData)}
@@ -413,7 +416,7 @@ class EdinetAdapter:
             data = EdinetFinancialData(**{**asdict(data), "document_type": str(document.get("docTypeCode") or ""),
                 "document_name": str(document.get("docDescription") or ""), "submitted_at": str(document.get("submitDateTime") or "")})
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps({"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
+            path.write_text(json.dumps({"extraction_version":3,"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
             return EdinetResult("ok", data)
         except Exception as exc:
             return EdinetResult("error", reason=f"document_fetch_failed ({type(exc).__name__})")
@@ -454,6 +457,7 @@ class EdinetAdapter:
             raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
             if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
                     and raw.get("code_normalization_version") == 2
+                    and raw.get("extraction_version") == 3
                     and raw.get("data", {}).get("field_metadata")):
                 names = {item.name for item in fields(EdinetFinancialData)}
                 return EdinetResult("ok", EdinetFinancialData(**{k:v for k,v in raw["data"].items() if k in names}), cache_hit=True)
@@ -470,7 +474,7 @@ class EdinetAdapter:
             xbrl_name = next(name for name in archive.namelist() if name.lower().endswith(".xbrl"))
             data = parse_xbrl(archive.read(xbrl_name), normalized, entry.edinet_code, doc["docID"])
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps({"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
+            path.write_text(json.dumps({"extraction_version":3,"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
             return EdinetResult("ok", data)
         except Exception as exc:
             return EdinetResult("error", reason=f"edinet_fetch_failed ({type(exc).__name__})")

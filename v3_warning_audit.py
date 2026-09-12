@@ -16,9 +16,9 @@ from financial_crosscheck import CrosscheckConfig, comparison_diagnostics, finan
 
 CATEGORIES = ("period_mismatch", "scope_mismatch", "unit_correction",
               "xbrl_tag_selection", "substantive_difference", "data_missing",
-              "undetermined")
+              "semantic_mismatch", "undated_trailing_period", "comparison_basis_unavailable", "undetermined")
 LABELS = dict(zip(CATEGORIES, ("対象期間不一致", "連結/単体不一致", "単位補正",
-                             "XBRLタグ選択", "実質的な数値差異", "データ欠損", "根拠不足・未確定")))
+                             "XBRLタグ選択", "実質的な数値差異", "データ欠損", "項目定義不一致", "TTM対象期間未開示", "比較根拠が取得応答にない", "根拠不足・未確定")))
 
 
 def number(s):
@@ -42,6 +42,7 @@ def read_rows(text):
                 for f in checked.fields:
                     target=values[f.field]
                     target['before_status']=target.get('numeric_status') or target['status']
+                    target['edinet']=f.edinet_value
                     target.update({k:v for k,v in asdict(f).items() if k in
                         ('difference_ratio','unit_multiplier','numeric_status','diagnostics','status')})
             return rows, False

@@ -101,7 +101,7 @@ def _validate(codes, adapter, code_map, yahoo):
         data=er.data; comparisons={f.field:f for f in check.fields} if check else {}
         fields=[]
         for name in FIELDS:
-            item=comparisons.get(name); fields.append({"name":name,"edinet":getattr(data,name,None),"yahoo":getattr(yd,name,None),"status":item.status if item else "unavailable",
+            item=comparisons.get(name); fields.append({"name":name,"edinet":item.edinet_value if item else getattr(data,name,None),"yahoo":getattr(yd,name,None),"status":item.status if item else "unavailable",
                 **({k:v for k,v in asdict(item).items() if k in ('difference_ratio','unit_multiplier','numeric_status','diagnostics')} if item else {
                     "difference_ratio":None,"unit_multiplier":None,"numeric_status":"unavailable",
                     "diagnostics":{"edinet":data.field_metadata.get(name,{}) if data else {},
