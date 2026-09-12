@@ -26,6 +26,30 @@ def check(y,e):
 
 
 class ProvenanceTests(unittest.TestCase):
+    def test_numeric_match_requires_verified_scope_period_and_unit(self):
+        for key in ('scope','period_end','original_unit'):
+            with self.subTest(missing=key):
+                y,e=pair(1000)
+                y.field_metadata['revenue'].pop(key)
+                f=check(y,e).fields[0]
+                self.assertEqual(f.numeric_status,'matched')
+                self.assertEqual(f.status,'not_comparable')
+                self.assertFalse(f.diagnostics['eligible'])
+        y,e=pair(1000)
+        self.assertEqual(check(y,e).fields[0].status,'matched')
+
+    def test_legacy_crosscheck_stays_unchanged(self):
+        y=FinancialData('1',revenue=1000);e=EdinetFinancialData('1',revenue=1000)
+        self.assertEqual(financial_crosscheck(y,e).fields[0].status,'matched')
+
+    def test_target_tag_inventory_includes_unmapped_issuer_fact(self):
+        raw=b'''<xbrl xmlns:j="urn:j"><context id="CurrentYearDuration"><period><startDate>2025-04-01</startDate><endDate>2026-03-31</endDate></period></context><unit id="JPY"><measure>iso4217:JPY</measure></unit><j:NetSales contextRef="CurrentYearDuration" unitRef="JPY">5</j:NetSales><j:IssuerSpecificSales contextRef="CurrentYearDuration" unitRef="JPY">100</j:IssuerSpecificSales></xbrl>'''
+        e=parse_xbrl(raw,'7203','E001','DOC')
+        inv=e.field_metadata['revenue']['statement_tag_audit']
+        self.assertEqual(inv['doc_id'],'DOC')
+        self.assertIn('IssuerSpecificSales',[f['tag_local'] for f in inv['facts']])
+        self.assertEqual(e.revenue,5)
+
     def test_statement_total_selection_never_uses_closest_value(self):
         from financial_crosscheck import select_comparison_fact
         ns='{http://disclosure.edinet-fsa.go.jp/taxonomy/jppfs/2025-11-01/jppfs_cor}'
@@ -154,9 +178,9 @@ class ProvenanceTests(unittest.TestCase):
     def test_missing_metadata_does_not_claim_true_difference(self):
         y=FinancialData('1',revenue=1000);e=EdinetFinancialData('1',revenue=500)
         f=check(y,e).fields[0]
-        self.assertEqual(f.status,'review')
+        self.assertEqual(f.status,'not_comparable')
         self.assertFalse(f.diagnostics['eligible'])
-        self.assertEqual(check(y,replace(e,revenue=1000)).fields[0].status,'matched')
+        self.assertEqual(check(y,replace(e,revenue=1000)).fields[0].status,'not_comparable')
 
     def test_heuristic_unit_match_is_not_verified(self):
         f=check(FinancialData('1',revenue=1000),EdinetFinancialData('1',revenue=1)).fields[0]

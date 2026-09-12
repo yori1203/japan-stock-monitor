@@ -105,6 +105,7 @@ def select_comparison_fact(name, ym, em, value):
     # Different values in the remaining equivalent contexts remain ambiguous.
     chosen = sorted(pool, key=lambda c: (c.get("tag", ""), c.get("context_id", "")))[0]
     metadata = {**chosen, "candidates": candidates,
+                **({"statement_tag_audit": em["statement_tag_audit"]} if "statement_tag_audit" in em else {}),
                 "selection_ambiguous": len({(c.get("normalized_value"), c.get("original_unit"), c.get("period_start"), c.get("scope")) for c in pool}) > 1,
                 "candidate_count": len(candidates), "eligible_candidate_count": len(pool),
                 "selection_basis": "statement_total; observed_period; scope; source_field_semantics",
@@ -201,16 +202,12 @@ def financial_crosscheck(yahoo: FinancialData, edinet: EdinetFinancialData,
         if config.require_provenance:
             if any(c in diagnostics["causes"] for c in ("period_mismatch","scope_mismatch","unit_mismatch","xbrl_tag_selection","semantic_mismatch","undated_trailing_period")):
                 status = "not_comparable"
-            elif not diagnostics["eligible"] and status == "warning":
-                if ym.get("source") == "annual_statement" and em.get("selection_basis"):
-                    # The recorded provider response has no scope/start evidence.
-                    # Finish the audit as unavailable comparison basis, not a
-                    # proven financial difference or a fabricated matched fact.
-                    status = "not_comparable"
-                    diagnostics["causes"].append("comparison_basis_unavailable")
-                    diagnostics["reason"] += "; comparison_basis_unavailable: provider metadata does not establish " + ", ".join(diagnostics["unknown"])
-                else:
-                    status = "review"
+            elif not diagnostics["eligible"]:
+                # Numeric agreement cannot establish period, scope or units.
+                # Keep numeric_status for audit, but never call it matched.
+                status = "not_comparable"
+                diagnostics["causes"].append("comparison_basis_unavailable")
+                diagnostics["reason"] += "; comparison_basis_unavailable: " + ", ".join(diagnostics["unknown"])
             if diagnostics["eligible"] and status == "warning":
                 diagnostics["causes"].append("substantive_difference")
                 diagnostics["reason"] = "substantive_difference: aligned conditions, difference exceeds threshold"

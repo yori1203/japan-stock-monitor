@@ -32,7 +32,7 @@ def build_report(rows, started, *, smoke_rows=(), diagnostics=None):
            f"- Yahoo照合成功数: {yahoo_ok}", f"- matched数: {matched}", f"- warning数: {warnings}",
            f"- データ期間不一致数: {periods}", f"- 単位補正数: {units}", "",
            f"- 要確認項目数（根拠不足）: {reviews}", f"- 比較条件不一致項目数: {incomparable}",
-           "matchedは数値の一致です。比較条件が未確認なら正式な照合成功とはしません。", "",
+           "matchedは比較条件を確認できた数値一致のみです。条件未確認はnot_comparable、数値のみの判定はnumeric_statusに保持します。", "",
            "APIキーはレポートおよびログへ出力していません。", ""]
     if smoke_rows:
         lines += ["## 5銘柄スモーク検証", "",
