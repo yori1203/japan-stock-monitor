@@ -267,7 +267,10 @@ def parse_xbrl(content: bytes, code: str, edinet_code: str | None = None, doc_id
         value = _numeric(node.text, node.attrib.get("scale"))
         if value is None: continue
         for field_name, tags in XBRL_TAGS.items():
-            if name in tags:
+            audited_revenue = field_name == "revenue" and (
+                (code == "7203" and name == "TotalNetRevenuesIFRS" and "/E02144-000/" in node.tag)
+                or (code == "6758" and name == "NetSalesIFRS" and node.tag.startswith("{http://disclosure.edinet-fsa.go.jp/taxonomy/jpigp/")))
+            if name in tags or audited_revenue:
                 start, end = contexts.get(node.attrib.get("contextRef", ""), (None, None))
                 candidates[field_name].append((start, end, value))
                 provenance[field_name].append({
@@ -299,7 +302,7 @@ def parse_xbrl(content: bytes, code: str, edinet_code: str | None = None, doc_id
             metadata[field_name]["candidate_count"] = len(alternatives)
             metadata[field_name]["candidates"] = alternatives
             metadata[field_name]["all_period_candidates"] = provenance[field_name]
-            metadata[field_name]["extraction_version"] = 4
+            metadata[field_name]["extraction_version"] = 5
         older = sorted(((end, value) for _, end, value in values if end and end != latest), reverse=True)
         previous[field_name] = older[0][1] if older else None
     starts = [start for values in candidates.values() for start, end, _ in values if end == latest and start]
@@ -420,7 +423,7 @@ class EdinetAdapter:
             raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
             if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
                     and raw.get("code_normalization_version") == 2
-                    and raw.get("extraction_version") == 4
+                    and raw.get("extraction_version") == 5
                     and raw.get("data", {}).get("field_metadata")
                     and raw.get("data", {}).get("doc_id") == str(document.get("docID"))):
                 names = {item.name for item in fields(EdinetFinancialData)}
@@ -434,7 +437,7 @@ class EdinetAdapter:
             data = EdinetFinancialData(**{**asdict(data), "document_type": str(document.get("docTypeCode") or ""),
                 "document_name": str(document.get("docDescription") or ""), "submitted_at": str(document.get("submitDateTime") or "")})
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps({"extraction_version":4,"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
+            path.write_text(json.dumps({"extraction_version":5,"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
             return EdinetResult("ok", data)
         except Exception as exc:
             return EdinetResult("error", reason=f"document_fetch_failed ({type(exc).__name__})")
@@ -475,7 +478,7 @@ class EdinetAdapter:
             raw = json.loads(path.read_text(encoding="utf-8")); fetched = datetime.fromisoformat(raw["fetched_at"])
             if (datetime.now(timezone.utc) - fetched <= timedelta(hours=self.config.cache_ttl_hours)
                     and raw.get("code_normalization_version") == 2
-                    and raw.get("extraction_version") == 4
+                    and raw.get("extraction_version") == 5
                     and raw.get("data", {}).get("field_metadata")):
                 names = {item.name for item in fields(EdinetFinancialData)}
                 return EdinetResult("ok", EdinetFinancialData(**{k:v for k,v in raw["data"].items() if k in names}), cache_hit=True)
@@ -492,8 +495,7 @@ class EdinetAdapter:
             xbrl_name = next(name for name in archive.namelist() if name.lower().endswith(".xbrl"))
             data = parse_xbrl(archive.read(xbrl_name), normalized, entry.edinet_code, doc["docID"])
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps({"extraction_version":4,"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
+            path.write_text(json.dumps({"extraction_version":5,"code_normalization_version":2,"fetched_at": datetime.now(timezone.utc).isoformat(), "data": asdict(data)}, ensure_ascii=False), encoding="utf-8")
             return EdinetResult("ok", data)
         except Exception as exc:
             return EdinetResult("error", reason=f"edinet_fetch_failed ({type(exc).__name__})")
-

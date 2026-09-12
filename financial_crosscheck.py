@@ -92,6 +92,11 @@ def select_comparison_fact(name, ym, em, value):
     scoped = [c for c in pool if c.get("scope") == desired_scope] if desired_scope in ("consolidated", "non_consolidated") else []
     if not scoped:
         scoped = [c for c in pool if c.get("scope") == "consolidated"]
+    if not scoped and desired_scope not in ("consolidated", "non_consolidated"):
+        # Audited issuer-extension totals may lack a standard taxonomy scope
+        # label. Prefer the statement-total context over an explicit standalone
+        # context, but keep scope unknown rather than inventing evidence.
+        scoped = [c for c in pool if c.get("dimensions") == []]
     pool = scoped or pool
     source_field = ym.get("source_field")
     if name == "net_income" and source_field in ("Net Income", "Net Income Common Stockholders"):

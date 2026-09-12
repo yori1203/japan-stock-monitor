@@ -26,6 +26,22 @@ def check(y,e):
 
 
 class ProvenanceTests(unittest.TestCase):
+    def test_audited_revenue_tags_select_total_without_claiming_yahoo_scope(self):
+        cases=[('7203','http://disclosure.edinet-fsa.go.jp/jpcrp030000/asr/001/E02144-000/2026-03-31/01/2026-06-10','TotalNetRevenuesIFRS',50684952000000),
+               ('6758','http://disclosure.edinet-fsa.go.jp/taxonomy/jpigp/2025-11-01/jpigp_cor','NetSalesIFRS',12479620000000)]
+        for code,ns,tag,value in cases:
+            with self.subTest(code=code):
+                raw=f'''<xbrl xmlns:j="{ns}" xmlns:p="urn:p"><context id="CurrentYearDuration"><period><startDate>2025-04-01</startDate><endDate>2026-03-31</endDate></period></context><context id="CurrentYearDuration_NonConsolidatedMember"><period><startDate>2025-04-01</startDate><endDate>2026-03-31</endDate></period><scenario><explicitMember>jppfs_cor:NonConsolidatedMember</explicitMember></scenario></context><unit id="JPY"><measure>iso4217:JPY</measure></unit><p:NetSales contextRef="CurrentYearDuration_NonConsolidatedMember" unitRef="JPY">100</p:NetSales><j:{tag} contextRef="CurrentYearDuration" unitRef="JPY">{value}</j:{tag}></xbrl>'''.encode()
+                e=parse_xbrl(raw,code)
+                y=FinancialData(code,revenue=value,field_metadata={'revenue':{'period_end':'2026-03-31','period_kind':'annual','source':'annual_statement','source_field':'Total Revenue','scope':'unknown','original_unit':'JPY'}})
+                f=check(y,e).fields[0]
+                self.assertEqual(f.edinet_value,value)
+                self.assertEqual(f.numeric_status,'matched')
+                self.assertEqual(f.status,'not_comparable')
+                self.assertEqual(f.diagnostics['edinet']['tag_local'],tag)
+                other=parse_xbrl(raw,'9999')
+                self.assertEqual(other.revenue,100)
+
     def test_numeric_match_requires_verified_scope_period_and_unit(self):
         for key in ('scope','period_end','original_unit'):
             with self.subTest(missing=key):
