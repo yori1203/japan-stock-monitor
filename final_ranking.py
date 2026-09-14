@@ -170,6 +170,8 @@ def _risk_component(candidate: RankingCandidate, config: FinalRankingConfig) -> 
         warnings.append("EDINETの直近対象書類なし")
     elif candidate.edinet_status not in ("ok", "matched"):
         warnings.append("EDINET照合未取得")
+    elif candidate.crosscheck_score is None:
+        warnings.append("EDINET比較条件未確認・照合対象不足（加点なし）")
     return _bounded(100.0 - total_penalty), tuple(dict.fromkeys(warnings))
 
 
@@ -203,7 +205,8 @@ def _positive_reasons(candidate: RankingCandidate, small_score: float | None) ->
         "edinet_values_confirmed": "EDINET公式値で確認済み",
     }
     warning_codes = {"high_per", "weak_fcf", "limited_financial_data", "edinet_crosscheck_warning"}
-    reasons = [labels.get(reason, reason) for reason in candidate.score_reasons if reason not in warning_codes]
+    reasons = [labels.get(reason, reason) for reason in candidate.score_reasons if reason not in warning_codes
+               and (reason != "edinet_values_confirmed" or (candidate.crosscheck_score or 0) >= 80)]
     if (candidate.growth_score or 0) >= 70:
         reasons.append("売上・利益成長が高い")
     if (candidate.profitability_score or 0) >= 70:
@@ -222,6 +225,8 @@ def _positive_reasons(candidate: RankingCandidate, small_score: float | None) ->
 def score_final_candidate(candidate: RankingCandidate, config: FinalRankingConfig = FinalRankingConfig(),
                           *, generated_at: str | None = None) -> FinalCandidate:
     timestamp = generated_at or datetime.now(timezone.utc).isoformat()
+    if candidate.edinet_status not in ("ok", "matched"):
+        candidate = replace(candidate, crosscheck_score=None)
     if any(event.code != candidate.code for event in candidate.tdnet_events):
         raise ValueError("TDnet event stock does not match candidate")
     tdnet_status = candidate.tdnet_status
@@ -273,10 +278,15 @@ def from_financial_candidate(candidate: FinancialCandidate, *, industry: str | N
                              edinet_status: str = "unavailable", yahoo_status: str = "ok") -> RankingCandidate:
     risks = list(candidate.risk_flags)
     crosscheck_score = None
-    if crosscheck is not None:
-        crosscheck_score = crosscheck.crosscheck_score
+    if crosscheck is not None and edinet_status in ("ok", "matched"):
+        # Only proven comparable fields reach the ranking weight. In particular,
+        # the comparison engine's no-evidence neutral score is not evidence.
+        eligible = [f for f in crosscheck.fields if f.diagnostics.get("eligible")
+                    and f.status in ("matched", "warning")]
+        if eligible:
+            crosscheck_score = round(100 * sum(f.status == "matched" for f in eligible) / len(eligible), 2)
         risks.extend(crosscheck.edinet_risk_flags)
-        risks.extend(crosscheck.warnings)
+        risks.extend(f"{f.field}_mismatch" for f in eligible if f.status == "warning")
     return RankingCandidate(
         candidate.code, candidate.company_name, candidate.market, industry,
         candidate.minimum_purchase_amount, candidate.preselection_score, candidate.financial_score,

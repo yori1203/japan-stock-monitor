@@ -116,7 +116,7 @@ class Pipeline:
         except FileExistsError:
             raise RuntimeError("V3 pipeline lock exists; inspect before resuming") from None
         try:
-            fingerprint = digest({"version": 2, "source": self.source, "edinet": self.saved_ed, "config": self.settings, "mode": self.mode,
+            fingerprint = digest({"version": 4, "source": self.source, "edinet": self.saved_ed, "config": self.settings, "mode": self.mode,
                 "portfolio_settings": read(self.root / "v3_portfolio_settings.json"), "portfolio_input": read(self.root / "validation/v3_portfolio_input.json"),
                 "portfolio_cache": read(self.cache / "portfolio-cache.json")})
             previous = read(self.checkpoint)
@@ -280,7 +280,8 @@ class Pipeline:
         for code in codes:
             saved = latest.get("results", {}).get(code, self.saved_ed.get("results", {}).get(code, {}))
             valid = (saved.get("status") == "no_recent_filing" or
-                     saved.get("status") == "ok" and saved.get("data", {}).get("code") == code and saved["data"].get("period_end"))
+                     saved.get("status") == "ok" and saved.get("data", {}).get("code") == code and saved["data"].get("period_end")
+                     and any(m.get("extraction_version") == 5 for m in saved["data"].get("field_metadata", {}).values()))
             at = saved.get("data", {}).get("fetched_at") or saved.get("checked_at") or self.saved_ed.get("as_of")
             if valid and (self.mode != "full" or freshness([at], self.now, 7)["warning"] == "なし"):
                 progress["results"][code] = saved; hits += 1
@@ -337,10 +338,17 @@ class Pipeline:
         return {"status": result.status, "source": result.source, "fetched_at": result.fetched_at,
                 "results": {c: asdict(r) for c, r in mapped.items()}}, self.stats(len(codes), 0, result.cache_hits, result.failure_count, status="unavailable")
 
+    def assessment_time(self):
+        if self.mode != "full":
+            return self.now
+        # Acquisition can finish long after a resumed run's fixed start time.
+        # Persist one assessment time so report rebuilds remain reproducible.
+        return timestamp(self.state.setdefault("assessment_at", timestamp().isoformat()))
+
     def stage_portfolio(self):
         financial = {c["code"]: c["financial_data"] for c in self.result("financial")["candidates"]}
         items = analyse_portfolio(self.root, self.cache, self.result("preselection")["snapshots"], financial,
-                                  self.result("edinet")["results"], self.now)
+                                  self.result("edinet")["results"], self.assessment_time())
         count = sum(p["portfolio_score"] is not None for p in items)
         return {"portfolio_universe": [p["code"] for p in items], "holdings": items}, self.stats(len(items), count, count,
             status="cached" if count == len(items) else "partial")
@@ -348,7 +356,7 @@ class Pipeline:
     def stage_ranking(self):
         from financials import FinancialCandidate, FinancialData
         from edinet_adapter import EdinetFinancialData
-        from financial_crosscheck import financial_crosscheck
+        from financial_crosscheck import CrosscheckConfig, financial_crosscheck
         from final_ranking import rank_financial_candidates
         from tdnet_adapter import TDnetResult
         from tdnet_events import TDnetEvent
@@ -366,11 +374,14 @@ class Pipeline:
             candidates.append(c)
             value = ed["results"].get(c.code, {})
             if value.get("status") == "ok" and value.get("data"):
-                checks[c.code] = financial_crosscheck(c.financial_data, EdinetFinancialData(**value["data"]))
+                checks[c.code] = financial_crosscheck(c.financial_data, EdinetFinancialData(**value["data"]), CrosscheckConfig(require_provenance=True))
         tdresults = {code: TDnetResult(r["status"], tuple(TDnetEvent(**e) for e in r.get("events", [])), provider_name=r["provider_name"], fetched_at=r["fetched_at"]) for code, r in td["results"].items()}
         ranking = rank_financial_candidates(candidates, crosschecks=checks, industries=industries,
             edinet_statuses={c: r["status"] for c, r in ed["results"].items()}, tdnet_results=tdresults, generated_at=self.now.isoformat())
         value = asdict(ranking)
+        self.state["crosscheck_counts"] = dict(Counter(f.status for check in checks.values() for f in check.fields))
+        self.state["crosscheck_unavailable_symbols"] = sum(c.code not in checks for c in candidates)
+        value["crosscheck_counts"] = self.state["crosscheck_counts"]
         value["report_stats"] = {"universe_count": self.source["universe_count"] if self.mode != "full" else self.result("universe")["count"],
             "preselection_count": self.result("preselection")["count"], "financial_success_count": len(candidates),
             "edinet_success_count": sum(r["status"] == "ok" for r in ed["results"].values()),
@@ -385,12 +396,13 @@ class Pipeline:
         ranked = value["ranked_candidates"]
         snapshots = self.result("preselection")["snapshots"]
         financial, ed = self.result("financial"), self.result("edinet")
-        fresh = {"JPX universe": age_freshness([self.result("universe").get("fetched_at")], self.now, 7),
-            "stock_price": price_freshness([snapshots[c["code"]].get("data_as_of") for c in ranked if c["code"] in snapshots] or [c.get("source_date") for c in ranked], self.now),
-            "fundamentals": age_freshness([c["fetched_at"] for c in financial["candidates"]], self.now, 7),
-            "財務決算期": age_freshness([c["financial_data"].get("period_end") for c in financial["candidates"]], self.now, 180),
-            "EDINET": age_freshness([r.get("data", {}).get("fetched_at") for r in ed["results"].values()], self.now, 7),
-            "EDINET決算期": age_freshness([r.get("data", {}).get("period_end") for r in ed["results"].values()], self.now, 180),
+        assessed_at = self.assessment_time()
+        fresh = {"JPX universe": age_freshness([self.result("universe").get("fetched_at")], assessed_at, 7),
+            "stock_price": price_freshness([snapshots[c["code"]].get("data_as_of") for c in ranked if c["code"] in snapshots] or [c.get("source_date") for c in ranked], assessed_at),
+            "fundamentals": age_freshness([c["fetched_at"] for c in financial["candidates"]], assessed_at, 7),
+            "財務決算期": age_freshness([c["financial_data"].get("period_end") for c in financial["candidates"]], assessed_at, 180),
+            "EDINET": age_freshness([r.get("data", {}).get("fetched_at") for r in ed["results"].values()], assessed_at, 7),
+            "EDINET決算期": age_freshness([r.get("data", {}).get("period_end") for r in ed["results"].values()], assessed_at, 180),
             "TDnet": {"status": "unknown", "oldest": None, "newest": None, "warning": "未照合", "reason": "利用許諾未確認のためunavailable"}}
         holdings = self.result("portfolio")["holdings"]
         atomic_json(self.out / "v3_portfolio_output.json", {"generated_at": self.now.isoformat(), "holdings": holdings})
@@ -407,6 +419,7 @@ class Pipeline:
         with path.open("a", encoding="utf-8") as handle: handle.write("\n\n" + text)
         atomic_json(self.out / "v3_final_ranking.json", asdict(result))
         summary = {"freshness": fresh, "portfolio": holdings, "changes": changes,
+            "crosscheck_counts": self.state.get("crosscheck_counts", {}),
             "top20": [c["code"] for c in ranked[:20]], "small_top10": [c["code"] for c in value["small_investment_top_10"]],
             "around_10k": [c["code"] for c in ranked if c["minimum_purchase_amount"] is not None and 5000 <= c["minimum_purchase_amount"] <= 15000],
             "category_a": [c["code"] for c in ranked if c["category"] == "A"]}

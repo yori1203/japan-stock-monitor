@@ -103,7 +103,8 @@ def analyse(h, raw, snapshot, now):
         c = score_financial_candidate(score_preselection(security, MarketSnapshot(**snap)), FinancialData(**fin), now=timestamp(now))
         checks = {}
         if ed_status == "ok" and ed.get("data"):
-            checks[code] = financial_crosscheck(c.financial_data, EdinetFinancialData(**ed["data"]))
+            from financial_crosscheck import CrosscheckConfig
+            checks[code] = financial_crosscheck(c.financial_data, EdinetFinancialData(**ed["data"]), CrosscheckConfig(require_provenance=True))
         ranked = rank_financial_candidates([c], crosschecks=checks, edinet_statuses={code: ed_status},
             tdnet_results={code: TDnetResult(td_status, events)}, generated_at=str(now)).ranked_candidates[0]
         components.update(financial=c.financial_score, edinet=ranked.crosscheck_score)

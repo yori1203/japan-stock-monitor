@@ -8,7 +8,7 @@ from typing import Mapping
 from edinet_adapter import EdinetAdapter, EdinetResult
 from final_ranking import FinalRankingConfig, FinalRankingResult, rank_financial_candidates
 from final_report import FinalReportStats, write_final_report
-from financial_crosscheck import CrosscheckResult, financial_crosscheck
+from financial_crosscheck import CrosscheckConfig, CrosscheckResult, financial_crosscheck
 from financials import (
     FinancialAdapter, FinancialConfig, FinancialResult, YahooFinanceAdapter,
     run_financial_enrichment,
@@ -84,7 +84,7 @@ def run_final_pipeline(
                     result = edinet.fetch_document(item.code, documents[item.code])
                 edinet_results[item.code] = result
                 if result.data is not None:
-                    crosschecks[item.code] = financial_crosscheck(item.financial_data, result.data)
+                    crosschecks[item.code] = financial_crosscheck(item.financial_data, result.data, CrosscheckConfig(require_provenance=True))
         except Exception as exc:
             reason = f"EDINET batch preparation failed ({type(exc).__name__})"
             edinet_results.update({item.code: EdinetResult("error", reason=reason) for item in target})

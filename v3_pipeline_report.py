@@ -66,8 +66,9 @@ def table(items):
 
 
 def build_report(run, ranked, portfolio, fresh, changes):
-    lines = ["# V3統合パイプライン", "", f"- 実行日時 JST: {timestamp(run['started_at']).astimezone(JST).isoformat()}",
-             f"- mode: {run['mode']} / status: {run['status']}", f"- 実行時間: {run.get('elapsed_seconds', 0):.2f}秒",
+    lines = ["# V3統合パイプライン", "", f"- 実行開始日時 JST: {timestamp(run['started_at']).astimezone(JST).isoformat()}",
+             f"- 鮮度評価日時 JST: {timestamp(run.get('assessment_at', run['started_at'])).astimezone(JST).isoformat()}",
+             f"- mode: {run['mode']} / status: {run['status']}", f"- 最終実行チャンクの処理時間: {run.get('elapsed_seconds', 0):.2f}秒",
              "- 保存データの日時は下表参照。自動売買なし。", "", "## stage状態", "",
              "| stage | status | 入力 | 成功 | 失敗 | cache hit |", "|---|---|---:|---:|---:|---:|"]
     for name, s in run["stages"].items():
@@ -75,6 +76,8 @@ def build_report(run, ranked, portfolio, fresh, changes):
     lines += ["", "## data freshness", "", "| データ | 最古の取得日時・基準日 | 最新 | 状態 | 理由 |", "|---|---|---|---|---|"]
     for name, f in fresh.items(): lines.append(f"| {name} | {f['oldest'] or '未取得'} | {f['newest'] or '未取得'} | {f.get('status', 'unknown')} | {f.get('reason', f['warning'])} |")
     ed = run.get("edinet_counts", {})
+    lines += ["", f"- 項目照合判定: {run.get('crosscheck_counts', {})}",
+              "- not_comparable・欠損はEDINET一致度の採点対象外です。API取得成功や差異警告0件は、照合成功を意味しません。"]
     lines += ["", f"- EDINET: {ed}（no_recent_filingはAPI失敗ではありません）",
               f"- EDINET検索基準日: {run.get('edinet_reference_date', '未取得')}",
               f"- TDnet: {run.get('tdnet_status', 'unavailable')}（未取得は0点にせず再正規化）",

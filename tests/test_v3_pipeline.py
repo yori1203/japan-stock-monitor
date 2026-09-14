@@ -33,9 +33,9 @@ def test_modes_checkpoint_edinet_and_reports(tmp_path, no_network, mode):
     for stage in state["stages"].values():
         assert all(k in stage for k in ("status", "started_at", "completed_at", "input_count", "success_count", "failure_count", "cache_hits"))
         assert stage["started_at"] and stage["completed_at"]
-    assert state["edinet_counts"] == {"ok": 49, "no_recent_filing": 1}
+    assert state["edinet_counts"] == {"unavailable": 49, "no_recent_filing": 1}
     assert state["stages"]["edinet"]["failure_count"] == 0
-    assert state["stages"]["edinet"]["cache_hits"] == 50
+    assert state["stages"]["edinet"]["cache_hits"] == 1
     assert state["tdnet_status"] == "unavailable"
     ranked = read(tmp_path / "out/v3_final_ranking.json")
     assert len(ranked["ranked_candidates"]) == 50 and len(ranked["top_20"]) == 20

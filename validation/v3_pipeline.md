@@ -1,5 +1,34 @@
 # V3 integrated pipeline
 
+## Feature-only integration verification (2026-09-13)
+
+Stage 1 is frozen at `de2535e`. Downstream scoring uses strict comparison
+provenance and excludes unverified/missing crosschecks from the scoring weight
+and positive evidence. Legacy EDINET extraction caches are not adopted.
+
+The integrated workflow exists on the feature branch, not the default branch;
+GitHub therefore cannot dispatch it manually in the current repository layout.
+Only pushes to `feature/v3-discovery-engine` trigger its full evaluation.
+Re-running the same Actions run resumes the saved full checkpoint; only attempt
+1 starts a new evaluation. The manual input configuration is retained for a
+future repository layout that supports it. No default-branch or V2 changes are
+required, and no schedule is enabled.
+
+Local provider throttling is handled by spacing existing bounded invocations;
+failed acquisitions are never counted as successful matches. A successful Actions
+job with a `paused` checkpoint is not a completed integration validation.
+
+Local full/resume validation completed on 2026-09-14: 3,707 quote snapshots,
+400 financial candidates, 400 ranked outputs and four separately evaluated
+holdings. All 266 tests and seven subtests pass. Missing local EDINET credentials
+leave 50 unavailable outcomes, with no crosscheck weight or positive evidence.
+The GitHub full evaluation with its configured Secret remains a separate check.
+
+Full evaluations persist an assessment time after acquisition for freshness and
+portfolio evaluation. Using the earlier run-start timestamp incorrectly marked
+newly acquired financial data as future-dated. Report rebuilds reuse the saved
+assessment time; genuinely future-dated input remains unknown. Stage 1 is unchanged.
+
 Final validation on 2026-09-07: **196 passed in 6.91s**; cached measurement
 **1.406s**, zero additional acquisitions, 50 final candidates.
 

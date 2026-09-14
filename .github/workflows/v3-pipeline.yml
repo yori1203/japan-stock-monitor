@@ -1,6 +1,10 @@
-name: V3 Integrated Pipeline (manual)
+name: V3 Integrated Pipeline (feature)
 
 on:
+  # This workflow is intentionally absent from main. Feature pushes can run it
+  # without registering workflow_dispatch on the default branch.
+  push:
+    branches: [feature/v3-discovery-engine]
   # Future only (UTC): 09:30 / 12:30 / 16:00 JST, weekdays.
   # schedule:
   #   - cron: '30 0,3 * * 1-5'
@@ -55,8 +59,9 @@ jobs:
         run: |
           set +e
           args=()
-          if [ "${{ inputs.mode }}" != "full" ] || [ "${{ inputs.new_run }}" = "true" ]; then args+=(--new-run); fi
-          python v3_pipeline.py --mode "${{ inputs.mode }}" "${args[@]}" --max-seconds 180 --max-operations 20
+          mode="${{ inputs.mode || 'full' }}"
+          if [ "$mode" != "full" ] || [ "${{ inputs.new_run }}" = "true" ] || { [ "${{ github.event_name }}" = "push" ] && [ "${{ github.run_attempt }}" = "1" ]; }; then args+=(--new-run); fi
+          python v3_pipeline.py --mode "$mode" "${args[@]}" --max-seconds 180 --max-operations 20
           code=$?
           if [ "$code" -eq 2 ]; then
             echo "::notice::Chunk saved. Dispatch the same mode again to resume."
