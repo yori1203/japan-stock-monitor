@@ -123,8 +123,10 @@ def test_mock_contamination_cannot_enter_production(tmp_path, no_network):
     assert c["tdnet_event_score"] is None
 
 
-def test_full_budget_pause_and_resume_reuses_finished_universe(tmp_path, no_network):
+def test_full_budget_pause_and_resume_reuses_finished_universe(tmp_path, no_network, monkeypatch):
     # Tiny synthetic full run: existing engine objects; transport replaced entirely.
+    # This scenario exercises the no-key path regardless of the CI environment.
+    monkeypatch.delenv("EDINET_API_KEY", raising=False)
     root = tmp_path / "root"
     (root / "validation").mkdir(parents=True)
     frozen = read(ROOT / "validation/v3_edinet_50_input.json")
