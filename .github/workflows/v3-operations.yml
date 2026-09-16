@@ -1,0 +1,130 @@
+name: V3 Session Operations
+
+on:
+  schedule:
+    # JST Monday-Friday 08:30 = UTC Sunday-Thursday 23:30.
+    - cron: '30 23 * * 0-4'
+    - cron: '30 3 * * 1-5'
+    - cron: '0 7 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      session:
+        type: choice
+        required: true
+        default: evening
+        options: [morning, noon, evening]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v3-session-operations
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/v3-discovery-engine
+          path: source
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: source/requirements.txt
+      - run: python -m pip install -r source/requirements.txt pytest
+      - name: Test operations and existing behavior
+        working-directory: source
+        run: python -m pytest -q
+      - name: Select session
+        id: session
+        env:
+          EVENT: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          SESSION: ${{ inputs.session }}
+        run: |
+          if [ "$EVENT" = schedule ]; then
+            case "$SCHEDULE" in
+              '30 23 * * 0-4') SESSION=morning ;;
+              '30 3 * * 1-5') SESSION=noon ;;
+              '0 7 * * 1-5') SESSION=evening ;;
+              *) exit 1 ;;
+            esac
+          fi
+          case "$SESSION" in morning|noon|evening) ;; *) exit 1 ;; esac
+          echo "name=$SESSION" >> "$GITHUB_OUTPUT"
+      - name: Restore durable reports and signal history
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir state
+          git -C state init -b v3-operation-data
+          git -C state remote add origin "https://github.com/${GITHUB_REPOSITORY}.git"
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          set +e
+          git -C state ls-remote --exit-code --heads origin refs/heads/v3-operation-data > /dev/null
+          code=$?
+          set -e
+          if [ "$code" = 0 ]; then
+            git -C state fetch origin refs/heads/v3-operation-data
+            git -C state reset --hard FETCH_HEAD
+          elif [ "$code" != 2 ]; then
+            exit "$code"
+          fi
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            source/.cache/v3-pipeline
+            source/.cache/v3-edinet-validation
+            source/.cache/recovery
+          key: v3-operations-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: v3-operations-${{ runner.os }}-
+      - name: Monitor all required stocks and generate V3 session reports
+        id: operation
+        continue-on-error: true
+        env:
+          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+        run: python source/v3_operations.py --session '${{ steps.session.outputs.name }}' --output state
+      - name: Persist reports on data branch only
+        if: always() && steps.operation.outcome != 'skipped' && steps.operation.outcome != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          export GIT_CONFIG_COUNT=1
+          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
+          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
+          git -C state config user.name 'github-actions[bot]'
+          git -C state config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git -C state add -- '*.md' '*.json' '*.csv' '*.bak'
+          if ! git -C state diff --cached --quiet; then
+            git -C state commit -m 'Save V3 ${{ steps.session.outputs.name }} session'
+            git -C state push origin HEAD:refs/heads/v3-operation-data
+          fi
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            source/.cache/v3-pipeline
+            source/.cache/v3-edinet-validation
+            source/.cache/recovery
+          key: v3-operations-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v3-session-${{ steps.session.outputs.name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 90
+          if-no-files-found: error
+          path: |
+            state/*.md
+            state/*.csv
+            state/*.json
+      - name: Enforce complete session
+        if: always()
+        run: |
+          test '${{ steps.operation.outcome }}' = success
+          python -c "import json; assert json.load(open('state/operations_status.json'))['complete'] is True"
