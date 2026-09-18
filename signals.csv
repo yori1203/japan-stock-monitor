@@ -1,0 +1,15 @@
+date,code,price,score,signal,confidence,rsi,session,data_as_of,category,priority,signal_key,source,run_id
+2026-09-18 12:02,6740,49.0,78,🟢 買い・買い増し候補,中,50.0,morning,2026-09-18,portfolio,high,add,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,6573,27.0,32,🔴 損切り警戒,中,28.6,morning,2026-09-18,portfolio,high,stop_loss,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,4596,66.0,36,⚠️ 下落警戒,中,47.4,morning,2026-09-18,portfolio,high,warning,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,4597,30.0,36,⚠️ 下落警戒,中,50.0,morning,2026-09-18,portfolio,high,warning,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,6721,75.0,74,🟢 買い・買い増し候補,中,53.3,morning,2026-09-18,portfolio,high,add,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,6177,84.0,56,🟡 継続監視,低,50.0,morning,2026-09-18,watchlist,high,hold,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,2134,17.0,24,🔴 損切り警戒,高,33.3,morning,2026-09-18,watchlist,normal,stop_loss,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,2410,2881.0,32,🔴 損切り警戒,中,37.4,morning,2026-09-18,watchlist,normal,stop_loss,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,4583,95.0,72,🟢 買い・買い増し候補,中,57.1,morning,2026-09-18,watchlist,normal,add,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,2330,92.0,72,🟢 買い・買い増し候補,中,56.0,morning,2026-09-18,discovery,normal,add,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,1435,182.0,56,🟡 継続監視,低,59.3,morning,2026-09-18,discovery,normal,hold,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,3679,449.0,28,🔴 損切り警戒,中,41.7,morning,2026-09-18,discovery,normal,stop_loss,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,8622,925.0,28,🔴 損切り警戒,中,35.4,morning,2026-09-18,discovery,normal,stop_loss,Yahoo Finance (yfinance),20260918-morning
+2026-09-18 12:02,8614,703.0,32,🔴 損切り警戒,中,26.5,morning,2026-09-18,discovery,normal,stop_loss,Yahoo Finance (yfinance),20260918-morning
