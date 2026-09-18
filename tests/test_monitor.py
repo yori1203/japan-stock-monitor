@@ -28,11 +28,11 @@ class MonitorTests(unittest.TestCase):
             ("6573", 100, "high"),
             ("4596", 100, "high"),
             ("4597", 300, "high"),
+            ("6721", 100, "high"),
         ])
         self.assertEqual(watchlist, [
             ("6177", "high"),
             ("2134", "normal"),
-            ("6721", "normal"),
             ("2410", "normal"),
             ("4583", "normal"),
         ])
