@@ -14,8 +14,8 @@ import monitor
 from history import FIELDS, _atomic_write, _read_rows, migrate_history
 from v3_pipeline import Pipeline
 
-EXPECTED = {"portfolio": {"6740", "6573", "4596", "4597"},
-            "watchlist": {"6177", "2134", "6721", "2410", "4583"}}
+EXPECTED = {"portfolio": {"6740", "6573", "4596", "4597", "6721"},
+            "watchlist": {"6177", "2134", "2410", "4583"}}
 
 
 def save_signals(path, rows):

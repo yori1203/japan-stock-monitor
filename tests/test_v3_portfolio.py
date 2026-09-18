@@ -81,7 +81,7 @@ def test_config_null_override_does_not_erase_cost(tmp_path):
     assert holdings(tmp_path)[0]['average_cost'] == 100
 
 
-def test_four_outside_candidates_and_report_offline(tmp_path, monkeypatch):
+def test_five_outside_candidates_and_report_offline(tmp_path, monkeypatch):
     def no_network(*a, **k): raise AssertionError('network forbidden')
     monkeypatch.setattr(socket.socket, 'connect', no_network)
     p = Pipeline(root=ROOT, cache_dir=tmp_path/'cache', output_dir=tmp_path/'out', mode='cached', now=NOW, executor=no_network)
@@ -90,10 +90,14 @@ def test_four_outside_candidates_and_report_offline(tmp_path, monkeypatch):
     report = (tmp_path/'out/v3_report.md').read_text(encoding='utf-8')
     ranked = read(tmp_path/'out/v3_final_ranking.json')['ranked_candidates']
     portfolio = read(tmp_path/'out/v3_portfolio_output.json')['holdings']
-    assert {h['code'] for h in portfolio} == {'6740','6573','4596','4597'}
+    assert {h['code'] for h in portfolio} == {'6740','6573','4596','4597','6721'}
     assert not {h['code'] for h in portfolio} & {c['code'] for c in ranked}
     assert len(ranked) == 50
     for h in portfolio:
+        if h['code'] == '6721':
+            assert h['financial_status'] != 'ok'  # no cached financial fixture for new holding
+            assert h['code'] in report
+            continue
         assert h['portfolio_score'] is not None and h['action'] != 'insufficient_data'
         assert h['components']['event'] is None and 'event' in h['missing_components']
         assert h['evaluation_reasons'] and h['financial_status'] == 'ok' and h['technical_status'] == 'ok'
@@ -104,7 +108,7 @@ def test_four_outside_candidates_and_report_offline(tmp_path, monkeypatch):
 
 def test_no_financial_data_still_technical_analysis(tmp_path):
     items = analyse_portfolio(ROOT, tmp_path, {}, {}, {}, NOW)
-    assert len(items) == 4
+    assert len(items) == 5
     p = analyse({'code':'6740'}, {'technical': {'score':55}}, {}, NOW)
     assert p['portfolio_score'] == 55 and p['action'] == 'hold'
 
