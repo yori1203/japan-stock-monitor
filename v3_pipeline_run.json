@@ -2,7 +2,7 @@
   "version": 1,
   "mode": "full",
   "input_hash": "38823adb103f687ab439fce14077bc84cc41c6a84974a5161f60e8ec99092569",
-  "started_at": "2026-10-02T13:21:15.443525+00:00",
+  "started_at": "2026-10-05T02:18:47.178650+00:00",
   "status": "completed",
   "warnings": [
     "TDnet公開情報の自動取得・保存に必要な利用許諾を未確認（無断転用・複製禁止）。取得は無効です。"
@@ -10,8 +10,8 @@
   "stages": {
     "universe": {
       "status": "cached",
-      "started_at": "2026-10-02T13:21:15.478857+00:00",
-      "completed_at": "2026-10-02T13:21:15.529176+00:00",
+      "started_at": "2026-10-05T02:18:47.210500+00:00",
+      "completed_at": "2026-10-05T02:18:47.262448+00:00",
       "input_count": 4441,
       "success_count": 4441,
       "failure_count": 0,
@@ -20,28 +20,28 @@
     },
     "preselection": {
       "status": "completed",
-      "started_at": "2026-10-02T13:21:15.539380+00:00",
-      "completed_at": "2026-10-02T13:21:22.935175+00:00",
+      "started_at": "2026-10-05T02:18:47.272438+00:00",
+      "completed_at": "2026-10-05T02:18:52.831303+00:00",
       "input_count": 3707,
       "success_count": 400,
       "failure_count": 0,
       "cache_hits": 3632,
-      "output_hash": "51b45cfd2367a1a4dbfd7b334de76731b7052bff222a6a2a65f770ad0a4b7954"
+      "output_hash": "f3871b8ffc93a20d6f8176282ff0c4be5c07fb0e19a025168c37caf2987e8885"
     },
     "financial": {
       "status": "completed",
-      "started_at": "2026-10-02T13:21:22.968046+00:00",
-      "completed_at": "2026-10-02T13:21:23.553078+00:00",
+      "started_at": "2026-10-05T02:18:52.864245+00:00",
+      "completed_at": "2026-10-05T02:18:53.424071+00:00",
       "input_count": 400,
       "success_count": 400,
       "failure_count": 0,
       "cache_hits": 400,
-      "output_hash": "ae91798d8946244f6e255eed1e410264d380e9a9f142c1ce36c2a490d7b9bb09"
+      "output_hash": "7923a2d9d673dad08a8193ae3bbb0d6d7cb9f7ddce6017b0cef4da38dd609ded"
     },
     "edinet": {
       "status": "cached",
-      "started_at": "2026-10-02T13:21:23.568267+00:00",
-      "completed_at": "2026-10-02T13:21:24.003336+00:00",
+      "started_at": "2026-10-05T02:18:53.439732+00:00",
+      "completed_at": "2026-10-05T02:18:53.876696+00:00",
       "input_count": 50,
       "success_count": 50,
       "failure_count": 0,
@@ -50,43 +50,43 @@
     },
     "tdnet": {
       "status": "unavailable",
-      "started_at": "2026-10-02T13:21:24.039810+00:00",
-      "completed_at": "2026-10-02T13:21:24.083261+00:00",
+      "started_at": "2026-10-05T02:18:53.912610+00:00",
+      "completed_at": "2026-10-05T02:18:53.954922+00:00",
       "input_count": 400,
       "success_count": 0,
       "failure_count": 0,
       "cache_hits": 0,
-      "output_hash": "46437025ccb05a0384f39c54ef86e3465388aeb533f36beafc95ab6f7cd07ae6"
+      "output_hash": "9c5cbcb30901cd1210762f20bd645ad178dbc2cbffc9b99446b362e58d601a28"
     },
     "portfolio": {
       "status": "cached",
-      "started_at": "2026-10-02T13:21:24.084731+00:00",
-      "completed_at": "2026-10-02T13:21:24.291418+00:00",
+      "started_at": "2026-10-05T02:18:53.956271+00:00",
+      "completed_at": "2026-10-05T02:18:54.166126+00:00",
       "input_count": 5,
       "success_count": 5,
       "failure_count": 0,
       "cache_hits": 5,
-      "output_hash": "08120ec9ae2c97f758ad252393d0a7367ab9a060b22fb819a7ca6c748102cf39"
+      "output_hash": "d85931b8f7f62e745fa5a9ebaf5fd8b1eae819f19d6bccea51cc2ac0bc95c21c"
     },
     "ranking": {
       "status": "completed",
-      "started_at": "2026-10-02T13:21:24.292437+00:00",
-      "completed_at": "2026-10-02T13:21:24.589583+00:00",
+      "started_at": "2026-10-05T02:18:54.167135+00:00",
+      "completed_at": "2026-10-05T02:18:54.466882+00:00",
       "input_count": 399,
       "success_count": 399,
       "failure_count": 0,
       "cache_hits": 0,
-      "output_hash": "0e49f77da2e0f05326acb1ff4b26159a7c61866da7c94ccc21c525f7f1a8662c"
+      "output_hash": "0272e88f24a5990cc19b9baa1e40c47fed86babc1a7f6f1dceae9710a527f7b0"
     },
     "report": {
       "status": "completed",
-      "started_at": "2026-10-02T13:21:24.595422+00:00",
-      "completed_at": "2026-10-02T13:21:24.870157+00:00",
+      "started_at": "2026-10-05T02:18:54.472771+00:00",
+      "completed_at": "2026-10-05T02:18:54.756476+00:00",
       "input_count": 399,
       "success_count": 399,
       "failure_count": 0,
       "cache_hits": 0,
-      "output_hash": "4c7a2e2001d3f38d23d5fc0b6e3d1efdadf7240da7fec88fd535f171b2045aac"
+      "output_hash": "da30dee320896cefe8fd324355b98ba4b925f7b86491d308a8174a5624f36e0c"
     }
   },
   "edinet_counts": {
@@ -94,11 +94,11 @@
   },
   "edinet_reference_date": "2026-09-05",
   "tdnet_status": "unavailable",
-  "assessment_at": "2026-10-02T13:21:24.271623+00:00",
+  "assessment_at": "2026-10-05T02:18:54.146721+00:00",
   "crosscheck_counts": {
     "not_comparable": 247,
     "unavailable": 53
   },
   "crosscheck_unavailable_symbols": 349,
-  "elapsed_seconds": 9.379
+  "elapsed_seconds": 7.528
 }

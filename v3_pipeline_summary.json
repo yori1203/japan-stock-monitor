@@ -1,10 +1,10 @@
 {
   "freshness": {
     "JPX universe": {
-      "status": "fresh",
+      "status": "acceptable",
       "oldest": "2026-09-30T09:56:23.609241+00:00",
       "newest": "2026-09-30T09:56:23.609241+00:00",
-      "reason": "最古データは2.1日前（許容7日）",
+      "reason": "最古データは4.7日前（許容7日）",
       "warning": "なし"
     },
     "stock_price": {
@@ -15,32 +15,32 @@
       "reason": "必要な直近営業日終値 2026-10-02 に対し最古の株価基準日は 2026-09-30"
     },
     "fundamentals": {
-      "status": "fresh",
+      "status": "acceptable",
       "oldest": "2026-09-29T02:42:12.711183+00:00",
       "newest": "2026-10-02T10:06:28.908787+00:00",
-      "reason": "最古データは3.4日前（許容7日）",
+      "reason": "最古データは6.0日前（許容7日）",
       "warning": "なし"
     },
     "財務決算期": {
       "status": "stale",
       "oldest": "2025-01-31T00:00:00+09:00",
       "newest": "2026-07-31T00:00:00+09:00",
-      "reason": "最古データは609.9日前（許容180日）",
-      "warning": "古いデータを含む: 最古データは609.9日前（許容180日）"
+      "reason": "最古データは612.5日前（許容180日）",
+      "warning": "古いデータを含む: 最古データは612.5日前（許容180日）"
     },
     "EDINET": {
-      "status": "fresh",
+      "status": "acceptable",
       "oldest": "2026-09-29T02:45:39.408864+00:00",
       "newest": "2026-10-02T10:07:21.504943+00:00",
-      "reason": "最古データは3.4日前（許容7日）",
+      "reason": "最古データは6.0日前（許容7日）",
       "warning": "なし"
     },
     "EDINET決算期": {
       "status": "stale",
       "oldest": "2025-03-31T00:00:00+09:00",
       "newest": "2026-07-31T00:00:00+09:00",
-      "reason": "最古データは550.9日前（許容180日）",
-      "warning": "古いデータを含む: 最古データは550.9日前（許容180日）"
+      "reason": "最古データは553.5日前（許容180日）",
+      "warning": "古いデータを含む: 最古データは553.5日前（許容180日）"
     },
     "TDnet": {
       "status": "unknown",
@@ -139,7 +139,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 43.84,
+      "ranking_equivalent_score": 43.83,
       "available_components": [
         "financial",
         "technical",
@@ -197,15 +197,15 @@
           "status": "stale",
           "oldest": "2026-09-07T11:46:23.365526+09:00",
           "newest": "2026-09-07T11:46:23.365526+09:00",
-          "reason": "最古データは25.4日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは25.4日前（許容7日）"
+          "reason": "最古データは28.0日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは28.0日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2026-03-31T00:00:00+09:00",
           "newest": "2026-03-31T00:00:00+09:00",
-          "reason": "最古データは185.9日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは185.9日前（許容180日）"
+          "reason": "最古データは188.5日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは188.5日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -312,7 +312,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 51.63,
+      "ranking_equivalent_score": 51.61,
       "available_components": [
         "financial",
         "technical",
@@ -371,15 +371,15 @@
           "status": "stale",
           "oldest": "2026-09-07T11:46:34.020616+09:00",
           "newest": "2026-09-07T11:46:34.020616+09:00",
-          "reason": "最古データは25.4日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは25.4日前（許容7日）"
+          "reason": "最古データは28.0日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは28.0日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは275.9日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは275.9日前（許容180日）"
+          "reason": "最古データは278.5日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは278.5日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -485,7 +485,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 51.89,
+      "ranking_equivalent_score": 51.88,
       "available_components": [
         "financial",
         "technical",
@@ -543,15 +543,15 @@
           "status": "stale",
           "oldest": "2026-09-07T11:46:43.920526+09:00",
           "newest": "2026-09-07T11:46:43.920526+09:00",
-          "reason": "最古データは25.4日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは25.4日前（許容7日）"
+          "reason": "最古データは28.0日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは28.0日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは275.9日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは275.9日前（許容180日）"
+          "reason": "最古データは278.5日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは278.5日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -657,7 +657,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 54.34,
+      "ranking_equivalent_score": 54.33,
       "available_components": [
         "financial",
         "technical",
@@ -715,15 +715,15 @@
           "status": "stale",
           "oldest": "2026-09-07T11:46:53.696321+09:00",
           "newest": "2026-09-07T11:46:53.696321+09:00",
-          "reason": "最古データは25.4日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは25.4日前（許容7日）"
+          "reason": "最古データは28.0日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは28.0日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは275.9日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは275.9日前（許容180日）"
+          "reason": "最古データは278.5日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは278.5日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -840,8 +840,34 @@
     }
   ],
   "changes": {
-    "up": [],
-    "down": [],
+    "up": [
+      "3040",
+      "6400",
+      "4114",
+      "8202",
+      "3315",
+      "6758",
+      "8309",
+      "9533",
+      "7746",
+      "2385",
+      "3167",
+      "7161",
+      "3176",
+      "8425",
+      "8550"
+    ],
+    "down": [
+      "4442",
+      "543A",
+      "4674",
+      "4205",
+      "7211",
+      "2175",
+      "9508",
+      "4882",
+      "9506"
+    ],
     "new": [],
     "top20_new": [],
     "removed": []
