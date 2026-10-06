@@ -2,14 +2,14 @@
   "version": 1,
   "mode": "full",
   "input_hash": "38823adb103f687ab439fce14077bc84cc41c6a84974a5161f60e8ec99092569",
-  "started_at": "2026-10-05T15:24:35.633477+00:00",
+  "started_at": "2026-10-06T03:16:43.907719+00:00",
   "status": "failed",
   "warnings": [],
   "stages": {
     "universe": {
       "status": "cached",
-      "started_at": "2026-10-05T15:24:35.654369+00:00",
-      "completed_at": "2026-10-05T15:24:35.687388+00:00",
+      "started_at": "2026-10-06T03:16:43.943788+00:00",
+      "completed_at": "2026-10-06T03:16:43.988252+00:00",
       "input_count": 4441,
       "success_count": 4441,
       "failure_count": 0,
@@ -18,22 +18,22 @@
     },
     "preselection": {
       "status": "partial",
-      "started_at": "2026-10-05T15:24:35.694740+00:00",
-      "completed_at": "2026-10-05T15:27:44.724508+00:00",
+      "started_at": "2026-10-06T03:16:43.995808+00:00",
+      "completed_at": "2026-10-06T03:20:25.507217+00:00",
       "input_count": 3707,
       "success_count": 400,
-      "failure_count": 252,
-      "cache_hits": 1616,
-      "output_hash": "72f74708313e607138a22e22fd374130cb76fa5e9214b9cdaf25fbc67bff48e2"
+      "failure_count": 374,
+      "cache_hits": 3312,
+      "output_hash": "469d4450e1ae003f2982969b9454156f0c6d3d0c405f16b5001e2ead3e970c1f"
     },
     "financial": {
       "status": "failed",
-      "started_at": "2026-10-05T15:27:44.748993+00:00",
+      "started_at": "2026-10-06T03:20:25.532688+00:00",
       "completed_at": null,
       "input_count": 400,
-      "success_count": 122,
+      "success_count": 12,
       "failure_count": 1,
-      "cache_hits": 122,
+      "cache_hits": 12,
       "error": "RuntimeError"
     },
     "edinet": {
@@ -82,5 +82,5 @@
       "cache_hits": 0
     }
   },
-  "elapsed_seconds": 5.144
+  "elapsed_seconds": 5.724
 }
