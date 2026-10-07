@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-06T13:46:40.646702+00:00",
+  "generated_at": "2026-10-07T02:39:58.480229+00:00",
   "holdings": [
     {
       "code": "6740",
@@ -89,7 +89,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 43.98,
+      "ranking_equivalent_score": 43.97,
       "available_components": [
         "financial",
         "technical",
@@ -147,15 +147,15 @@
           "status": "stale",
           "oldest": "2026-09-07T11:46:23.365526+09:00",
           "newest": "2026-09-07T11:46:23.365526+09:00",
-          "reason": "最古データは29.5日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは29.5日前（許容7日）"
+          "reason": "最古データは30.0日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは30.0日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2026-03-31T00:00:00+09:00",
           "newest": "2026-03-31T00:00:00+09:00",
-          "reason": "最古データは190.0日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは190.0日前（許容180日）"
+          "reason": "最古データは190.5日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは190.5日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -262,7 +262,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 51.57,
+      "ranking_equivalent_score": 51.56,
       "available_components": [
         "financial",
         "technical",
@@ -321,15 +321,15 @@
           "status": "stale",
           "oldest": "2026-09-07T11:46:34.020616+09:00",
           "newest": "2026-09-07T11:46:34.020616+09:00",
-          "reason": "最古データは29.5日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは29.5日前（許容7日）"
+          "reason": "最古データは30.0日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは30.0日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは280.0日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは280.0日前（許容180日）"
+          "reason": "最古データは280.5日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは280.5日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -435,7 +435,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 52.66,
+      "ranking_equivalent_score": 52.65,
       "available_components": [
         "financial",
         "technical",
@@ -493,15 +493,15 @@
           "status": "stale",
           "oldest": "2026-09-07T11:46:43.920526+09:00",
           "newest": "2026-09-07T11:46:43.920526+09:00",
-          "reason": "最古データは29.5日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは29.5日前（許容7日）"
+          "reason": "最古データは30.0日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは30.0日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは280.0日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは280.0日前（許容180日）"
+          "reason": "最古データは280.5日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは280.5日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -665,15 +665,15 @@
           "status": "stale",
           "oldest": "2026-09-07T11:46:53.696321+09:00",
           "newest": "2026-09-07T11:46:53.696321+09:00",
-          "reason": "最古データは29.5日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは29.5日前（許容7日）"
+          "reason": "最古データは30.0日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは30.0日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは280.0日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは280.0日前（許容180日）"
+          "reason": "最古データは280.5日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは280.5日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
