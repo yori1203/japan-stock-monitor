@@ -1292,3 +1292,5 @@ date,code,price,score,signal,confidence,rsi,session,data_as_of,category,priority
 2026-10-13 19:50,6758,3814.0,94,🟢 強い買い候補,高,55.4,noon,2026-10-13,discovery,normal,buy,Yahoo Finance (yfinance),20261013-noon
 2026-10-13 19:50,2914,7319.0,86,🟢 強い買い候補,高,69.2,noon,2026-10-13,discovery,normal,buy,Yahoo Finance (yfinance),20261013-noon
 2026-10-13 19:50,7203,2984.0,78,🟢 買い・買い増し候補,中,44.9,noon,2026-10-13,discovery,normal,add,Yahoo Finance (yfinance),20261013-noon
+2026-10-13 23:38,4502,5963.0,100,🟢 強い買い候補,高,50.9,evening,2026-10-13,discovery,normal,buy,Yahoo Finance (yfinance),20261013-evening
+2026-10-13 23:38,7203,2984.0,78,🟢 買い・買い増し候補,中,44.9,evening,2026-10-13,discovery,normal,add,Yahoo Finance (yfinance),20261013-evening
