@@ -642,3 +642,5 @@ date,code,price,score,signal,confidence,rsi,session,data_as_of,category,priority
 2026-10-13 19:55,2134,15.0,24,🔴 損切り警戒,高,33.3,noon,2026-10-13,watchlist,normal,stop_loss,Yahoo Finance (yfinance),20261013-noon
 2026-10-13 19:55,2410,2553.0,16,🔴 損切り警戒,高,17.3,noon,2026-10-13,watchlist,normal,stop_loss,Yahoo Finance (yfinance),20261013-noon
 2026-10-13 19:55,4583,93.0,36,⚠️ 下落警戒,中,48.5,noon,2026-10-13,watchlist,normal,warning,Yahoo Finance (yfinance),20261013-noon
+2026-10-13 23:41,3940,133.0,52,🟡 継続監視,低,42.9,evening,2026-10-13,discovery,normal,hold,Yahoo Finance (yfinance),20261013-evening
+2026-10-13 23:41,1926,958.0,16,🔴 損切り警戒,高,40.3,evening,2026-10-13,discovery,normal,stop_loss,Yahoo Finance (yfinance),20261013-evening
