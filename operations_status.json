@@ -1,7 +1,7 @@
 {
-  "session": "evening",
-  "started_at": "2026-10-13T23:41:27.435159+09:00",
-  "completed_at": "2026-10-13T23:49:34.758187+09:00",
+  "session": "morning",
+  "started_at": "2026-10-14T11:06:34.319334+09:00",
+  "completed_at": "2026-10-14T11:06:48.602267+09:00",
   "complete": true,
   "expected": {
     "portfolio": [
