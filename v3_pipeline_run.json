@@ -2,38 +2,38 @@
   "version": 1,
   "mode": "full",
   "input_hash": "38823adb103f687ab439fce14077bc84cc41c6a84974a5161f60e8ec99092569",
-  "started_at": "2026-10-21T08:48:31.617298+00:00",
+  "started_at": "2026-10-21T12:34:34.632391+00:00",
   "status": "failed",
   "warnings": [],
   "stages": {
     "universe": {
-      "status": "cached",
-      "started_at": "2026-10-21T08:48:31.649715+00:00",
-      "completed_at": "2026-10-21T08:48:31.701399+00:00",
+      "status": "completed",
+      "started_at": "2026-10-21T12:34:34.663545+00:00",
+      "completed_at": "2026-10-21T12:34:36.082607+00:00",
       "input_count": 4447,
       "success_count": 4447,
       "failure_count": 0,
-      "cache_hits": 4447,
-      "output_hash": "49e9f7388f1df00d70f211ad0a822c00043e0589acc67a57893731956603b47c"
+      "cache_hits": 0,
+      "output_hash": "83b45104b87301456460932cdecf9b4ded3714544d606e026c6d34cd95381134"
     },
     "preselection": {
       "status": "partial",
-      "started_at": "2026-10-21T08:48:31.710981+00:00",
-      "completed_at": "2026-10-21T08:52:12.808653+00:00",
+      "started_at": "2026-10-21T12:34:36.093194+00:00",
+      "completed_at": "2026-10-21T12:37:12.776171+00:00",
       "input_count": 3702,
       "success_count": 400,
-      "failure_count": 2171,
-      "cache_hits": 1518,
-      "output_hash": "557738e59fdfb941db56c4dc609712b3b5df8a94ed5f36a230e992ba99a0b63f"
+      "failure_count": 657,
+      "cache_hits": 2994,
+      "output_hash": "de139b362732ecfd4c7cd834ee3a9b3b7a59607cfdc5990d9baa7c1d7c809b00"
     },
     "financial": {
       "status": "failed",
-      "started_at": "2026-10-21T08:52:12.841059+00:00",
+      "started_at": "2026-10-21T12:37:12.829765+00:00",
       "completed_at": null,
       "input_count": 400,
-      "success_count": 72,
+      "success_count": 47,
       "failure_count": 1,
-      "cache_hits": 72,
+      "cache_hits": 47,
       "error": "RuntimeError"
     },
     "edinet": {
@@ -82,5 +82,5 @@
       "cache_hits": 0
     }
   },
-  "elapsed_seconds": 26.346
+  "elapsed_seconds": 7.251
 }
