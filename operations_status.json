@@ -1,8 +1,8 @@
 {
-  "session": "morning",
-  "started_at": "2026-10-29T11:43:37.266538+09:00",
-  "completed_at": "2026-10-29T11:45:11.964788+09:00",
-  "complete": true,
+  "session": "noon",
+  "started_at": "2026-10-29T19:19:06.022614+09:00",
+  "completed_at": "2026-10-29T19:22:58.772179+09:00",
+  "complete": false,
   "expected": {
     "portfolio": [
       "4596",
@@ -29,20 +29,14 @@
     "2410",
     "4583"
   ],
-  "top5": [
-    "4765",
-    "5244",
-    "6184",
-    "9273",
-    "2127"
+  "top5": [],
+  "issues": [
+    {
+      "stage": "V3",
+      "status": "system_error",
+      "reason": "RuntimeError"
+    }
   ],
-  "issues": [],
-  "edinet_counts": {
-    "ok": 48,
-    "no_recent_filing": 2
-  },
-  "crosscheck_counts": {
-    "not_comparable": 250,
-    "unavailable": 38
-  }
+  "edinet_counts": {},
+  "crosscheck_counts": {}
 }
