@@ -1,7 +1,7 @@
 {
-  "session": "evening",
-  "started_at": "2026-11-10T01:58:43.805216+09:00",
-  "completed_at": "2026-11-10T02:01:46.088288+09:00",
+  "session": "morning",
+  "started_at": "2026-11-10T13:45:14.612147+09:00",
+  "completed_at": "2026-11-10T13:53:53.137549+09:00",
   "complete": true,
   "expected": {
     "portfolio": [
@@ -33,8 +33,8 @@
     "2353",
     "7844",
     "4765",
-    "3679",
-    "543A"
+    "2317",
+    "3679"
   ],
   "issues": [],
   "edinet_counts": {
