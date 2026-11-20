@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-19T04:25:53.561027+00:00",
+  "generated_at": "2026-11-20T15:50:32.457421+00:00",
   "holdings": [
     {
       "code": "6740",
@@ -89,7 +89,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 43.19,
+      "ranking_equivalent_score": 43.24,
       "available_components": [
         "financial",
         "technical",
@@ -140,22 +140,22 @@
           "status": "stale",
           "oldest": "2026-09-07",
           "newest": "2026-09-07",
-          "warning": "必要な直近営業日終値 2026-11-18 に対し最古の株価基準日は 2026-09-07",
-          "reason": "必要な直近営業日終値 2026-11-18 に対し最古の株価基準日は 2026-09-07"
+          "warning": "必要な直近営業日終値 2026-11-20 に対し最古の株価基準日は 2026-09-07",
+          "reason": "必要な直近営業日終値 2026-11-20 に対し最古の株価基準日は 2026-09-07"
         },
         "fundamentals": {
           "status": "stale",
           "oldest": "2026-09-07T11:46:23.365526+09:00",
           "newest": "2026-09-07T11:46:23.365526+09:00",
-          "reason": "最古データは73.1日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは73.1日前（許容7日）"
+          "reason": "最古データは74.5日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは74.5日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2026-03-31T00:00:00+09:00",
           "newest": "2026-03-31T00:00:00+09:00",
-          "reason": "最古データは233.6日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは233.6日前（許容180日）"
+          "reason": "最古データは235.0日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは235.0日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -262,7 +262,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 51.12,
+      "ranking_equivalent_score": 51.24,
       "available_components": [
         "financial",
         "technical",
@@ -314,22 +314,22 @@
           "status": "stale",
           "oldest": "2026-09-07",
           "newest": "2026-09-07",
-          "warning": "必要な直近営業日終値 2026-11-18 に対し最古の株価基準日は 2026-09-07",
-          "reason": "必要な直近営業日終値 2026-11-18 に対し最古の株価基準日は 2026-09-07"
+          "warning": "必要な直近営業日終値 2026-11-20 に対し最古の株価基準日は 2026-09-07",
+          "reason": "必要な直近営業日終値 2026-11-20 に対し最古の株価基準日は 2026-09-07"
         },
         "fundamentals": {
           "status": "stale",
           "oldest": "2026-09-07T11:46:34.020616+09:00",
           "newest": "2026-09-07T11:46:34.020616+09:00",
-          "reason": "最古データは73.1日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは73.1日前（許容7日）"
+          "reason": "最古データは74.5日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは74.5日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは323.6日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは323.6日前（許容180日）"
+          "reason": "最古データは325.0日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは325.0日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -435,7 +435,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 51.84,
+      "ranking_equivalent_score": 52.17,
       "available_components": [
         "financial",
         "technical",
@@ -486,22 +486,22 @@
           "status": "stale",
           "oldest": "2026-09-07",
           "newest": "2026-09-07",
-          "warning": "必要な直近営業日終値 2026-11-18 に対し最古の株価基準日は 2026-09-07",
-          "reason": "必要な直近営業日終値 2026-11-18 に対し最古の株価基準日は 2026-09-07"
+          "warning": "必要な直近営業日終値 2026-11-20 に対し最古の株価基準日は 2026-09-07",
+          "reason": "必要な直近営業日終値 2026-11-20 に対し最古の株価基準日は 2026-09-07"
         },
         "fundamentals": {
           "status": "stale",
           "oldest": "2026-09-07T11:46:43.920526+09:00",
           "newest": "2026-09-07T11:46:43.920526+09:00",
-          "reason": "最古データは73.1日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは73.1日前（許容7日）"
+          "reason": "最古データは74.5日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは74.5日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは323.6日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは323.6日前（許容180日）"
+          "reason": "最古データは325.0日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは325.0日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -607,7 +607,7 @@
         "event": null
       },
       "available_weight": 75,
-      "ranking_equivalent_score": 53.62,
+      "ranking_equivalent_score": 54.14,
       "available_components": [
         "financial",
         "technical",
@@ -658,22 +658,22 @@
           "status": "stale",
           "oldest": "2026-09-07",
           "newest": "2026-09-07",
-          "warning": "必要な直近営業日終値 2026-11-18 に対し最古の株価基準日は 2026-09-07",
-          "reason": "必要な直近営業日終値 2026-11-18 に対し最古の株価基準日は 2026-09-07"
+          "warning": "必要な直近営業日終値 2026-11-20 に対し最古の株価基準日は 2026-09-07",
+          "reason": "必要な直近営業日終値 2026-11-20 に対し最古の株価基準日は 2026-09-07"
         },
         "fundamentals": {
           "status": "stale",
           "oldest": "2026-09-07T11:46:53.696321+09:00",
           "newest": "2026-09-07T11:46:53.696321+09:00",
-          "reason": "最古データは73.1日前（許容7日）",
-          "warning": "古いデータを含む: 最古データは73.1日前（許容7日）"
+          "reason": "最古データは74.5日前（許容7日）",
+          "warning": "古いデータを含む: 最古データは74.5日前（許容7日）"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは323.6日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは323.6日前（許容180日）"
+          "reason": "最古データは325.0日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは325.0日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
@@ -699,8 +699,8 @@
       "average_cost": null,
       "purchase_price_status": "missing",
       "cost_basis_status": "missing",
-      "current_price": 102.0,
-      "price_date": "2026-11-18",
+      "current_price": 89.0,
+      "price_date": "2026-11-20",
       "previous_close": null,
       "change_pct": null,
       "volume": null,
@@ -718,14 +718,14 @@
         "eps_growth_yoy": -0.07202216066481992,
         "book_value_per_share": 6.397,
         "per": null,
-        "pbr": 17.508207,
+        "pbr": 13.756449,
         "roe": -1.9435699,
         "roa": -0.80886,
         "equity_ratio": 0.37362717446753896,
         "cash_and_equivalents": 82957000.0,
         "total_debt": 211123000.0,
         "free_cash_flow": -781878000.0,
-        "market_cap": 6591099392.0,
+        "market_cap": 5178720768.0,
         "equity": 343499000.0,
         "total_assets": 919363000.0,
         "dividend_yield": 0.0,
@@ -740,7 +740,7 @@
         "consecutive_loss_years": 4,
         "source": "Yahoo Finance (yfinance)",
         "period_end": "2025-12-31",
-        "fetched_at": "2026-11-13T15:01:26.383522+00:00",
+        "fetched_at": "2026-11-20T15:55:24.864791+00:00",
         "field_metadata": {
           "revenue": {
             "source_field": "Total Revenue",
@@ -817,7 +817,7 @@
         "event": null
       },
       "available_weight": 50,
-      "ranking_equivalent_score": 48.0,
+      "ranking_equivalent_score": 50.05,
       "available_components": [
         "financial",
         "momentum",
@@ -831,7 +831,7 @@
       "evaluation_reasons": [
         "strong_revenue_growth",
         "weak_fcf",
-        "20営業日騰落率 -46.88%"
+        "20営業日騰落率 -55.94%"
       ],
       "action": "reduce",
       "confidence": "low",
@@ -861,24 +861,24 @@
       "freshness": {
         "stock_price": {
           "status": "fresh",
-          "oldest": "2026-11-18",
-          "newest": "2026-11-18",
+          "oldest": "2026-11-20",
+          "newest": "2026-11-20",
           "warning": "なし",
-          "reason": "直近の確定営業日終値 2026-11-18 と一致"
+          "reason": "直近の確定営業日終値 2026-11-20 と一致"
         },
         "fundamentals": {
-          "status": "acceptable",
-          "oldest": "2026-11-13T15:01:26.383522+00:00",
-          "newest": "2026-11-13T15:01:26.383522+00:00",
-          "reason": "最古データは5.6日前（許容7日）",
+          "status": "fresh",
+          "oldest": "2026-11-20T15:55:24.864791+00:00",
+          "newest": "2026-11-20T15:55:24.864791+00:00",
+          "reason": "最古データは0.0日前（許容7日）",
           "warning": "なし"
         },
         "fundamentals_period": {
           "status": "stale",
           "oldest": "2025-12-31T00:00:00+09:00",
           "newest": "2025-12-31T00:00:00+09:00",
-          "reason": "最古データは323.6日前（許容180日）",
-          "warning": "古いデータを含む: 最古データは323.6日前（許容180日）"
+          "reason": "最古データは325.0日前（許容180日）",
+          "warning": "古いデータを含む: 最古データは325.0日前（許容180日）"
         },
         "EDINET": {
           "status": "unknown",
