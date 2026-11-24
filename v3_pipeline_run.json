@@ -2,14 +2,14 @@
   "version": 1,
   "mode": "full",
   "input_hash": "38823adb103f687ab439fce14077bc84cc41c6a84974a5161f60e8ec99092569",
-  "started_at": "2026-11-24T07:03:42.994842+00:00",
+  "started_at": "2026-11-24T14:07:55.923648+00:00",
   "status": "failed",
   "warnings": [],
   "stages": {
     "universe": {
       "status": "cached",
-      "started_at": "2026-11-24T07:03:43.026219+00:00",
-      "completed_at": "2026-11-24T07:03:43.078633+00:00",
+      "started_at": "2026-11-24T14:07:55.944428+00:00",
+      "completed_at": "2026-11-24T14:07:55.978983+00:00",
       "input_count": 4444,
       "success_count": 4444,
       "failure_count": 0,
@@ -18,17 +18,17 @@
     },
     "preselection": {
       "status": "partial",
-      "started_at": "2026-11-24T07:03:43.089220+00:00",
-      "completed_at": "2026-11-24T07:08:08.727084+00:00",
+      "started_at": "2026-11-24T14:07:55.986886+00:00",
+      "completed_at": "2026-11-24T14:10:06.417237+00:00",
       "input_count": 3693,
       "success_count": 400,
-      "failure_count": 2122,
-      "cache_hits": 1565,
-      "output_hash": "fc001923ffaf47370842ab99bfd82336772e5da842f0713d12824f949b33913e"
+      "failure_count": 646,
+      "cache_hits": 3034,
+      "output_hash": "10cf38759aa05bae05ba93e13f7aabd2540bbc9949cd9fb6ddf6c4d3c662fc94"
     },
     "financial": {
       "status": "failed",
-      "started_at": "2026-11-24T07:08:08.759422+00:00",
+      "started_at": "2026-11-24T14:10:06.458126+00:00",
       "completed_at": null,
       "input_count": 400,
       "success_count": 0,
@@ -82,5 +82,5 @@
       "cache_hits": 0
     }
   },
-  "elapsed_seconds": 33.129
+  "elapsed_seconds": 3.218
 }
