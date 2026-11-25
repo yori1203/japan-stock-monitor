@@ -1,7 +1,7 @@
 {
-  "session": "evening",
-  "started_at": "2026-11-25T03:28:04.648825+09:00",
-  "completed_at": "2026-11-25T03:36:21.287152+09:00",
+  "session": "morning",
+  "started_at": "2026-11-25T14:37:31.410006+09:00",
+  "completed_at": "2026-11-25T14:40:17.871519+09:00",
   "complete": true,
   "expected": {
     "portfolio": [
@@ -42,7 +42,7 @@
     "no_recent_filing": 4
   },
   "crosscheck_counts": {
-    "not_comparable": 233,
-    "unavailable": 43
+    "not_comparable": 232,
+    "unavailable": 44
   }
 }
