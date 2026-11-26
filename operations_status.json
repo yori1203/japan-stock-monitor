@@ -1,7 +1,7 @@
 {
-  "session": "evening",
-  "started_at": "2026-11-26T02:42:07.627565+09:00",
-  "completed_at": "2026-11-26T02:47:06.833767+09:00",
+  "session": "morning",
+  "started_at": "2026-11-26T14:21:26.362410+09:00",
+  "completed_at": "2026-11-26T14:25:58.278517+09:00",
   "complete": true,
   "expected": {
     "portfolio": [
@@ -38,11 +38,11 @@
   ],
   "issues": [],
   "edinet_counts": {
-    "ok": 45,
-    "no_recent_filing": 5
+    "ok": 44,
+    "no_recent_filing": 6
   },
   "crosscheck_counts": {
-    "not_comparable": 229,
-    "unavailable": 41
+    "not_comparable": 225,
+    "unavailable": 39
   }
 }
